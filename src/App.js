@@ -7,6 +7,7 @@ import LoginPage from "./Login/LoginPage";
 import PageNotFound from "./InvalidPage/PageNotFound";
 import NavBar from "./Shared/NavBar"
 import DetailedJobPage from "./DetailedJobPage/DetailedJobPage";
+import EmployerPage from "./ProfilePage/EmployerPage";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                   <Route path={"/login"} component={LoginPage}/>
                   <Route path={"/detailedjob"} component={DetailedJobPage}/>
                   <Route exact path={"/"} component={LandingPage}/>
+                  <Route path={"/employer"} component={EmployerPage}/>
                   <Route component={PageNotFound}/>
               </Switch>
           </div>

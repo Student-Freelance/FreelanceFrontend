@@ -8,6 +8,9 @@ export default class EmployerStore {
         jobs: [{
             id: "alsdjkas",
             name: "Full-stack i Lyngby"
+        }, {
+            id: "asdadee",
+            name: "Front-end i Mexico"
         }]
     };
 

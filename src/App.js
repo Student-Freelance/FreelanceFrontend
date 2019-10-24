@@ -7,7 +7,7 @@ import LoginPage from "./Login/LoginPage";
 import PageNotFound from "./InvalidPage/PageNotFound";
 import NavBar from "./Shared/NavBar"
 import DetailedJobPage from "./DetailedJobPage/DetailedJobPage";
-import EmployerPage from "./ProfilePage/EmployerPage";
+import EmployerPage from "./EmployerPage/EmployerPage";
 
 
 function App() {

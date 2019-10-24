@@ -12,4 +12,4 @@ function EmployerJobs(props) {
     )
 }
 
-export default EmployerJobs;
+export default EmployerJobs

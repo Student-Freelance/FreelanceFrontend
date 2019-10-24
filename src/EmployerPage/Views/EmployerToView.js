@@ -7,14 +7,12 @@ const EmployerToView = (props) => {
 
     return (
         <div>
-            <Card.Body>
-                <Card.Title>
-                    {employer.name}
-                </Card.Title>
-                <Card.Text>
-                    {employer.description}
-                </Card.Text>
-            </Card.Body>
+            <Card.Title>
+                {employer.name}
+            </Card.Title>
+            <Card.Text>
+                {employer.description}
+            </Card.Text>
         </div>
     )
 };

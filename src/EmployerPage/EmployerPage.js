@@ -19,45 +19,30 @@ class EmployerPage extends Component {
             editMode: false,
             btnText: "edit",
         };
-
-        console.table(this.firm);
     }
 
     //Changes state if user wants to edit
     toggleEdit = () => {
-        this.setState(state => ({editMode: !state.editMode}));
-        this.state.editMode ? this.setState({btnText: "save"}) : this.setState({btnText: "edit"});
+        this.setState(state => (
+            {editMode: !state.editMode}));
+        this.state.editMode ? this.setState({btnText: "edit"}) : this.setState({btnText: "save"});
     };
 
     render() {
         return (
             <Container fluid>
-                <Card style={{width: "90%"}}>
+                <Card className="col-sm-11 col-xl-6">
                     <Card.Img src={employerStore.employer.logo} alt="logo"/>
+                    <Card.Body>
                         {this.state.editMode ?
-                        <EmployerToChange employer={employerStore.employer}/> :
-                        <EmployerToView employer={employerStore.employer}/>}
-                    {/*{this.state.editMode ?*/}
-                    {/*    <div>*/}
-
-                    {/*        <Button color="success"*/}
-                    {/*                onClick={() => this.toggleEdit()}>Save</Button>*/}
-                    {/*        <input type="text"*/}
-                    {/*               value={employerStore.employer.description}*/}
-                    {/*               onChange={e => employerStore.setDescription(e.target.value)}/>*/}
-                    {/*    </div>*/}
-                    {/*    :*/}
-                    {/*    <div>*/}
-                    {/*        <Button color="primary"*/}
-                    {/*                onClick={() => this.toggleEdit()}>Edit</Button>*/}
-                    {/*        <p>{employerStore.employer.description}</p>*/}
-                    {/*    </div>*/}
-                    {/*}*/}
-                    <EmployerJobs jobs={employerStore.employer.jobs}/>
-                    <Button color="primary"
-                            onClick={() => this.toggleEdit()}>
-                        {this.state.btnText}
-                    </Button>
+                            <EmployerToChange employerStore={employerStore}/> :
+                            <EmployerToView employer={employerStore.employer}/>}
+                        <EmployerJobs jobs={employerStore.employer.jobs}/>
+                        <Button color="primary"
+                                onClick={() => this.toggleEdit()}>
+                            {this.state.btnText}
+                        </Button>
+                    </Card.Body>
                 </Card>
             </Container>
 

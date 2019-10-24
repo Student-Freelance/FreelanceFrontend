@@ -5,7 +5,7 @@ import LandingPage from "./LandingPage/LandingPage";
 import MarketPage from "./MarketPage/MarketPage";
 import LoginPage from "./Login/LoginPage";
 import PageNotFound from "./InvalidPage/PageNotFound";
-import NavBar from "./Shared/NavBar"
+import NavBar from "./Shared/Views/NavBar"
 import DetailedJobPage from "./DetailedJobPage/DetailedJobPage";
 import EmployerPage from "./EmployerPage/EmployerPage";
 

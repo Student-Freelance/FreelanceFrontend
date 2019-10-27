@@ -8,6 +8,10 @@ import EmployerLoginTab from "./LoginTabs/EmployerLoginTab/EmployerLoginTab";
 function LoginPage() {
     return (
         <div>
+            <Container className="LoginTitle">
+                <h1>Login</h1>
+            </Container>
+
             <Container className="LoginCard">
                 <Tabs defaultActiveKey="loginFreelancer" id="uncontrolled-tab-example">
                     <Tab eventKey="loginFreelancer" title="Freelancer">

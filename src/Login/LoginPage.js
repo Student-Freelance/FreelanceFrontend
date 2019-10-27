@@ -1,9 +1,27 @@
 import React from "react";
+import './LoginPage.css';
+import {Tab, Tabs} from 'react-bootstrap';
+import Container from "react-bootstrap/Container";
+import FreelancerLoginTab from "./LoginTabs/FreelancerLoginTab/FreelancerLoginTab";
+import EmployerLoginTab from "./LoginTabs/EmployerLoginTab/EmployerLoginTab";
 
 function LoginPage() {
     return (
         <div>
-            <h1>Login page!</h1>
+            <Container className="LoginTitle">
+                <h1>Login</h1>
+            </Container>
+
+            <Container className="LoginCard">
+                <Tabs defaultActiveKey="loginFreelancer" id="uncontrolled-tab-example">
+                    <Tab eventKey="loginFreelancer" title="Freelancer">
+                        <FreelancerLoginTab/>
+                    </Tab>
+                    <Tab eventKey="loginEmployer" title="Employer">
+                        <EmployerLoginTab/>
+                    </Tab>
+                </Tabs>
+            </Container>
         </div>
     )
 }

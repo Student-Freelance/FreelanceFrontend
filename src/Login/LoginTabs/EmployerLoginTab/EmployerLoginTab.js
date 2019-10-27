@@ -8,11 +8,14 @@ function EmployerLoginTab() {
 
         <div>
             <Container className="LoginButtons">
-                <Button variant="primary" size="lg" block>
+                <Button variant="dark" size="lg" block>
                     Employer button 1
                 </Button>
-                <Button variant="secondary" size="lg" block>
+                <Button variant="dark" size="lg" block>
                     Employer button 2
+                </Button>
+                <Button variant="dark" size="lg" block>
+                    Employer button 3
                 </Button>
             </Container>
             <Container className="LoginDivider">

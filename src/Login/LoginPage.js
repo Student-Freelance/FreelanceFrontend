@@ -1,4 +1,5 @@
 import React from "react";
+import './LoginPage.css';
 import {Tab, Tabs} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import FreelancerLoginTab from "./LoginTabs/FreelancerLoginTab/FreelancerLoginTab";

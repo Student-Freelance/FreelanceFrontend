@@ -1,7 +1,11 @@
-.LoginButtons {
+.LoginForm {
     padding-top: 20px;
 }
 
+.LoginButtons {
+    margin: -20px;
+}
+
 .LoginDivider {
-    padding: 20px;
+    padding-top: 10px;
 }

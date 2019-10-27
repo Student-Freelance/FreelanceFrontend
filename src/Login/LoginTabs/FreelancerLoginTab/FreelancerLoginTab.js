@@ -1,5 +1,5 @@
 import React from "react";
-import {Tab, Tabs} from 'react-bootstrap';
+import './FreelancerLoginTab.css';
 import Container from "react-bootstrap/Container";
 
 function FreelancerLoginTab() {

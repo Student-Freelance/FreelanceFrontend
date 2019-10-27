@@ -1,7 +1,8 @@
 import React from "react";
 import {Tab, Tabs} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
-import FreelancerLoginTab from "./FreelancerLoginTab/FreelancerLoginTab";
+import FreelancerLoginTab from "./LoginTabs/FreelancerLoginTab/FreelancerLoginTab";
+import EmployerLoginTab from "./LoginTabs/EmployerLoginTab/EmployerLoginTab";
 
 function LoginPage() {
     return (
@@ -12,7 +13,7 @@ function LoginPage() {
                         <FreelancerLoginTab/>
                     </Tab>
                     <Tab eventKey="loginEmployer" title="Employer">
-                        {/* <Sonnet /> */}
+                        <EmployerLoginTab/>
                     </Tab>
                 </Tabs>
             </Container>

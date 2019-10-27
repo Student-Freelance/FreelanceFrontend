@@ -8,10 +8,10 @@ function FreelancerLoginTab() {
         <div>
             <Container className="LoginButtons">
                 <Button variant="primary" size="lg" block>
-                    Block level button
+                    Freelancer button 1
                 </Button>
                 <Button variant="secondary" size="lg" block>
-                    Block level button
+                    Freelancer button 2
                 </Button>
             </Container>
         </div>

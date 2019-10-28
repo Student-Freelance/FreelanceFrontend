@@ -8,6 +8,7 @@ import PageNotFound from "./InvalidPage/PageNotFound";
 import NavBar from "./Shared/Views/NavBar"
 import DetailedJobPage from "./DetailedJobPage/DetailedJobPage";
 import EmployerPage from "./EmployerPage/EmployerPage";
+import ProfilePage from "./Profile/ProfilePage";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                   <Route path={"/detailedjob"} component={DetailedJobPage}/>
                   <Route exact path={"/"} component={LandingPage}/>
                   <Route path={"/employer"} component={EmployerPage}/>
+                  <Route path={"/profilepage"} component={ProfilePage}/>
                   <Route component={PageNotFound}/>
               </Switch>
           </div>

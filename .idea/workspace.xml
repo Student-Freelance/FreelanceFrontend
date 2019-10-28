@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52a1b2c0-b760-4fd7-a3de-f3485074e4ab" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Assets/editPen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Assets/profilepic.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Profile/ProfilePage.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Profile/ProfilePage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +37,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -78,6 +84,8 @@
       <workItem from="1569916186738" duration="2434000" />
       <workItem from="1569940650841" duration="108000" />
       <workItem from="1571302822200" duration="275000" />
+      <workItem from="1572206256564" duration="2464000" />
+      <workItem from="1572243023720" duration="3068000" />
     </task>
     <servers />
   </component>
@@ -96,5 +104,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

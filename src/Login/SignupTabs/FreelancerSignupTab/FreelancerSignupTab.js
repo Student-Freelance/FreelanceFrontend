@@ -1,67 +1,100 @@
 import React, {Component} from "react";
 import './FreelancerSignupTab.css';
-import {Tab, Tabs, Button, Form, Dropdown, Col} from 'react-bootstrap';
+import {Button, Form, Col} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Axios from "axios";
 
 class FreelancerSignupTab extends Component {
-
     constructor(props) {
         super(props);
 
-        /*
         this.state = {
-            showSignupForm: false
-        };*/
+            email: "",
+            userName: "",
+            password: "",
+            confirmPassword: "",
+            firstName: "",
+            lastName: ""
+        }
     }
 
-    showSignupFormPage() {
-        //this.setState({ showSignupForm: true});
+    handleEmailChange = (event) => {
+        this.setState({
+            email: event.target.value
+        })
+    }
 
+    handlePasswordChange = (event) => {
+        this.setState({
+            password: event.target.value
+        })
+    }
+
+    handleConfirmPasswordChange = (event) => {
+        this.setState({
+            confirmPassword: event.target.value
+        })
+    }
+
+    handleUsernameNameChange = (event) => {
+        this.setState({
+            userName: event.target.value
+        })
+    }
+
+    handleFirstNameChange = (event) => {
+        this.setState({
+            firstName: event.target.value
+        })
+    }
+
+    handleLastNameChange = (event) => {
+        this.setState({
+            lastName: event.target.value
+        })
+    }
+
+    handleSubmit = event => {
+        performHTTPRequest(this.state.email, this.state.userName, this.state.password, this.state.confirmPassword, this.state.firstName, this.state.lastName)
     }
 
     render() {
-        /*
-        const signupForm = (
-            <p>HELLO</p>
-        );*/
-
-        const loginForm = (
+        return (
             <div>
                 <Container className="LoginForm">
-                    <Form.Group>
-                        <Form.Row>
-                            <Col>
-                                <Form.Label>First name</Form.Label>
-                                <Form.Control type="text" placeholder="Enter first name" />
-                            </Col>
-                            <Col>
-                                <Form.Label>Last name</Form.Label>
-                                <Form.Control type="text" placeholder="Enter last name" />
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
+                    <Form onSubmit={this.handleSubmit}>
+                        <Form.Group>
+                            <Form.Row>
+                                <Col>
+                                    <Form.Label>First name</Form.Label>
+                                    <Form.Control type="text" value={this.state.firstName} placeholder="Enter first name" onChange={this.handleFirstNameChange} />
+                                </Col>
+                                <Col>
+                                    <Form.Label>Last name</Form.Label>
+                                    <Form.Control type="text" value={this.state.lastName} placeholder="Enter last name" onChange={this.handleLastNameChange} />
+                                </Col>
+                            </Form.Row>
+                        </Form.Group>
 
-                    <Form>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
+                            <Form.Control type="email" value={this.state.email} placeholder="Enter email" onChange={this.handleEmailChange} />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicUsername">
                             <Form.Label>Username</Form.Label>
-                            <Form.Control type="username" placeholder="Enter username" />
+                            <Form.Control type="text" value={this.state.userName} placeholder="Enter username" onChange={this.handleUsernameNameChange} />
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Enter password" />
+                                    <Form.Control type="password" value={this.state.password} placeholder="Enter password" onChange={this.handlePasswordChange} />
                                 </Col>
                                 <Col>
                                     <Form.Label>Confirm password</Form.Label>
-                                    <Form.Control type="password" placeholder="Re-enter password" />
+                                    <Form.Control type="password" value={this.state.confirmPassword}  placeholder="Re-enter password" onChange={this.handleConfirmPasswordChange} />
                                 </Col>
                             </Form.Row>
                         </Form.Group>
@@ -73,16 +106,30 @@ class FreelancerSignupTab extends Component {
                 </Container>
             </div>
         );
-
-        return loginForm
-        /*
-        return { this.state.showSignupForm ? signupForm : loginForm };*/
     }
 }
 
-async function performHTTPRequest() {
-    const response = await Axios.get("https://cvrapi.dk/api?vat=28983379&country=dk")
-    console.log(response.data)
+async function performHTTPRequest(email, userName, password, confirmPassword, firstName, lastName) {
+    let emailBodyHeader = 'email'
+    let userNameBodyHeader = 'userName'
+    let passwordBodyHeader = 'password'
+    let confirmPasswordBodyHeader = 'confirmPassword'
+    let firstNameBodyHeader = 'firstName'
+    let lastNameBodyHeader = 'lastName'
+
+    const response = await Axios.post(
+        'http://localhost:5001/api/User/RegisterStudent', {
+            emailBodyHeader: email,
+            userNameBodyHeader: userName,
+            passwordBodyHeader: password,
+            confirmPasswordBodyHeader: confirmPassword,
+            firstNameBodyHeader: firstName,
+            lastNameBodyHeader: lastName
+        }).then(res => {
+        console.log(res.data)
+    }).catch(error => {
+        console.log(error)
+    })
 }
 
 export default FreelancerSignupTab;

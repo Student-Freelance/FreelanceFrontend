@@ -1,56 +1,49 @@
 import React from "react";
 import './EmployerSignupTab.css';
-import {Tab, Tabs, Button, Form, Dropdown, Card} from 'react-bootstrap';
+import {Button, Form, Col, Dropdown, Card} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
+import Axios from "axios";
 
 function EmployerSignupTab() {
     return (
         <div>
             <Container className="LoginForm">
-                <Card>
-                    <Card.Header as="h5">Sign in with mail</Card.Header>
-                    <Card.Body>
-                        <Form>
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Control type="email" placeholder="Enter email" />
-                            </Form.Group>
+                <Form>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email" />
+                    </Form.Group>
 
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Control type="password" placeholder="Password" />
-                            </Form.Group>
-                            <Form.Group controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Remember me?" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit" size="lg" block>
-                                Sign in
-                            </Button>
-                            <Button variant="secondary" type="submit" size="lg" block>
-                                Sign up
-                            </Button>
-                        </Form>
-                    </Card.Body>
-                </Card>
-            </Container>
-            <Container className="LoginDivider"></Container>
-            <Container className="LoginButtons">
-                <Card>
-                    <Card.Header as="h5">Sign in with third parties</Card.Header>
-                    <Card.Body>
-                        <Button variant="dark" size="lg" block>
-                            Freelancer button 1
-                        </Button>
-                        <Button variant="dark" size="lg" block>
-                            Freelancer button 2
-                        </Button>
-                        <Button variant="dark" size="lg" block>
-                            Freelancer button 3
-                        </Button>
-                    </Card.Body>
-                </Card>
+                    <Form.Group>
+                        <Form.Row>
+                            <Col>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Enter password" />
+                            </Col>
+                            <Col>
+                                <Form.Label>Confirm password</Form.Label>
+                                <Form.Control type="password" placeholder="Re-enter password" />
+                            </Col>
+                        </Form.Row>
+                    </Form.Group>
+
+                    <Form.Group controlId="formCompanyName">
+                        <Form.Label>Company name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter company name" />
+                    </Form.Group>
+
+                    <Button onClick={() => performHTTPRequest()} variant="primary" type="submit" size="lg" block>
+                        Sign up
+                    </Button>
+                </Form>
             </Container>
         </div>
-
     )
+}
+
+async function performHTTPRequest() {
+    const response = await Axios.get("https://cvrapi.dk/api?vat=28983379&country=dk")
+    console.log(response.data)
 }
 
 export default EmployerSignupTab;

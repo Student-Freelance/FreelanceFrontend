@@ -2,6 +2,7 @@ import React from "react";
 import './FreelancerLoginTab.css';
 import {Tab, Tabs, Button, Form, Dropdown} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
+import Axios from "axios";
 
 function FreelancerLoginTab() {
     return (
@@ -18,7 +19,7 @@ function FreelancerLoginTab() {
                     <Form.Group controlId="formBasicCheckbox">
                         <Form.Check type="checkbox" label="Remember me?" />
                     </Form.Group>
-                    <Button variant="primary" type="submit" size="lg" block>
+                    <Button onClick={() => performHTTPRequest()} variant="primary" type="submit" size="lg" block>
                         Sign in
                     </Button>
                     <Button variant="secondary" type="submit" size="lg" block>
@@ -42,6 +43,11 @@ function FreelancerLoginTab() {
             </Container>
         </div>
     )
+}
+
+async function performHTTPRequest() {
+    const response = await Axios.get("https://cvrapi.dk/api?vat=28983379&country=dk")
+    console.log(response.data)
 }
 
 export default FreelancerLoginTab;

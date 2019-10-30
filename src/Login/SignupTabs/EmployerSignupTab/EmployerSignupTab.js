@@ -1,11 +1,10 @@
 import React, {Component} from "react";
 import './EmployerSignupTab.css';
-import {Button, Form, Col, Dropdown, Card} from 'react-bootstrap';
+import {Button, Form, Col} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Axios from "axios";
 
 class EmployerSignupTab extends Component {
-
     constructor(props) {
         super(props);
 
@@ -42,7 +41,7 @@ class EmployerSignupTab extends Component {
     }
 
     handleSubmit = event => {
-
+        performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName)
     }
 
     render() {
@@ -83,9 +82,23 @@ class EmployerSignupTab extends Component {
     }
 }
 
-async function performHTTPRequest() {
-    const response = await Axios.get("https://cvrapi.dk/api?vat=28983379&country=dk")
-    console.log(response.data)
+async function performHTTPRequest(email, password, confirmPassword, companyName) {
+    let emailBodyHeader = 'email'
+    let passwordBodyHeader = 'password'
+    let confirmPasswordBodyHeader = 'confirmPassword'
+    let companyNameBodyHeader = 'companyName'
+
+    const response = await Axios.post(
+        'http://localhost:5001/api/User/RegisterCompany', {
+            emailBodyHeader: email,
+            passwordBodyHeader: password,
+            confirmPasswordBodyHeader: confirmPassword,
+            companyNameBodyHeader: companyName
+        }).then(res => {
+            console.log(res.data)
+        }).catch(error => {
+            console.log(error)
+        })
 }
 
 export default EmployerSignupTab;

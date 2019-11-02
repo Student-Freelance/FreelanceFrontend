@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import './FreelancerSignupTab.css';
-import {Button, Form, Col} from 'react-bootstrap';
+import {Button, Form, Col, Modal} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Axios from "axios";
 
@@ -109,6 +109,44 @@ class FreelancerSignupTab extends Component {
     }
 }
 
+function showModalSuccess() {
+    return (
+            <Modal.Dialog>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal title</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <p>Modal body text goes here.</p>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary">Close</Button>
+                    <Button variant="primary">Save changes</Button>
+                </Modal.Footer>
+            </Modal.Dialog>
+    )
+}
+
+function showModalError() {
+    return (
+        <Modal.Dialog>
+            <Modal.Header closeButton>
+                <Modal.Title>Error</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                <p>Modal body text goes here.</p>
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button variant="secondary">Close</Button>
+                <Button variant="primary">Save changes</Button>
+            </Modal.Footer>
+        </Modal.Dialog>
+    )
+}
+
 async function performHTTPRequest(email, userName, password, confirmPassword, firstName, lastName) {
     let emailBodyHeader = 'email'
     let userNameBodyHeader = 'userName'
@@ -118,7 +156,7 @@ async function performHTTPRequest(email, userName, password, confirmPassword, fi
     let lastNameBodyHeader = 'lastName'
 
     const response = await Axios.post(
-        'http://localhost:5001/api/User/RegisterStudent', {
+        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterStudent', { //http://localhost:5001/api/User/RegisterStudent
             emailBodyHeader: email,
             userNameBodyHeader: userName,
             passwordBodyHeader: password,
@@ -126,9 +164,11 @@ async function performHTTPRequest(email, userName, password, confirmPassword, fi
             firstNameBodyHeader: firstName,
             lastNameBodyHeader: lastName
         }).then(res => {
-        console.log(res.data)
-    }).catch(error => {
-        console.log(error)
+            showModalSuccess()
+            console.log(res.data)
+        }).catch(error => {
+            showModalError()
+            console.log(error)
     })
 }
 

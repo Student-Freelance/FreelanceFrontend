@@ -10,38 +10,45 @@ class FreelancerLoginTab extends Component {
     constructor(props) {
         super(props);
 
-        /*
         this.state = {
-            showSignupForm: false
-        };*/
+            userName: "",
+            password: ""
+        }
+    }
+
+    handleUsernameNameChange = (event) => {
+        this.setState({
+            userName: event.target.value
+        })
+    }
+
+    handlePasswordChange = (event) => {
+        this.setState({
+            password: event.target.value
+        })
     }
 
     showSignupFormPage() {
         //this.setState({ showSignupForm: true});
-
     }
 
     render() {
-        /*
-        const signupForm = (
-            <p>HELLO</p>
-        );*/
 
         const loginForm = (
             <div>
                 <Container className="LoginForm">
                     <Form>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Group controlId="formBasicUsername">
+                            <Form.Control type="username" value={this.state.username} placeholder="Enter username" onChange={this.handleUsernameNameChange} />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control type="password" value={this.state.password} placeholder="Enter password" onChange={this.handlePasswordChange} />
                         </Form.Group>
                         <Form.Group controlId="formBasicCheckbox">
                             <Form.Check type="checkbox" label="Remember me?" />
                         </Form.Group>
-                        <Button onClick={() => performHTTPRequest()} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.userName, this.state.password)} variant="primary" type="submit" size="lg" block>
                             Sign in
                         </Button>
                         <Button onClick={this.showSignupFormPage} variant="secondary" type="submit" size="lg" block>
@@ -72,9 +79,16 @@ class FreelancerLoginTab extends Component {
     }
 }
 
-async function performHTTPRequest() {
-    const response = await Axios.get("https://cvrapi.dk/api?vat=28983379&country=dk")
-    console.log(response.data)
+async function performHTTPRequest(username, password) {
+    const response = await Axios.post(
+        'https://devops01.eitlab.diplom.dtu.dk/api/Login/Login', {
+            userName: username,
+            password: password
+        }).then(res => {
+            console.log(res.data)
+         }).catch(error => {
+            console.log(error)
+    })
 }
 
 export default FreelancerLoginTab;

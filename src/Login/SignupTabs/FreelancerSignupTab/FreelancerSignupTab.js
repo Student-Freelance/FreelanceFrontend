@@ -148,28 +148,25 @@ function showModalError() {
 }
 
 async function performHTTPRequest(email, userName, password, confirmPassword, firstName, lastName) {
-    let emailBodyHeader = 'email'
-    let userNameBodyHeader = 'userName'
-    let passwordBodyHeader = 'password'
-    let confirmPasswordBodyHeader = 'confirmPassword'
-    let firstNameBodyHeader = 'firstName'
-    let lastNameBodyHeader = 'lastName'
+    const freelancer = {
+        email: email,
+        userName: userName,
+        password: password,
+        confirmPassword: confirmPassword,
+        firstName: firstName,
+        lastName: lastName
+    }
 
     const response = await Axios.post(
-        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterStudent', { //http://localhost:5001/api/User/RegisterStudent
-            emailBodyHeader: email,
-            userNameBodyHeader: userName,
-            passwordBodyHeader: password,
-            confirmPasswordBodyHeader: confirmPassword,
-            firstNameBodyHeader: firstName,
-            lastNameBodyHeader: lastName
-        }).then(res => {
+        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterStudent', { freelancer })
+        .then(res => {
             showModalSuccess()
             console.log(res.data)
-        }).catch(error => {
+        })
+        .catch(error => {
             showModalError()
             console.log(error)
-    })
+        })
 }
 
 export default FreelancerSignupTab;

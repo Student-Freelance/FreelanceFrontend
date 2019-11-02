@@ -99,7 +99,7 @@ class FreelancerSignupTab extends Component {
                             </Form.Row>
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest()} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.userName, this.state.password, this.state.confirmPassword, this.state.firstName, this.state.lastName)} variant="primary" type="submit" size="lg" block>
                             Sign up
                         </Button>
                     </Form>
@@ -148,17 +148,15 @@ function showModalError() {
 }
 
 async function performHTTPRequest(email, userName, password, confirmPassword, firstName, lastName) {
-    const freelancer = {
-        email: email,
-        userName: userName,
-        password: password,
-        confirmPassword: confirmPassword,
-        firstName: firstName,
-        lastName: lastName
-    }
-
     const response = await Axios.post(
-        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterStudent', { freelancer })
+        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterStudent', {
+            email: email,
+            userName: userName,
+            password: password,
+            confirmPassword: confirmPassword,
+            firstName: firstName,
+            lastName: lastName
+        })
         .then(res => {
             showModalSuccess()
             console.log(res.data)

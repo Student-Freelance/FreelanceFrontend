@@ -72,7 +72,7 @@ class EmployerSignupTab extends Component {
                             <Form.Control type="text" value={this.state.companyName} placeholder="Enter company name" onChange={this.handleCompanyNameChange} />
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest()} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName)} variant="primary" type="submit" size="lg" block>
                             Sign up
                         </Button>
                     </Form>
@@ -83,17 +83,12 @@ class EmployerSignupTab extends Component {
 }
 
 async function performHTTPRequest(email, password, confirmPassword, companyName) {
-    let emailBodyHeader = 'email'
-    let passwordBodyHeader = 'password'
-    let confirmPasswordBodyHeader = 'confirmPassword'
-    let companyNameBodyHeader = 'companyName'
-
     const response = await Axios.post(
-        'http://localhost:5001/api/User/RegisterCompany', {
-            emailBodyHeader: email,
-            passwordBodyHeader: password,
-            confirmPasswordBodyHeader: confirmPassword,
-            companyNameBodyHeader: companyName
+        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterCompany', {
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+            companyName: companyName
         }).then(res => {
             console.log(res.data)
         }).catch(error => {

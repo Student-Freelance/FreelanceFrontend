@@ -10,15 +10,23 @@ class EmployerSignupTab extends Component {
 
         this.state = {
             email: "",
+            userName: "",
             password: "",
             confirmPassword: "",
-            companyName: ""
+            companyName: "",
+            companyCVR: ""
         }
     }
 
     handleEmailChange = (event) => {
         this.setState({
             email: event.target.value
+        })
+    }
+
+    handleUsernameNameChange = (event) => {
+        this.setState({
+            userName: event.target.value
         })
     }
 
@@ -40,6 +48,12 @@ class EmployerSignupTab extends Component {
         })
     }
 
+    handleCompanyCvrChange = (event) => {
+        this.setState({
+            companyCVR: event.target.value
+        })
+    }
+
     handleSubmit = event => {
         performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName)
     }
@@ -49,9 +63,27 @@ class EmployerSignupTab extends Component {
             <div>
                 <Container className="LoginForm">
                     <Form onSubmit={this.handleSubmit}>
+                        <Form.Group>
+                            <Form.Row>
+                                <Col>
+                                    <Form.Label>Company name</Form.Label>
+                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter company name" onChange={this.handleCompanyNameChange} />
+                                </Col>
+                                <Col>
+                                    <Form.Label>Company CVR</Form.Label>
+                                    <Form.Control type="text" value={this.state.companyCVR} placeholder="Enter company cvr" onChange={this.handleCompanyCvrChange} />
+                                </Col>
+                            </Form.Row>
+                        </Form.Group>
+
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" value={this.state.email} placeholder="Enter email" onChange={this.handleEmailChange} />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" value={this.state.userName} placeholder="Enter username" onChange={this.handleUsernameNameChange} />
                         </Form.Group>
 
                         <Form.Group>
@@ -67,12 +99,7 @@ class EmployerSignupTab extends Component {
                             </Form.Row>
                         </Form.Group>
 
-                        <Form.Group controlId="formCompanyName">
-                            <Form.Label>Company name</Form.Label>
-                            <Form.Control type="text" value={this.state.companyName} placeholder="Enter company name" onChange={this.handleCompanyNameChange} />
-                        </Form.Group>
-
-                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName, this.state.userName)} variant="primary" type="submit" size="lg" block>
                             Sign up
                         </Button>
                     </Form>
@@ -82,13 +109,14 @@ class EmployerSignupTab extends Component {
     }
 }
 
-async function performHTTPRequest(email, password, confirmPassword, companyName) {
+async function performHTTPRequest(email, password, confirmPassword, companyName, userName) {
     const response = await Axios.post(
         'https://devops01.eitlab.diplom.dtu.dk/api/Companies', {
             email: email,
             password: password,
             confirmPassword: confirmPassword,
-            companyName: companyName
+            companyName: companyName,
+            userName: userName
         }).then(res => {
             console.log(res.data)
         }).catch(error => {

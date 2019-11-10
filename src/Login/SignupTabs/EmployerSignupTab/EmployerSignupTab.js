@@ -71,7 +71,7 @@ class EmployerSignupTab extends Component {
                                 </Col>
                                 <Col>
                                     <Form.Label>Company CVR</Form.Label>
-                                    <Form.Control type="text" value={this.state.companyCVR} placeholder="Enter company cvr" onChange={this.handleCompanyCvrChange} />
+                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter company cvr" onChange={this.handleCompanyCvrChange} />
                                 </Col>
                             </Form.Row>
                         </Form.Group>

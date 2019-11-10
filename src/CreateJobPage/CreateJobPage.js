@@ -167,12 +167,12 @@ class CreateJobPage extends Component {
                                     <Form.Label>Job scope</Form.Label>
                                     <Form.Control type="text" value={this.state.scope} placeholder="Enter job scope" onChange={this.handleScopeChange} />
                                 </Col>
-                                <Form.Group as={Col} controlId="formGridState">
+                                <Form.Group as={Col} controlId="formGridState" onChange={this.handleExperienceChange}>
                                     <Form.Label>Experience level</Form.Label>
                                     <Form.Control as="select">
                                         <option>Choose experience Level</option>
-                                        <option value={this.state.experience} onChange={this.handleExperienceChange}>Junior</option>
-                                        <option value={this.state.experience} onChange={this.handleExperienceChange}>Senior</option>
+                                        <option value="junior">Junior</option>
+                                        <option value="senior">Senior</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>
@@ -194,7 +194,7 @@ class CreateJobPage extends Component {
 
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName, this.state.userName)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.start, this.state.end)} variant="primary" type="submit" size="lg" block>
                             Submit
                         </Button>
                     </Form>
@@ -204,11 +204,21 @@ class CreateJobPage extends Component {
     }
 }
 
-async function performHTTPRequest(username, password) {
+async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, start, end) {
     const response = await Axios.post(
         'https://devops01.eitlab.diplom.dtu.dk/api/Jobs', {
-            userName: username,
-            password: password
+            companyName: companyName,
+            title: title,
+            salary: salary,
+            description: description,
+            //scope: scope,
+            tags: tags,
+            //freelancerAmount: freelancerAmount,
+            paidMonthly: paidMonthly,
+            paidHourly: paidHourly,
+            experience: experience,
+            start: start,
+            end: end
         }).then(res => {
         console.log(res.data)
     }).catch(error => {

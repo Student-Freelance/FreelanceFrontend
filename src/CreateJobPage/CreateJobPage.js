@@ -30,6 +30,10 @@ class CreateJobPage extends Component {
     render() {
         return (
             <div>
+                <Container className="CreateJobTitle">
+                    <h1>Create job</h1>
+                </Container>
+
                 <Container className="CreateJobForm">
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group>

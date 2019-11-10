@@ -1,13 +1,7 @@
-.summary-Job-Description {
-    padding: 5%;
+.CreateJobTitle {
+    padding-bottom: 30px;
 }
 
-.badge, .badge-secondary {
-    margin-right: 0.5%;
-    margin-bottom: 1%;
-}
-
-.aboutJobRightCard {
-    padding-top: 5%;
-    padding-bottom: 5%;
+.CreateJobForm {
+    padding-top: 20px;
 }

@@ -84,7 +84,7 @@ class EmployerSignupTab extends Component {
 
 async function performHTTPRequest(email, password, confirmPassword, companyName) {
     const response = await Axios.post(
-        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterCompany', {
+        'https://devops01.eitlab.diplom.dtu.dk/api/Companies', {
             email: email,
             password: password,
             confirmPassword: confirmPassword,

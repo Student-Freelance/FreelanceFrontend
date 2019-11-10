@@ -36,44 +36,90 @@ class CreateJobPage extends Component {
 
                 <Container className="CreateJobForm">
                     <Form onSubmit={this.handleSubmit}>
-                        <Form.Group>
-                            <Form.Row>
+                        <Form.Group className="CreateJobFormSummary">
+                            <h2>Summary description</h2>
+
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Job title</Form.Label>
+                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job title" onChange={this.handleCompanyNameChange} />
+                            </Form.Group>
+
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Summary description</Form.Label>
+                                <Form.Control as="textarea" rows="3" placeholder="Enter job description" />
+                            </Form.Group>
+
+                            <Form.Row className="CreateJobFormDetailed">
                                 <Col>
                                     <Form.Label>Company name</Form.Label>
                                     <Form.Control type="text" value={this.state.companyName} placeholder="Enter company name" onChange={this.handleCompanyNameChange} />
                                 </Col>
                                 <Col>
-                                    <Form.Label>Company CVR</Form.Label>
-                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter company cvr" onChange={this.handleCompanyCvrChange} />
+                                    <Form.Label>Job salery</Form.Label>
+                                    <Form.Control type="number" value={this.state.companyName} placeholder="Enter job salery" onChange={this.handleCompanyNameChange} />
                                 </Col>
                             </Form.Row>
+
+                            <Form.Group>
+                                <Form.Label>Job location</Form.Label>
+                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job location" onChange={this.handleCompanyNameChange} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Job tags</Form.Label>
+                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job tags, being comma seperated," onChange={this.handleCompanyNameChange} />
+                            </Form.Group>
+
                         </Form.Group>
 
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" value={this.state.email} placeholder="Enter email" onChange={this.handleEmailChange} />
-                        </Form.Group>
+                        <Form.Group className="CreateJobFormDetailed">
+                            <h2>Detailed description</h2>
 
-                        <Form.Group controlId="formBasicUsername">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control type="text" value={this.state.userName} placeholder="Enter username" onChange={this.handleUsernameNameChange} />
-                        </Form.Group>
+                            <Form.Row className="CreateJobFormSeperator">
+                                <Col>
+                                    <Form.Label>Job start</Form.Label>
+                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter job start" onChange={this.handleCompanyNameChange} />
+                                </Col>
+                                <Col>
+                                    <Form.Label>Job end</Form.Label>
+                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter job end" onChange={this.handleCompanyCvrChange} />
+                                </Col>
+                            </Form.Row>
 
-                        <Form.Group>
                             <Form.Row>
                                 <Col>
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" value={this.state.password} placeholder="Enter password" onChange={this.handlePasswordChange} />
+                                    <Form.Label>Job scope</Form.Label>
+                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter job scope" onChange={this.handleCompanyNameChange} />
                                 </Col>
-                                <Col>
-                                    <Form.Label>Confirm password</Form.Label>
-                                    <Form.Control type="password" value={this.state.confirmPassword} placeholder="Re-enter password" onChange={this.handleConfirmPasswordChange} />
-                                </Col>
+                                <Form.Group as={Col} controlId="formGridState">
+                                    <Form.Label>Experience level</Form.Label>
+                                    <Form.Control as="select">
+                                        <option>Choose experience Level</option>
+                                        <option>Junior</option>
+                                        <option>Senior</option>
+                                    </Form.Control>
+                                </Form.Group>
                             </Form.Row>
+
+                            <Form.Row>
+                                <Col>
+                                    <Form.Label>Amount of freelancers</Form.Label>
+                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter amount of freelancers" onChange={this.handleCompanyCvrChange} />
+                                </Col>
+                                <Form.Group as={Col} controlId="formGridState">
+                                    <Form.Label>Payment method</Form.Label>
+                                    <Form.Control as="select">
+                                        <option>Choose monthly/hourly</option>
+                                        <option>Monthly</option>
+                                        <option>Hourly</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Form.Row>
+
                         </Form.Group>
 
                         <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName, this.state.userName)} variant="primary" type="submit" size="lg" block>
-                            Sign up
+                            Submit
                         </Button>
                     </Form>
                 </Container>

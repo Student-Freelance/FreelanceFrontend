@@ -10,15 +10,19 @@ class CreateJobPage extends Component {
         super(props);
 
         this.state = {
-            userName: "",
-            password: ""
+            companyName: "",
+            title: "",
+            salary: 0,
+            description: "",
+            scope: "",
+            tags: [],
+            freelancerAmount: 0,
+            paidMonthly: false,
+            paidHourly: false,
+            experience: "",
+            start: "",
+            end: ""
         }
-    }
-
-    handleUsernameNameChange = (event) => {
-        this.setState({
-            userName: event.target.value
-        })
     }
 
     handlePasswordChange = (event) => {
@@ -41,12 +45,12 @@ class CreateJobPage extends Component {
 
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Job title</Form.Label>
-                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job title" onChange={this.handleCompanyNameChange} />
+                                <Form.Control type="text" value={this.state.title} placeholder="Enter job title" onChange={this.handleCompanyNameChange} />
                             </Form.Group>
 
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Summary description</Form.Label>
-                                <Form.Control as="textarea" rows="3" placeholder="Enter job description" />
+                                <Form.Control as="textarea" rows="3" value={this.state.description} placeholder="Enter job description" />
                             </Form.Group>
 
                             <Form.Row className="CreateJobFormDetailed">
@@ -56,18 +60,18 @@ class CreateJobPage extends Component {
                                 </Col>
                                 <Col>
                                     <Form.Label>Job salery</Form.Label>
-                                    <Form.Control type="number" value={this.state.companyName} placeholder="Enter job salery" onChange={this.handleCompanyNameChange} />
+                                    <Form.Control type="number" value={this.state.salary} placeholder="Enter job salery" onChange={this.handleCompanyNameChange} />
                                 </Col>
                             </Form.Row>
 
                             <Form.Group>
                                 <Form.Label>Job location</Form.Label>
-                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job location" onChange={this.handleCompanyNameChange} />
+                                <Form.Control type="text" value={this.state.location} placeholder="Enter job location" onChange={this.handleCompanyNameChange} />
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Job tags</Form.Label>
-                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job tags, being comma seperated," onChange={this.handleCompanyNameChange} />
+                                <Form.Control type="text" value={this.state.tags} placeholder="Enter job tags, being comma seperated," onChange={this.handleCompanyNameChange} />
                             </Form.Group>
 
                         </Form.Group>
@@ -78,25 +82,25 @@ class CreateJobPage extends Component {
                             <Form.Row className="CreateJobFormSeperator">
                                 <Col>
                                     <Form.Label>Job start</Form.Label>
-                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter job start" onChange={this.handleCompanyNameChange} />
+                                    <Form.Control type="text" value={this.state.start} placeholder="Enter job start" onChange={this.handleCompanyNameChange} />
                                 </Col>
                                 <Col>
                                     <Form.Label>Job end</Form.Label>
-                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter job end" onChange={this.handleCompanyCvrChange} />
+                                    <Form.Control type="text" value={this.state.end} placeholder="Enter job end" onChange={this.handleCompanyCvrChange} />
                                 </Col>
                             </Form.Row>
 
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Job scope</Form.Label>
-                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter job scope" onChange={this.handleCompanyNameChange} />
+                                    <Form.Control type="text" value={this.state.scope} placeholder="Enter job scope" onChange={this.handleCompanyNameChange} />
                                 </Col>
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>Experience level</Form.Label>
                                     <Form.Control as="select">
                                         <option>Choose experience Level</option>
-                                        <option>Junior</option>
-                                        <option>Senior</option>
+                                        <option value={this.state.experience}>Junior</option>
+                                        <option value={this.state.experience}>Senior</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>
@@ -104,14 +108,14 @@ class CreateJobPage extends Component {
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Amount of freelancers</Form.Label>
-                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter amount of freelancers" onChange={this.handleCompanyCvrChange} />
+                                    <Form.Control type="number" value={this.state.freelancerAmount} placeholder="Enter amount of freelancers" onChange={this.handleCompanyCvrChange} />
                                 </Col>
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>Payment method</Form.Label>
                                     <Form.Control as="select">
                                         <option>Choose monthly/hourly</option>
-                                        <option>Monthly</option>
-                                        <option>Hourly</option>
+                                        <option value={this.state.paidMonthly}>Monthly</option>
+                                        <option value={this.state.paidHourly}>Hourly</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>

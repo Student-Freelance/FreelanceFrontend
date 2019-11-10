@@ -2,8 +2,7 @@ import React from "react";
 import './LoginPage.css';
 import {Tab, Tabs} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
-import FreelancerLoginTab from "./LoginTabs/FreelancerLoginTab/FreelancerLoginTab";
-import EmployerLoginTab from "./LoginTabs/EmployerLoginTab/EmployerLoginTab";
+import LoginTab from "./LoginTabs/LoginTab/LoginTab";
 import EmployerSignupTab from "./SignupTabs/EmployerSignupTab/EmployerSignupTab";
 import FreelancerSignupTab from "./SignupTabs/FreelancerSignupTab/FreelancerSignupTab";
 
@@ -15,15 +14,12 @@ function LoginPage() {
             </Container>
 
             <Container className="LoginCard">
-                <Tabs defaultActiveKey="loginFreelancer" id="uncontrolled-tab-example">
-                    <Tab eventKey="loginFreelancer" title="Freelancer - Login">
-                        <FreelancerLoginTab/>
+                <Tabs defaultActiveKey="loginEmployerAndFreelancer" id="uncontrolled-tab-example">
+                    <Tab eventKey="loginEmployerAndFreelancer" title="Login">
+                        <LoginTab/>
                     </Tab>
                     <Tab eventKey="signupFreelancer" title="Freelancer - Signup">
                         <FreelancerSignupTab/>
-                    </Tab>
-                    <Tab eventKey="loginEmployer" title="Employer- Login">
-                        <EmployerLoginTab/>
                     </Tab>
                     <Tab eventKey="signupEmployer" title="Employer - Signup">
                         <EmployerSignupTab/>

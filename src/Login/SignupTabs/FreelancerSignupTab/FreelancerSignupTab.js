@@ -149,7 +149,7 @@ function showModalError() {
 
 async function performHTTPRequest(email, userName, password, confirmPassword, firstName, lastName) {
     const response = await Axios.post(
-        'https://devops01.eitlab.diplom.dtu.dk/api/User/RegisterStudent', {
+        'https://devops01.eitlab.diplom.dtu.dk/api/Students', {
             email: email,
             userName: userName,
             password: password,

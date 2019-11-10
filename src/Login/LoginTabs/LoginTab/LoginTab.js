@@ -1,11 +1,10 @@
 import React, {Component} from "react";
-import './FreelancerLoginTab.css';
+import './LoginTab.css';
 import {Tab, Tabs, Button, Form, Dropdown} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Axios from "axios";
-import EmployerLoginTab from "../EmployerLoginTab/EmployerLoginTab";
 
-class FreelancerLoginTab extends Component {
+class LoginTab extends Component {
 
     constructor(props) {
         super(props);
@@ -81,7 +80,7 @@ class FreelancerLoginTab extends Component {
 
 async function performHTTPRequest(username, password) {
     const response = await Axios.post(
-        'https://devops01.eitlab.diplom.dtu.dk/api/Login/Login', {
+        'https://devops01.eitlab.diplom.dtu.dk/api/Account/Login', {
             userName: username,
             password: password
         }).then(res => {
@@ -91,4 +90,4 @@ async function performHTTPRequest(username, password) {
     })
 }
 
-export default FreelancerLoginTab;
+export default LoginTab;

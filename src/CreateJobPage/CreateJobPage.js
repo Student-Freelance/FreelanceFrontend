@@ -10,20 +10,96 @@ class CreateJobPage extends Component {
         super(props);
 
         this.state = {
-            userName: "",
-            password: ""
+            companyName: "",
+            title: "",
+            salary: 0,
+            description: "",
+            scope: "",
+            tags: [],
+            freelancerAmount: 0,
+            paidMonthly: false,
+            paidHourly: false,
+            experience: "",
+            start: "",
+            end: ""
         }
     }
 
-    handleUsernameNameChange = (event) => {
+    handleTitleChange = (event) => {
         this.setState({
-            userName: event.target.value
+            title: event.target.value
         })
     }
 
-    handlePasswordChange = (event) => {
+    handleDescriptionChange = (event) => {
         this.setState({
-            password: event.target.value
+            description: event.target.value
+        })
+    }
+
+    handleCompanyNameChange = (event) => {
+        this.setState({
+            companyName: event.target.value
+        })
+    }
+
+    handleJobSaleryChange = (event) => {
+        this.setState({
+            salary: event.target.value
+        })
+    }
+
+    handleLocationChange = (event) => {
+        this.setState({
+            location: event.target.value
+        })
+    }
+
+    handleTagsChange = (event) => {
+        this.setState({
+            tags: event.target.value
+        })
+    }
+
+    handleStartChange = (event) => {
+        this.setState({
+            start: event.target.value
+        })
+    }
+
+    handleEndChange = (event) => {
+        this.setState({
+            end: event.target.value
+        })
+    }
+
+    handleScopeChange = (event) => {
+        this.setState({
+            scope: event.target.value
+        })
+    }
+
+    handleExperienceChange = (event) => {
+        this.setState({
+            experience: event.target.value
+        })
+    }
+
+    handleFreelancerAmountChange = (event) => {
+        this.setState({
+            freelancerAmount: event.target.value
+        })
+    }
+
+    handlePaidMonthlyChange = (event) => {
+        this.setState({
+            paidMonthly: event.target.value
+        })
+    }
+
+    handlePaidHourlyChange = (event) => {
+        this.setState({
+            paidHourly: event.target.value
         })
     }
 
@@ -41,12 +117,12 @@ class CreateJobPage extends Component {
 
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Job title</Form.Label>
-                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job title" onChange={this.handleCompanyNameChange} />
+                                <Form.Control type="text" value={this.state.title} placeholder="Enter job title" onChange={this.handleTitleChange} />
                             </Form.Group>
 
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Summary description</Form.Label>
-                                <Form.Control as="textarea" rows="3" placeholder="Enter job description" />
+                                <Form.Control as="textarea" rows="3" value={this.state.description} placeholder="Enter job description" onChange={this.handleDescriptionChange} />
                             </Form.Group>
 
                             <Form.Row className="CreateJobFormDetailed">
@@ -56,18 +132,18 @@ class CreateJobPage extends Component {
                                 </Col>
                                 <Col>
                                     <Form.Label>Job salery</Form.Label>
-                                    <Form.Control type="number" value={this.state.companyName} placeholder="Enter job salery" onChange={this.handleCompanyNameChange} />
+                                    <Form.Control type="number" value={this.state.salary} placeholder="Enter job salery" onChange={this.handleJobSaleryChange} />
                                 </Col>
                             </Form.Row>
 
                             <Form.Group>
                                 <Form.Label>Job location</Form.Label>
-                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job location" onChange={this.handleCompanyNameChange} />
+                                <Form.Control type="text" value={this.state.location} placeholder="Enter job location" onChange={this.handleLocationChange} />
                             </Form.Group>
 
                             <Form.Group>
                                 <Form.Label>Job tags</Form.Label>
-                                <Form.Control type="text" value={this.state.companyName} placeholder="Enter job tags, being comma seperated," onChange={this.handleCompanyNameChange} />
+                                <Form.Control type="text" value={this.state.tags} placeholder="Enter job tags, being comma seperated," onChange={this.handleTagsChange} />
                             </Form.Group>
 
                         </Form.Group>
@@ -78,25 +154,25 @@ class CreateJobPage extends Component {
                             <Form.Row className="CreateJobFormSeperator">
                                 <Col>
                                     <Form.Label>Job start</Form.Label>
-                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter job start" onChange={this.handleCompanyNameChange} />
+                                    <Form.Control type="text" value={this.state.start} placeholder="Enter job start" onChange={this.handleStartChange} />
                                 </Col>
                                 <Col>
                                     <Form.Label>Job end</Form.Label>
-                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter job end" onChange={this.handleCompanyCvrChange} />
+                                    <Form.Control type="text" value={this.state.end} placeholder="Enter job end" onChange={this.handleEndChange} />
                                 </Col>
                             </Form.Row>
 
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Job scope</Form.Label>
-                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter job scope" onChange={this.handleCompanyNameChange} />
+                                    <Form.Control type="text" value={this.state.scope} placeholder="Enter job scope" onChange={this.handleScopeChange} />
                                 </Col>
-                                <Form.Group as={Col} controlId="formGridState">
+                                <Form.Group as={Col} controlId="formGridState" onChange={this.handleExperienceChange}>
                                     <Form.Label>Experience level</Form.Label>
                                     <Form.Control as="select">
                                         <option>Choose experience Level</option>
-                                        <option>Junior</option>
-                                        <option>Senior</option>
+                                        <option value="junior">Junior</option>
+                                        <option value="senior">Senior</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>
@@ -104,21 +180,21 @@ class CreateJobPage extends Component {
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Amount of freelancers</Form.Label>
-                                    <Form.Control type="number" maxLength={8} value={this.state.companyCVR} placeholder="Enter amount of freelancers" onChange={this.handleCompanyCvrChange} />
+                                    <Form.Control type="number" value={this.state.freelancerAmount} placeholder="Enter amount of freelancers" onChange={this.handleFreelancerAmountChange} />
                                 </Col>
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>Payment method</Form.Label>
                                     <Form.Control as="select">
                                         <option>Choose monthly/hourly</option>
-                                        <option>Monthly</option>
-                                        <option>Hourly</option>
+                                        <option value={this.state.paidMonthly} onChange={this.handlePaidMonthlyChange}>Monthly</option>
+                                        <option value={this.state.paidHourly} onChange={this.handlePaidHourlyChange}>Hourly</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>
 
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName, this.state.userName)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.start, this.state.end)} variant="primary" type="submit" size="lg" block>
                             Submit
                         </Button>
                     </Form>
@@ -128,11 +204,21 @@ class CreateJobPage extends Component {
     }
 }
 
-async function performHTTPRequest(username, password) {
+async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, start, end) {
     const response = await Axios.post(
         'https://devops01.eitlab.diplom.dtu.dk/api/Jobs', {
-            userName: username,
-            password: password
+            companyName: companyName,
+            title: title,
+            salary: salary,
+            description: description,
+            //scope: scope,
+            tags: tags,
+            //freelancerAmount: freelancerAmount,
+            paidMonthly: paidMonthly,
+            paidHourly: paidHourly,
+            experience: experience,
+            start: start,
+            end: end
         }).then(res => {
         console.log(res.data)
     }).catch(error => {

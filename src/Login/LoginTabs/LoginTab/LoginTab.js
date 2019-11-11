@@ -84,7 +84,8 @@ async function performHTTPRequest(username, password) {
             userName: username,
             password: password
         }).then(res => {
-            console.log(res.data)
+            localStorage.setItem('token', res.data.token);
+            console.log(res.data.token)
          }).catch(error => {
             console.log(error)
     })

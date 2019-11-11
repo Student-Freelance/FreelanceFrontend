@@ -6,7 +6,7 @@ import {GoogleLogin} from 'react-google-login';
 import Axios from "axios";
 
 class LoginTab extends Component {
-
+    ClientID = "908937238247-c2fr5ag4d8vi7tcd5m8cssa0pffaiccp.apps.googleusercontent.com";
 
     constructor(props) {
         super(props);
@@ -16,7 +16,7 @@ class LoginTab extends Component {
         }
     }
 
-    googleResponse = (e) => { console.log(e)
+    googleResponse = (response) => { console.log(response)
     };
     onFailure = (error) => {
         alert(error);
@@ -40,7 +40,6 @@ class LoginTab extends Component {
 
 
     render() {
-
         return (
             <div>
                 <Container className="LoginForm">
@@ -70,12 +69,13 @@ class LoginTab extends Component {
                     <Dropdown.Divider/>
                 </Container>
                 <Container>
-                            <GoogleLogin
-                                         clientId= {process.env.GoogleID}
-                                         buttonText="Login"
-                                         onSuccess={this.googleResponse}
-                                         onFailure={this.googleResponse}
-                            />
+                    <GoogleLogin
+                        clientId= {this.ClientID}
+                        buttonText="Login"
+                        onSuccess={this.googleResponse}
+                        onFailure={this.googleResponse}
+                    />
+
                 </Container>
             </div>
         )

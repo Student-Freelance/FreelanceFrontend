@@ -24,10 +24,10 @@ class CreateJobPage extends Component {
             paidHourly: false,
             experience: "",
             freelancers: 0,
-            deadlineDate: "",  //new Date(),
+            deadlineDate: "",
             createdOn: "",
-            startDate: "", //new Date(),
-            endDate: "", //new Date(),
+            startDate: "",
+            endDate: "",
         }
 
         this.handleDelete = this.handleDelete.bind(this);
@@ -106,8 +106,9 @@ class CreateJobPage extends Component {
         })
     }
 
-    /* React-tags onChange handlers */
-
+    /* React-tags onChange handlers
+    https://www.npmjs.com/package/react-tag-input#usage
+    */
     handleDelete(i) {
         const { tags } = this.state;
         this.setState({
@@ -126,7 +127,7 @@ class CreateJobPage extends Component {
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
 
-        // re-render
+        // Re-render
         this.setState({ tags: newTags });
     }
 

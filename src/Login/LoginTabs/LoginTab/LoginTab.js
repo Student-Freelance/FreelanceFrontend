@@ -84,9 +84,9 @@ async function performHTTPRequest(username, password) {
             userName: username,
             password: password
         }).then(res => {
-            console.log(response.result.data)
+            console.log(res.data)
          }).catch(error => {
-            console.log(response.error)
+            console.log(error)
     })
 }
 

@@ -7,7 +7,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import { WithContext as ReactTags } from 'react-tag-input';
-import {forEach} from "react-bootstrap/utils/ElementChildren";
 
 class CreateJobPage extends Component {
 

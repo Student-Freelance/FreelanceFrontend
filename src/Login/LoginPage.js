@@ -8,7 +8,7 @@ import FreelancerSignupTab from "./SignupTabs/FreelancerSignupTab/FreelancerSign
 
 function LoginPage() {
     return (
-        <div>
+        <div className="LoginMargins">
             <Container className="LoginTitle">
                 <h1>Login</h1>
             </Container>

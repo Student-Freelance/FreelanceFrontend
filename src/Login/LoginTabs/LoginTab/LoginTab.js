@@ -1,18 +1,25 @@
 import React, {Component} from "react";
 import './LoginTab.css';
-import {Button, Form, Dropdown} from 'react-bootstrap';
+import {Button, Dropdown, Form, Row} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
+import {GoogleLogin} from 'react-google-login';
 import Axios from "axios";
 
 class LoginTab extends Component {
 
+
     constructor(props) {
         super(props);
-
         this.state = {
             userName: "",
             password: ""
         }
+    }
+
+    googleResponse = (e) => { console.log(e)
+    };
+    onFailure = (error) => {
+        alert(error);
     }
 
     handleUsernameNameChange = (event) => {
@@ -31,23 +38,27 @@ class LoginTab extends Component {
         //this.setState({ showSignupForm: true});
     }
 
+
     render() {
 
-        const loginForm = (
+        return (
             <div>
                 <Container className="LoginForm">
                     <Form>
                         <Form.Group controlId="formBasicUsername">
-                            <Form.Control type="username" value={this.state.username} placeholder="Enter username" onChange={this.handleUsernameNameChange} />
+                            <Form.Control type="username" value={this.state.username} placeholder="Enter username"
+                                          onChange={this.handleUsernameNameChange}/>
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Control type="password" value={this.state.password} placeholder="Enter password" onChange={this.handlePasswordChange} />
+                            <Form.Control type="password" value={this.state.password} placeholder="Enter password"
+                                          onChange={this.handlePasswordChange}/>
                         </Form.Group>
                         <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Remember me?" />
+                            <Form.Check type="checkbox" label="Remember me?"/>
                         </Form.Group>
-                        <Button onClick={() => performHTTPRequest(this.state.userName, this.state.password)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.userName, this.state.password)}
+                                variant="primary" type="submit" size="lg" block>
                             Sign in
                         </Button>
                         <Button onClick={this.showSignupFormPage} variant="secondary" type="submit" size="lg" block>
@@ -56,23 +67,18 @@ class LoginTab extends Component {
                     </Form>
                 </Container>
                 <Container className="LoginDivider">
-                    <Dropdown.Divider />
+                    <Dropdown.Divider/>
                 </Container>
-                <Container className="LoginButtons">
-                    <Button variant="dark" size="lg" block>
-                        Freelancer button 1
-                    </Button>
-                    <Button variant="dark" size="lg" block>
-                        Freelancer button 2
-                    </Button>
-                    <Button variant="dark" size="lg" block>
-                        Freelancer button 3
-                    </Button>
+                <Container>
+                            <GoogleLogin
+                                         clientId= {process.env.GoogleID}
+                                         buttonText="Login"
+                                         onSuccess={this.googleResponse}
+                                         onFailure={this.googleResponse}
+                            />
                 </Container>
             </div>
-        );
-
-        return loginForm
+        )
         /*
         return { this.state.showSignupForm ? signupForm : loginForm };*/
     }
@@ -84,10 +90,10 @@ async function performHTTPRequest(username, password) {
             userName: username,
             password: password
         }).then(res => {
-            localStorage.setItem('token', res.data.token);
-            console.log(res.data.token)
-         }).catch(error => {
-            console.log(error)
+        localStorage.setItem('token', res.data.token);
+        console.log(res.data.token)
+    }).catch(error => {
+        console.log(error)
     })
 }
 

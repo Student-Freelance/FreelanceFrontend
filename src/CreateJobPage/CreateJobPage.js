@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import { WithContext as ReactTags } from 'react-tag-input';
+import {forEach} from "react-bootstrap/utils/ElementChildren";
 
 class CreateJobPage extends Component {
 
@@ -82,12 +83,6 @@ class CreateJobPage extends Component {
         })
     }
 
-    handleTagsChange = (event) => {
-        this.setState({
-            tags: event.target.value
-        })
-    }
-
     handleExperienceChange = (event) => {
         this.setState({
             experience: event.target.value
@@ -136,7 +131,7 @@ class CreateJobPage extends Component {
     }
 
     render() {
-        const { tags, suggestions } = this.state;
+        const { tags } = this.state;
 
         return (
             <div>
@@ -234,7 +229,7 @@ class CreateJobPage extends Component {
 
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, moment().format(),this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, createTagsArray(this.state.tags), this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, moment().format(),this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
                             Submit
                         </Button>
                     </Form>
@@ -242,6 +237,16 @@ class CreateJobPage extends Component {
             </div>
         );
     }
+}
+
+function createTagsArray(tags) {
+    let tagsArray = []
+
+    tags.forEach(value => {
+        tagsArray.push(value["text"]);
+    });
+
+    return tagsArray;
 }
 
 async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, freelancers, deadline, createdOn, start, end) {

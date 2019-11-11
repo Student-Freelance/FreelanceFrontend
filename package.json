@@ -16,6 +16,7 @@
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.2",
+    "react-tag-input": "^6.4.1",
     "serve": "^11.2.0"
   },
   "scripts": {

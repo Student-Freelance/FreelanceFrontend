@@ -21,7 +21,9 @@ class MarketPage extends React.Component {
     }
 
     async getMarketPostsFromAPI() {
-        const response = await Axios.get("https://devops01.eitlab.diplom.dtu.dk/api/Jobs", {headers: {"Authorization": `Bearer "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbSIsImp0aSI6ImYxMTVjNTM2LWY4MjQtNGRjMy1hODViLWM4ODA3MWY3MWIwNCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNjQyMmY5NWYtMzlhMi00ZGI2LTk2ZjUtMWM0MDY2ZGFmYzI3IiwiZXhwIjoxNTczNDk4OTIzLCJpc3MiOiJGcmVlbGFuY2VBcGkiLCJhdWQiOiJGcmVlbGFuY2VBcGkifQ.8jl2e_7qFYMvSWzns1NeUQehCnGCWcG61KKHbOon1yk"`}});
+        const token = localStorage.getItem('token');
+
+        const response = await Axios.get("https://devops01.eitlab.diplom.dtu.dk/api/Jobs", { headers: {"Authorization" : `Bearer ${token}`} });
 
         try {
             this.setState({

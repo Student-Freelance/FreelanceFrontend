@@ -6,6 +6,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
+import Axios from "axios";
 
 class MarketPage extends React.Component{
 
@@ -13,32 +14,9 @@ class MarketPage extends React.Component{
         super(props);
 
         this.state = {
-            jobs: [
-                {
-                    id: 'asd123',
-                    title: 'UX-design',
-                    text: 'Et meget spændende job - dårlig løn',
-                    url: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
-                },
-                {
-                    id: '21dsada',
-                    title: 'Java-udvikler',
-                    text: 'Et meget kedeligt job - god løn',
-                    url: 'https://images.unsplash.com/photo-1517650862521-d580d5348145?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
-                },
-                {
-                    id: 'sd1ds',
-                    title: 'Java-udvikler',
-                    text: 'Et meget kedeligt job - god løn',
-                    url: 'https://images.unsplash.com/photo-1517650862521-d580d5348145?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
-                },
-                {
-                    id: 'sd21l2',
-                    title: 'Java-udvikler',
-                    text: 'Et meget kedeligt job - god løn',
-                    url: 'https://images.unsplash.com/photo-1517650862521-d580d5348145?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'
-                },
-            ]
+            jobs: [],
+            isLoading: true,
+            errors: null
         }
     }
 
@@ -108,8 +86,19 @@ class MarketPage extends React.Component{
             </Container>
         )
     }
-
-
 }
+
+async function getMarketPostsFromAPI() {
+    const response = await Axios.get("https://devops01.eitlab.diplom.dtu.dk/api/Jobs");
+
+    try {
+        this.setState({
+            jobs: response.data
+        });
+    } catch (error) {
+        this.setState({ error, isLoading: false });
+    }
+}
+
 
 export default MarketPage;

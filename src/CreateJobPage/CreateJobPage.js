@@ -3,6 +3,9 @@ import './CreateJobPage.css';
 import {Tab, Tabs, Button, Form, Dropdown, Col} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 
 class CreateJobPage extends Component {
 
@@ -14,15 +17,34 @@ class CreateJobPage extends Component {
             title: "",
             salary: 0,
             description: "",
-            scope: "",
             tags: [],
-            freelancerAmount: 0,
             paidMonthly: false,
             paidHourly: false,
             experience: "",
-            start: "",
-            end: ""
+            freelancers: 0,
+            deadlineDate: "",  //new Date(),
+            createdOn: "",
+            startDate: "", //new Date(),
+            endDate: "", //new Date(),
         }
+    }
+
+    handleStartDateChange = date => {
+        this.setState({
+            startDate: date
+        })
+    }
+
+    handleEndDateChange = date => {
+        this.setState({
+            endDate: date
+        })
+    }
+
+    handleDeadlineDateChange = date => {
+        this.setState({
+            deadlineDate: date
+        })
     }
 
     handleTitleChange = (event) => {
@@ -61,33 +83,15 @@ class CreateJobPage extends Component {
         })
     }
 
-    handleStartChange = (event) => {
-        this.setState({
-            start: event.target.value
-        })
-    }
-
-    handleEndChange = (event) => {
-        this.setState({
-            end: event.target.value
-        })
-    }
-
-    handleScopeChange = (event) => {
-        this.setState({
-            scope: event.target.value
-        })
-    }
-
     handleExperienceChange = (event) => {
         this.setState({
             experience: event.target.value
         })
     }
 
-    handleFreelancerAmountChange = (event) => {
+    handleFreelancersChange = (event) => {
         this.setState({
-            freelancerAmount: event.target.value
+            freelancers: event.target.value
         })
     }
 
@@ -154,19 +158,19 @@ class CreateJobPage extends Component {
                             <Form.Row className="CreateJobFormSeperator">
                                 <Col>
                                     <Form.Label>Job start</Form.Label>
-                                    <Form.Control type="text" value={this.state.start} placeholder="Enter job start" onChange={this.handleStartChange} />
+                                    <DatePicker todayButton="Today" selected={this.state.startDate} onChange={this.handleStartDateChange} placeholderText="Enter start date." showWeekNumbers />
                                 </Col>
                                 <Col>
                                     <Form.Label>Job end</Form.Label>
-                                    <Form.Control type="text" value={this.state.end} placeholder="Enter job end" onChange={this.handleEndChange} />
+                                    <DatePicker todayButton="Today" selected={this.state.endDate} onChange={this.handleEndDateChange} placeholderText="Enter end date." showWeekNumbers />
+                                </Col>
+                                <Col>
+                                    <Form.Label>Deadline</Form.Label>
+                                    <DatePicker todayButton="Today" selected={this.state.deadlineDate} onChange={this.handleDeadlineDateChange} placeholderText="Enter deadline date." showWeekNumbers />
                                 </Col>
                             </Form.Row>
 
                             <Form.Row>
-                                <Col>
-                                    <Form.Label>Job scope</Form.Label>
-                                    <Form.Control type="text" value={this.state.scope} placeholder="Enter job scope" onChange={this.handleScopeChange} />
-                                </Col>
                                 <Form.Group as={Col} controlId="formGridState" onChange={this.handleExperienceChange}>
                                     <Form.Label>Experience level</Form.Label>
                                     <Form.Control as="select">
@@ -180,7 +184,7 @@ class CreateJobPage extends Component {
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Amount of freelancers</Form.Label>
-                                    <Form.Control type="number" value={this.state.freelancerAmount} placeholder="Enter amount of freelancers" onChange={this.handleFreelancerAmountChange} />
+                                    <Form.Control type="number" value={this.state.freelancers} placeholder="Enter amount of freelancers" onChange={this.handleFreelancersChange} />
                                 </Col>
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>Payment method</Form.Label>
@@ -194,7 +198,7 @@ class CreateJobPage extends Component {
 
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.start, this.state.end)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, moment().format(),this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
                             Submit
                         </Button>
                     </Form>
@@ -204,21 +208,23 @@ class CreateJobPage extends Component {
     }
 }
 
-async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, start, end) {
+async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, freelancers, deadline, createdOn, start, end) {
     const response = await Axios.post(
         'https://devops01.eitlab.diplom.dtu.dk/api/Jobs', {
             companyName: companyName,
             title: title,
             salary: salary,
+            location: location,
             description: description,
-            //scope: scope,
             tags: tags,
-            //freelancerAmount: freelancerAmount,
             paidMonthly: paidMonthly,
             paidHourly: paidHourly,
             experience: experience,
-            start: start,
-            end: end
+            freelancers: freelancers,
+            deadline: deadline,
+            createdOn: createdOn,
+            jobStart: start,
+            jobEnd: end
         }).then(res => {
         console.log(res.data)
     }).catch(error => {

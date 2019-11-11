@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import './CreateJobPage.css';
-import {Tab, Tabs, Button, Form, Dropdown, Col} from 'react-bootstrap';
+import {Button, Form, Col} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
+import { WithContext as ReactTags } from 'react-tag-input';
+import {forEach} from "react-bootstrap/utils/ElementChildren";
 
 class CreateJobPage extends Component {
 
@@ -27,6 +29,10 @@ class CreateJobPage extends Component {
             startDate: "", //new Date(),
             endDate: "", //new Date(),
         }
+
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleAddition = this.handleAddition.bind(this);
+        this.handleDrag = this.handleDrag.bind(this);
     }
 
     handleStartDateChange = date => {
@@ -77,12 +83,6 @@ class CreateJobPage extends Component {
         })
     }
 
-    handleTagsChange = (event) => {
-        this.setState({
-            tags: event.target.value
-        })
-    }
-
     handleExperienceChange = (event) => {
         this.setState({
             experience: event.target.value
@@ -106,7 +106,33 @@ class CreateJobPage extends Component {
         })
     }
 
+    /* React-tags onChange handlers */
+
+    handleDelete(i) {
+        const { tags } = this.state;
+        this.setState({
+            tags: tags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAddition(tag) {
+        this.setState(state => ({ tags: [...state.tags, tag] }));
+    }
+
+    handleDrag(tag, currPos, newPos) {
+        const tags = [...this.state.tags];
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        this.setState({ tags: newTags });
+    }
+
     render() {
+        const { tags } = this.state;
+
         return (
             <div>
                 <Container className="CreateJobTitle">
@@ -146,7 +172,13 @@ class CreateJobPage extends Component {
 
                             <Form.Group>
                                 <Form.Label>Job tags</Form.Label>
-                                <Form.Control type="text" value={this.state.tags} placeholder="Enter job tags, being comma seperated," onChange={this.handleTagsChange} />
+                                <div id="app">
+                                <ReactTags classNames={{tags: 'ReactTags__tags', tagInput: 'ReactTags__tagInput', tagInputField: 'ReactTags__tagInputField', selected: 'ReactTags__selected', tag: 'ReactTags__tag', remove: 'ReactTags__remove', suggestions: 'ReactTags__suggestions', activeSuggestion: 'ReactTags__activeSuggestionClass'}}
+                                           inputFieldPosition="inline" tags={tags}
+                                           handleDelete={this.handleDelete}
+                                           handleAddition={this.handleAddition}
+                                           handleDrag={this.handleDrag} />
+                                </div>
                             </Form.Group>
 
                         </Form.Group>
@@ -197,7 +229,7 @@ class CreateJobPage extends Component {
 
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, moment().format(),this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, createTagsArray(this.state.tags), this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, moment().format(),this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
                             Submit
                         </Button>
                     </Form>
@@ -205,6 +237,16 @@ class CreateJobPage extends Component {
             </div>
         );
     }
+}
+
+function createTagsArray(tags) {
+    let tagsArray = []
+
+    tags.forEach(value => {
+        tagsArray.push(value["text"]);
+    });
+
+    return tagsArray;
 }
 
 async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, freelancers, deadline, createdOn, start, end) {

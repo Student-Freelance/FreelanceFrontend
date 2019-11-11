@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import './LoginTab.css';
-import {Tab, Tabs, Button, Form, Dropdown} from 'react-bootstrap';
+import {Button, Form, Dropdown} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import Axios from "axios";
 
@@ -84,9 +84,9 @@ async function performHTTPRequest(username, password) {
             userName: username,
             password: password
         }).then(res => {
-            console.log(res.data)
+            console.log(response.result.data)
          }).catch(error => {
-            console.log(error)
+            console.log(response.error)
     })
 }
 

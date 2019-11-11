@@ -159,11 +159,11 @@ async function performHTTPRequest(email, userName, password, confirmPassword, fi
         })
         .then(res => {
             showModalSuccess()
-            console.log(res.data)
+            console.log(response.result.data)
         })
         .catch(error => {
             showModalError()
-            console.log(error)
+            console.log(response.error)
         })
 }
 

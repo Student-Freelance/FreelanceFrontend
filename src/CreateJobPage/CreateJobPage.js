@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 
 class CreateJobPage extends Component {
 
@@ -197,7 +198,7 @@ class CreateJobPage extends Component {
 
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, this.state.createdOn,this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, moment().format(),this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
                             Submit
                         </Button>
                     </Form>
@@ -222,8 +223,8 @@ async function performHTTPRequest(companyName, title, salary, location, descript
             freelancers: freelancers,
             deadline: deadline,
             createdOn: createdOn,
-            start: start,
-            end: end
+            jobStart: start,
+            jobEnd: end
         }).then(res => {
         console.log(res.data)
     }).catch(error => {

@@ -14,12 +14,13 @@ class CreateJobPage extends Component {
             title: "",
             salary: 0,
             description: "",
-            scope: "",
             tags: [],
-            freelancerAmount: 0,
             paidMonthly: false,
             paidHourly: false,
             experience: "",
+            freelancers: 0,
+            deadline: "",
+            createdOn: "",
             start: "",
             end: ""
         }
@@ -73,21 +74,15 @@ class CreateJobPage extends Component {
         })
     }
 
-    handleScopeChange = (event) => {
-        this.setState({
-            scope: event.target.value
-        })
-    }
-
     handleExperienceChange = (event) => {
         this.setState({
             experience: event.target.value
         })
     }
 
-    handleFreelancerAmountChange = (event) => {
+    handleFreelancersChange = (event) => {
         this.setState({
-            freelancerAmount: event.target.value
+            freelancers: event.target.value
         })
     }
 
@@ -163,10 +158,6 @@ class CreateJobPage extends Component {
                             </Form.Row>
 
                             <Form.Row>
-                                <Col>
-                                    <Form.Label>Job scope</Form.Label>
-                                    <Form.Control type="text" value={this.state.scope} placeholder="Enter job scope" onChange={this.handleScopeChange} />
-                                </Col>
                                 <Form.Group as={Col} controlId="formGridState" onChange={this.handleExperienceChange}>
                                     <Form.Label>Experience level</Form.Label>
                                     <Form.Control as="select">
@@ -180,7 +171,7 @@ class CreateJobPage extends Component {
                             <Form.Row>
                                 <Col>
                                     <Form.Label>Amount of freelancers</Form.Label>
-                                    <Form.Control type="number" value={this.state.freelancerAmount} placeholder="Enter amount of freelancers" onChange={this.handleFreelancerAmountChange} />
+                                    <Form.Control type="number" value={this.state.freelancers} placeholder="Enter amount of freelancers" onChange={this.handleFreelancersChange} />
                                 </Col>
                                 <Form.Group as={Col} controlId="formGridState">
                                     <Form.Label>Payment method</Form.Label>
@@ -194,7 +185,7 @@ class CreateJobPage extends Component {
 
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.start, this.state.end)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, this.state.tags, this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadline, this.state.createdOn,this.state.start, this.state.end)} variant="primary" type="submit" size="lg" block>
                             Submit
                         </Button>
                     </Form>
@@ -204,19 +195,21 @@ class CreateJobPage extends Component {
     }
 }
 
-async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, start, end) {
+async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, freelancers, deadline, createdOn, start, end) {
     const response = await Axios.post(
         'https://devops01.eitlab.diplom.dtu.dk/api/Jobs', {
             companyName: companyName,
             title: title,
             salary: salary,
+            location: location,
             description: description,
-            //scope: scope,
             tags: tags,
-            //freelancerAmount: freelancerAmount,
             paidMonthly: paidMonthly,
             paidHourly: paidHourly,
             experience: experience,
+            freelancers: freelancers,
+            deadline: deadline,
+            createdOn: createdOn,
             start: start,
             end: end
         }).then(res => {

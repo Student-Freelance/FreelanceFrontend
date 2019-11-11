@@ -89,21 +89,20 @@ class CreateJobPage extends Component {
         })
     }
 
+    handlePaidHourlyMonthlyChange = (event) => {
+        this.setState({paidMonthly: false})
+        this.setState({paidHourly: false})
+
+        const chosenPaymentInterval = event.target.value;
+
+        this.setState({
+            [chosenPaymentInterval]: true
+        })
+    }
+
     handleFreelancersChange = (event) => {
         this.setState({
             freelancers: event.target.value
-        })
-    }
-
-    handlePaidMonthlyChange = (event) => {
-        this.setState({
-            paidMonthly: event.target.value
-        })
-    }
-
-    handlePaidHourlyChange = (event) => {
-        this.setState({
-            paidHourly: event.target.value
         })
     }
 
@@ -186,12 +185,12 @@ class CreateJobPage extends Component {
                                     <Form.Label>Amount of freelancers</Form.Label>
                                     <Form.Control type="number" value={this.state.freelancers} placeholder="Enter amount of freelancers" onChange={this.handleFreelancersChange} />
                                 </Col>
-                                <Form.Group as={Col} controlId="formGridState">
+                                <Form.Group as={Col} controlId="formGridState" onChange={this.handlePaidHourlyMonthlyChange}>
                                     <Form.Label>Payment method</Form.Label>
                                     <Form.Control as="select">
                                         <option>Choose monthly/hourly</option>
-                                        <option value={this.state.paidMonthly} onChange={this.handlePaidMonthlyChange}>Monthly</option>
-                                        <option value={this.state.paidHourly} onChange={this.handlePaidHourlyChange}>Hourly</option>
+                                        <option value="paidMonthly">Monthly</option>
+                                        <option value="paidHourly">Hourly</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>

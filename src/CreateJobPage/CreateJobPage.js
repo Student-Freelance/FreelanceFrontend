@@ -267,9 +267,9 @@ async function performHTTPRequest(companyName, title, salary, location, descript
             jobStart: start,
             jobEnd: end
         }).then(res => {
-        console.log(response.result.data)
+        console.log(res.data)
     }).catch(error => {
-        console.log(response.error)
+        console.log(error)
     })
 }
 

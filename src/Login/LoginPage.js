@@ -6,9 +6,10 @@ import LoginTab from "./LoginTabs/LoginTab/LoginTab";
 import EmployerSignupTab from "./SignupTabs/EmployerSignupTab/EmployerSignupTab";
 import FreelancerSignupTab from "./SignupTabs/FreelancerSignupTab/FreelancerSignupTab";
 
+
 function LoginPage() {
     return (
-        <div>
+        <div className="LoginMargins">
             <Container className="LoginTitle">
                 <h1>Login</h1>
             </Container>

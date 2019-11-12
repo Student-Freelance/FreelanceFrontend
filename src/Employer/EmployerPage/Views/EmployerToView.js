@@ -8,10 +8,10 @@ const EmployerToView = (props) => {
     return (
         <div>
             <Card.Title>
-                {employer.name}
+                {employer.companyName}
             </Card.Title>
             <Card.Text>
-                {employer.description}
+                {employer.about}
             </Card.Text>
         </div>
     )

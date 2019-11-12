@@ -118,9 +118,9 @@ async function performHTTPRequest(email, password, confirmPassword, companyName,
             companyName: companyName,
             userName: userName
         }).then(res => {
-            console.log(response.result.data)
+            console.log(res.data)
         }).catch(error => {
-            console.log(response.error)
+            console.log(error)
         })
 }
 

@@ -25,7 +25,7 @@ export default function App() {
                     <Route path={"/createJob"} component={CreateJobPage}/>
                     <Route path={"/detailedjob"} component={DetailedJobPage}/>
                     <Route exact path={"/"} component={LandingPage}/>
-                    <Route path={"/employer"} component={EmployerPage}/>
+                    <Route path={"/employer/:handle"} component={EmployerPage}/>
                     <Route path={"/profilepage"} component={ProfilePage}/>
                     <Route component={PageNotFound}/>
                 </Switch>

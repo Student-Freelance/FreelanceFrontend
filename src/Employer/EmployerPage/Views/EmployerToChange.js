@@ -2,22 +2,22 @@ import {Card} from "react-bootstrap";
 import React from "react";
 
 const EmployerToChange = (props) => {
-    const employerStore = props.employerStore;
-    const employer = props.employerStore.employer;
+    const employer = props.employer;
 
+    // noinspection JSPrimitiveTypeWrapperUsage
     return (
         <div>
             <Card.Title>
                 <input
                     type="text"
-                    placeholder={employer.name}
-                    onChange={e => employerStore.setName(e.target.value)}/>
+                    placeholder={employer.companyName}
+                    onChange={e => employer.companyName = (e.target.value)}/>
             </Card.Title>
             <Card.Text>
                 <input
                     type="text"
-                    placeholder={employer.description}
-                    onChange={e => employerStore.setDescription(e.target.value)}/>
+                    placeholder={employer.about}
+                    onChange={e => employer.about = (e.target.value)}/>
             </Card.Text>
         </div>
     )

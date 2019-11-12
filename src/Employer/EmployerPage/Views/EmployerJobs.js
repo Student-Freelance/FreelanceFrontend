@@ -21,8 +21,6 @@ function EmployerJobs(props) {
             }
         </Card>
     )
-
-
 }
 
 

@@ -6,7 +6,7 @@ export class AxiosAgent {
     private config = {
         headers: {'Authorization': "bearer " + this.token}
     };
-    
+
     public async GetMany(endpoint: string) {
         return await Axios.get(`${this.url}${endpoint}`, this.config);
     }

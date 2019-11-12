@@ -1,18 +1,16 @@
 import React, {Component} from "react";
 import Button from "react-bootstrap/Button";
 import EmployerJobs from "./Views/EmployerJobs";
-// eslint-disable-next-line no-unused-vars
-import EmployerStore from "./Service/EmployerStore";
 import {observer} from "mobx-react";
 import {Card, Container} from "react-bootstrap";
 import EmployerToChange from "./Views/EmployerToChange";
 import EmployerToView from "./Views/EmployerToView";
 
-const employerStore = new EmployerStore();
-
 class EmployerPage extends Component {
     constructor(props) {
         super(props);
+
+        this.employer = props.employer;
 
         // //TODO: skal hentes fra backend (bortset fra editMode)
         this.state = {
@@ -32,12 +30,12 @@ class EmployerPage extends Component {
         return (
             <Container fluid>
                 <Card className="col-sm-11 col-xl-6">
-                    <Card.Img src={employerStore.employer.logo} alt="logo"/>
+                    <Card.Img src={this.employer.logo} alt="logo"/>
                     <Card.Body>
                         {this.state.editMode ?
-                            <EmployerToChange employerStore={employerStore}/> :
-                            <EmployerToView employer={employerStore.employer}/>}
-                        <EmployerJobs jobs={employerStore.employer.jobs}/>
+                            <EmployerToChange employer={this.employer}/> :
+                            <EmployerToView employer={this.employer}/>}
+                        <EmployerJobs jobs={this.employer.jobs}/>
                         <Button color="primary"
                                 onClick={() => this.toggleEdit()}>
                             {this.state.btnText}
@@ -50,4 +48,4 @@ class EmployerPage extends Component {
     }
 }
 
-export default observer(EmployerPage);
+export default EmployerPage;

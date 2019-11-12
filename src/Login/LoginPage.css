@@ -1,0 +1,13 @@
+.LoginTitle {
+    padding-bottom: 30px;
+}
+
+.LoginCard {
+    margin: 0 auto;
+}
+@media screen and (min-width: 1025px) {
+    .LoginMargins{
+        margin-right:35%;
+        margin-left:35%;
+    }
+}

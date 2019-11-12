@@ -12,7 +12,7 @@ import EmployerPage from "./EmployerPage/EmployerPage";
 import ProfilePage from "./Profile/ProfilePage";
 
 
-function App() {
+export default function App() {
     return (
         <div className="App">
             <React.Fragment>
@@ -33,5 +33,3 @@ function App() {
         </div>
     );
 }
-
-export default App;

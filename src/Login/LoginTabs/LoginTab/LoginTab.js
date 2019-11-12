@@ -20,19 +20,19 @@ class LoginTab extends Component {
     };
     onFailure = (error) => {
         alert(error);
-    }
+    };
 
     handleUsernameNameChange = (event) => {
         this.setState({
             userName: event.target.value
         })
-    }
+    };
 
     handlePasswordChange = (event) => {
         this.setState({
             password: event.target.value
         })
-    }
+    };
 
     showSignupFormPage() {
         //this.setState({ showSignupForm: true});
@@ -85,7 +85,7 @@ class LoginTab extends Component {
 }
 
 async function performHTTPRequest(username, password) {
-    const response = await Axios.post(
+    await Axios.post(
         'https://devops01.eitlab.diplom.dtu.dk/api/Account/Login', {
             userName: username,
             password: password
@@ -94,7 +94,7 @@ async function performHTTPRequest(username, password) {
         console.log(res.data.token)
     }).catch(error => {
         console.log(error)
-    })
+    });
 }
 
 export default LoginTab;

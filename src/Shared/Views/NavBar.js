@@ -9,13 +9,13 @@ class NavBar extends Component {
     render() {
         return(
             <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-                <Navbar.Brand href="#home">Freelancer</Navbar.Brand>
+                <Navbar.Brand href="/">Freelancer</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="#/market">Market</Nav.Link>
-                        <Nav.Link href="#/login">Log in</Nav.Link>
+                        <Nav.Link href="/market">Market</Nav.Link>
+                        <Nav.Link href="/login">Log in</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

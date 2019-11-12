@@ -15,7 +15,7 @@ const JobCard = (props) => {
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                    <small className="text-muted">Opdateret for 3 min siden</small>
+                    <small className="text-muted">Created at {props.date}</small>
                 </Card.Footer>
             </Card>
     )

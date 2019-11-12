@@ -2,13 +2,11 @@ import Axios from "axios";
 
 export class AxiosAgent {
     private url: string = 'https://devops01.eitlab.diplom.dtu.dk/api/';
-    private token: string;
+    private token: string = 'test';
     private config = {
         headers: {'Authorization': "bearer " + this.token}
     };
-
-    constructor() {}
-
+    
     public async GetMany(endpoint: string) {
         return await Axios.get(`${this.url}${endpoint}`, this.config);
     }

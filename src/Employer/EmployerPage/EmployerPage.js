@@ -8,12 +8,13 @@ import EmployerToView from "./Views/EmployerToView";
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import EmployerError from "./Views/EmployerError";
 
+const http = new AxiosAgent();
+
 class EmployerPage extends Component {
 
 constructor(props) {
-    super(props);
 
-        this.componentDidMount();
+    super(props);
         // //TODO: skal hentes fra backend (bortset fra editMode)
         this.state = {
             employer: Employer,
@@ -26,8 +27,12 @@ constructor(props) {
     componentDidMount(){
         const {handle} = this.props.match.params;
         try {
-            new AxiosAgent().GetOne("Companies", handle)
-                .then((company) => company.log(company))
+            http.GetOne("Companies", handle)
+                .then((company) => {
+                    console.table(company.data);
+                    this.setState({employer: company.data});
+                    this.setState({isLoaded: true});
+                })
         } catch (e) {
             console.log(e);
         }
@@ -39,6 +44,17 @@ constructor(props) {
         this.setState(state => (
             {editMode: !state.editMode}));
         this.state.editMode ? this.setState({btnText: "edit"}) : this.setState({btnText: "save"});
+
+        if (this.state.editMode){
+            try {
+                http.Put("Companies", this.state.employer)
+                    .then((data) => {
+                        console.log(data);
+                    });
+            } catch (e) {
+                console.log(e);
+            }
+        }
     };
 
     render() {
@@ -46,7 +62,7 @@ constructor(props) {
             <Container fluid>
                 {this.state.isLoaded ?
                 <Card className="col-sm-11 col-xl-6">
-                    <Card.Img src={this.state.employer.logo} alt="logo"/>
+                    <Card.Img src={this.state.employer.logo || 'https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg'} alt="logo"/>
                     <Card.Body>
                         {this.state.editMode ?
                             <EmployerToChange employer={this.state.employer}/> :

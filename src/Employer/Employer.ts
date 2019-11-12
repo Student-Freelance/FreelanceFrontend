@@ -7,7 +7,7 @@ export interface Employer {
     logo: string;
     jobs: Job[];
     website: string;
-    locationModel: LocationModel;
+    location: LocationModel;
     companySize: number;
     vat: number;
     phoneNumber: string;

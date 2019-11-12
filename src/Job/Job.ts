@@ -1,9 +1,11 @@
+import {LocationModel} from "../Shared/LocationModel";
+
 export interface Job {
     id: string;
     companyName: string;
     title: string;
     salary: number;
-    location: string;
+    location: LocationModel;
     description: string;
     tags: string[];
     paidMonthly: boolean;

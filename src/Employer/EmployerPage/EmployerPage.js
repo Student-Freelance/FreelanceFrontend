@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import Button from "react-bootstrap/Button";
 import EmployerJobs from "./Views/EmployerJobs";
-import {observer} from "mobx-react";
 import {Card, Container} from "react-bootstrap";
 import EmployerToChange from "./Views/EmployerToChange";
 import EmployerToView from "./Views/EmployerToView";

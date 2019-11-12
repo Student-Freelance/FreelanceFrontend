@@ -22,7 +22,8 @@
     "react-scripts": "^3.1.2",
     "react-tag-input": "^6.4.1",
     "react-twitter-auth": "0.0.13",
-    "serve": "^11.2.0"
+    "serve": "^11.2.0",
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "dev": "react-scripts start",

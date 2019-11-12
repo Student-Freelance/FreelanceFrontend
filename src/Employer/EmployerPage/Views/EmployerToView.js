@@ -2,7 +2,6 @@ import React from "react";
 import {Card} from "react-bootstrap";
 
 const EmployerToView = (props) => {
-    console.log(props.employer);
     const employer = props.employer;
 
     return (

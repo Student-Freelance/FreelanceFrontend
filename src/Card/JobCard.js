@@ -18,7 +18,7 @@ const JobCard = (props) => {
                     </Card.Text>
                     <Card.Link><Link to="/detailedJob">Visit post</Link></Card.Link>
 
-                    <Route exact path="/detailedJob" component={DetailedJobPage} />
+                    <Route exact path="/detailedJob" render={() => (<DetailedJobPage jobId = {props.jobId} />  )} />
                 </Card.Body>
                 <Card.Footer>
                     <small className="text-muted">Created at {props.date}</small>

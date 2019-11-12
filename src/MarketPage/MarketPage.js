@@ -96,6 +96,7 @@ class MarketPage extends React.Component {
                                         <CardDeck>
                                             <JobCard
                                                 key={id}
+                                                jobId={id}
                                                 title={title}
                                                 text={description}
                                                 url={location}

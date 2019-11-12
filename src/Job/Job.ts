@@ -1,6 +1,6 @@
 import {LocationModel} from "../Shared/LocationModel";
 
-export interface Job {
+export default interface Job {
     id: string;
     companyName: string;
     title: string;

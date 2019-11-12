@@ -1,7 +1,7 @@
-import {Job} from '../Job/Job';
+import Job from '../Job/Job';
 import {LocationModel} from '../Shared/LocationModel';
 
-export interface Employer {
+export default interface Employer {
     companyName: string;
     about: string;
     logo: string;

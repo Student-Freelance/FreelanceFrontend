@@ -7,7 +7,9 @@ class DetailedJobPage extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = {
+            jobId: ""
+        }
     }
 
     render() {
@@ -28,6 +30,7 @@ class DetailedJobPage extends Component {
                             <Col sm={8}>
                                 <Card>
                                     <Card.Body>
+                                        <p>{this.props.title}</p>
                                         <p>Vi har brug for en frisk person der vil få ansvaret for reaktivering
                                             tidligere
                                             kunder. Vi har rigtig gode realtioner og et godt renome hos dem og vi kan

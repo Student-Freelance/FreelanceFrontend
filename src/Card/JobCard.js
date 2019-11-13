@@ -1,5 +1,8 @@
 import React from "react";
 import {Card} from "react-bootstrap";
+import {Link, Route} from "react-router-dom";
+import DetailedJobPage from "../Job/DetailedJobPage/DetailedJobPage";
+
 
 const JobCard = (props) => {
     return (
@@ -13,9 +16,11 @@ const JobCard = (props) => {
                     <Card.Text>
                         {props.text}
                     </Card.Text>
+                    <Card.Link><Link to={'detailedJob/'+props.jobId}>Visit post</Link></Card.Link>
+
                 </Card.Body>
                 <Card.Footer>
-                    <small className="text-muted">Opdateret for 3 min siden</small>
+                    <small className="text-muted">Created at {props.date}</small>
                 </Card.Footer>
             </Card>
     )

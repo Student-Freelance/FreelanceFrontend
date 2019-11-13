@@ -13,16 +13,14 @@ function EmployerJobs(props) {
                 <ul className="list-group list-group-flush">
                     {jobs.map(job =>
                         <li className="list-group-item" key={job.id}
-                            onClick={() => console.log(`User pressed on ${job.name}`)}>
-                            {job.name}
+                            onClick={() => console.log(`User pressed on ${job.title}`)}>
+                            {job.title}
                         </li>
                     )}
                 </ul>
             }
         </Card>
     )
-
-
 }
 
 

@@ -10,6 +10,12 @@ class DetailedJobPage extends Component {
         this.state = {
             jobId: ""
         }
+
+        console.log(props);
+    }
+
+    componentDidMount() {
+        console.log(this.props.match.params);
     }
 
     render() {
@@ -30,7 +36,7 @@ class DetailedJobPage extends Component {
                             <Col sm={8}>
                                 <Card>
                                     <Card.Body>
-                                        <p>{this.props.title}</p>
+                                        <p>{this.props.jobId}</p>
                                         <p>Vi har brug for en frisk person der vil få ansvaret for reaktivering
                                             tidligere
                                             kunder. Vi har rigtig gode realtioner og et godt renome hos dem og vi kan

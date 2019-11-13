@@ -1,135 +1,146 @@
-import React from "react";
+import React, {Component} from "react";
 import './DetailedJobPage.css';
-import Container from "react-bootstrap/Container";
+import {Badge, Card, Container, Col, Row} from 'react-bootstrap';
+import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
+import Job from "../Job";
 
-function DetailedJobPage() {
-    return (
-        <div>
+const http = new AxiosAgent();
+
+class DetailedJobPage extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            job: Job,
+            isLoaded: false
+        };
+    }
+
+    componentDidMount() {
+        const {handle} = this.props.match.params;
+        try {
+            http.GetOne("Jobs", handle)
+                .then((job) => {
+                    console.table(job);
+                    this.setState({job: job.data});
+                    this.setState({isLoaded: true});
+                    console.log(job)
+                })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    render() {
+        return <div>
             <Container className="summary-Job-Description">
-                <div className="container">
-                    <h2>Summary job description (Job title)</h2>
+                <Container>
+                    <h2>{this.state.job.title} - Summary job description (Job title)</h2>
+
+                    {/*<div>
+                        {!this.state.isLoading ? (this.state.job.tags.map(tag => {
+                                return (
+                                    <Badge variant="primary">{tag}</Badge>
+                                );
+                            })
+                        ) : (
+                            <p>Loading...</p>
+                        )}
+                    </div>*/}
 
                     <div>
-                        <span className="badge badge-primary">First tag</span>
-                        <span className="badge badge-primary">Second tag</span>
-                        <span className="badge badge-primary">Third tag</span>
-                        <span className="badge badge-secondary">Fourth tag</span>
+                        <Badge variant="primary">First tag</Badge>
+                        <Badge variant="primary">Second tag</Badge>
+                        <Badge variant="primary">Third tag</Badge>
+                        <Badge variant="secondary">Fourth tag</Badge>
                     </div>
 
-                    <div className="row">
-                        <div className="col-sm-8">
-                            <div className="card">
-                                <div className="card-body">
-                                    <p>Vi har brug for en frisk person der vil få ansvaret for reaktivering tidligere
-                                        kunder. Vi har rigtig gode realtioner og et godt renome hos dem og vi kan
-                                        garanteret nyde godt af at de får lidt fornyet opmærksomhed.</p>
-                                    <br></br>
+                    <Row>
+                        <Col sm={8}>
+                            <Card>
+                                <Card.Body>
+                                    {this.state.job.description}
+                                </Card.Body>
+                            </Card>
+                        </Col>
 
-                                    Dine opgaver vil være at:
-                                    <ul>
-                                        <li>Reaktivere eksisterende kunder hos os (IT-forhandlere) som tidligere har
-                                            handlet, men er stoppet
-                                        </li>
-                                        <li>Få eksisterende mindre kunder til at handler oftere og/ eller mere hos os.
-                                        </li>
-                                        <li>Produkterne er computere og printere</li>
-                                        <li>Personen skal være serviceminded, venlig og energisk</li>
-                                        <li>Det er ikke et krav at vedkommende har detaljeret produktviden, men skal
-                                            vide hvad en computer og printer består af overordnet
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm-4">
-                            <div className="card text-center">
-                                <div className="card-body">
+                        <Col sm={4}>
+                            <Card className="text-center">
+                                <Card.Body>
                                     <div className="aboutJobRightCard">
-                                        <h5 className="card-title">Pr. time</h5>
-                                        <p className="card-text">DKK 400 - 700.</p>
+                                        <Card.Title>Pr. time</Card.Title>
+                                        <Card.Text>DKK {this.state.job.salary}.</Card.Text>
                                     </div>
                                     <div className="aboutJobRightCard">
-                                        <h5 className="card-title">Job start</h5>
-                                        <p className="card-text">Snarest muligt</p>
+                                        <Card.Title>Job start</Card.Title>
+                                        <Card.Text>{this.state.job.jobStart}</Card.Text>
                                     </div>
                                     <div className="aboutJobRightCard">
-                                        <h5 className="card-title">Arbejdssted</h5>
-                                        <p className="card-text"><p>Region: Storkøbenhavn</p><p
-                                            className="text-muted">1456 København K</p></p>
+                                        <Card.Title>Arbejdssted</Card.Title>
+                                        <Card.Text>Region: </Card.Text>
+                                        <Card.Text className="text-muted">1456 København K</Card.Text>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
 
             </Container>
 
             <Container className="detailed-Job-Description">
-                <div className="container">
+                <Container>
                     <h2>Detailed job description</h2>
-                    <div className="row">
-                        <div className="col-sm-8">
-                            <div className="card">
-                                <div className="card-body">
+                    <Row>
+                        <Col sm={8}>
+                            <Card>
+                                <Card.Body>
                                     <table className="table table-borderless">
                                         <tbody>
                                         <tr>
                                             <th scope="row">Job start og slut</th>
-                                            <td>Starter: Snarest muligt
-                                                <br></br>Stopper: 30. sep 2021
+                                            <td>Starter: {this.state.job.jobStart}
+                                                <br></br>Stopper: {this.state.job.jobEnd}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Omfang</th>
-                                            <td>Konsulentopgave på fuld tid</td>
+                                            <th scope="row">Deadline</th>
+                                            <td>{this.state.job.deadline}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Erfaringsniveau</th>
-                                            <td>Junior<br></br>Senior</td>
+                                            <td>{this.state.job.experience}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Antal freelancere</th>
-                                            <td>2</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Afregning</th>
-                                            <td>Mark</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Opslagets friskhed</th>
-                                            <td>Spritny</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Forventet svartid</th>
-                                            <td>Vi svarer løbende<br></br>
-                                                <p className="text-muted">Virksomhedens seneste besked sendt 1 uge
-                                                    siden</p></td>
+                                            <td>{this.state.job.freelancers}</td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Company name</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Company address</h6>
-                                    <p className="card-text">Some quick example text to build on the card title and make
-                                        up the bulk of the card's content.</p>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col sm={4}>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>{this.state.job.companyName}</Card.Title>
+                                    <Card.Subtitle className="mb-2 text-muted">Company address</Card.Subtitle>
+                                    <Card.Text>Some quick example text to build on the card title and make
+                                        up the bulk of the card's content.</Card.Text>
                                     <a href="#" className="card-link">Card link</a>
                                     <a href="#" className="card-link">Another link</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
 
             </Container>
+        </div>;
+    }
 
-        </div>
-    )
+
 }
 
 export default DetailedJobPage;

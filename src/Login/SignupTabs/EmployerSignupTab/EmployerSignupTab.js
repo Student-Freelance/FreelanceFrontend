@@ -2,7 +2,10 @@ import React, {Component} from "react";
 import './EmployerSignupTab.css';
 import {Button, Form, Col} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
+import {AxiosAgent} from "../../../Shared/Web/AxiosAgent";
 import Axios from "axios";
+
+const http = new AxiosAgent();
 
 class EmployerSignupTab extends Component {
     constructor(props) {
@@ -55,7 +58,7 @@ class EmployerSignupTab extends Component {
     }
 
     handleSubmit = event => {
-        performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName)
+        performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName, this.state.companyCVR);
     }
 
     render() {
@@ -99,7 +102,7 @@ class EmployerSignupTab extends Component {
                             </Form.Row>
                         </Form.Group>
 
-                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName, this.state.userName)} variant="primary" type="submit" size="lg" block>
+                        <Button onClick={() => performHTTPRequest(this.state.email, this.state.password, this.state.confirmPassword, this.state.companyName, this.state.userName, this.state.companyCVR)} variant="primary" type="submit" size="lg" block>
                             Sign up
                         </Button>
                     </Form>
@@ -109,19 +112,20 @@ class EmployerSignupTab extends Component {
     }
 }
 
-async function performHTTPRequest(email, password, confirmPassword, companyName, userName) {
+async function performHTTPRequest(email, password, confirmPassword, companyName, userName, companyCVR) {
     const response = await Axios.post(
         'https://devops01.eitlab.diplom.dtu.dk/api/Companies', {
             email: email,
             password: password,
             confirmPassword: confirmPassword,
             companyName: companyName,
-            userName: userName
+            userName: userName,
+            vat: companyCVR
         }).then(res => {
-            console.log(res.data)
-        }).catch(error => {
-            console.log(error)
-        })
+        console.log(res.data)
+    }).catch(error => {
+        console.log(error)
+    })
 }
 
 export default EmployerSignupTab;

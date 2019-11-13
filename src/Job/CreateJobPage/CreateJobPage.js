@@ -21,6 +21,8 @@ class CreateJobPage extends Component {
             end: new Date()
         };
 
+        // this.handleExperienceChange = this.handleExperienceChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
@@ -40,6 +42,17 @@ class CreateJobPage extends Component {
         this.setState(state => ({job: {tags: [...state.job.tags, tag]}}));
     }
 
+    handleInputChange(e) {
+        const target = e.target;
+        const value = target.value;
+        const name = target.name;
+        let job = {...this.state.job};
+        job[name] = value;
+        this.setState({
+            job: job
+        });
+    }
+
     handleDrag(tag, currPos, newPos) {
         const tags = [...this.state.job.tags];
         const newTags = tags.slice();
@@ -52,14 +65,18 @@ class CreateJobPage extends Component {
     }
 
     handleStartDateChange = date => {
+        let job = {...this.state.job};
+        job.jobStart = date;
         this.setState({
-            start: date
+            job: job
         });
     };
 
     handleEndDateChange = date => {
+        let job = {...this.state.job};
+        job.jobEnd = date;
         this.setState({
-            end: date
+            job: job
         });
     };
 
@@ -74,8 +91,9 @@ class CreateJobPage extends Component {
     };
 
     render() {
-        const {tags} = this.state;
-
+        // const {tags} = this.state;
+        const {title, companyName, description, salary, location, tags,
+            paidMonthly, paidHourly, experience, jobStart, jobEnd} = this.state.job;
         return (
             <div>
                 <Container className="CreateJobTitle">
@@ -88,42 +106,42 @@ class CreateJobPage extends Component {
                             <h2>Summary description</h2>
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Job title</Form.Label>
-                                <Form.Control type="text"
-                                              value={this.state.title}
+                                <Form.Control name="title"
+                                              value={title}
                                               placeholder="Enter job title"
-                                              onChange={(e) => this.setState({job: {title: e.target.value}})}/>
+                                              onChange={this.handleInputChange}/>
                             </Form.Group>
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Summary description</Form.Label>
                                 <Form.Control as="textarea" rows="3"
-                                              value={this.state.description}
+                                              name="description"
+                                              value={description}
                                               placeholder="Enter job description"
-                                              onChange={(e) => this.setState({job: {description: e.target.value}})}/>
+                                              onChange={this.handleInputChange}/>
                             </Form.Group>
 
                             <Form.Row className="CreateJobFormDetailed">
                                 <Col>
                                     <Form.Label>Company name</Form.Label>
-                                    <Form.Control type="text"
-                                                  value={this.state.companyName}
+                                    <Form.Control name="companyName"
+                                                  value={companyName}
                                                   placeholder="Enter company name"
-                                                  onChange={(e) => this.setState({job: {companyName: e.target.value}})}/>
+                                                  onChange={this.handleInputChange}/>
                                 </Col>
                                 <Col>
                                     <Form.Label>Job salary</Form.Label>
-                                    <Form.Control type="number"
-                                                  value={this.state.salary}
+                                    <Form.Control name="salary"
+                                                  value={salary}
                                                   placeholder="Enter job salary"
-                                                  onChange={(e) => this.setState({job: {salary: e.target.value}})}/>
+                                                  onChange={this.handleInputChange}/>
                                 </Col>
                             </Form.Row>
-
                             <Form.Group>
                                 <Form.Label>Job location</Form.Label>
-                                <Form.Control type="text"
-                                              value={this.state.location}
+                                <Form.Control name="location"
+                                              value={location}
                                               placeholder="Enter job location"
-                                              onChange={(e) => this.setState({job: {location: e.target.value}})}/>
+                                              onChange={this.handleInputChange}/>
                             </Form.Group>
 
                             <Form.Group>
@@ -169,7 +187,6 @@ class CreateJobPage extends Component {
                                                 onChange={this.handleEndDateChange}/>
                                 </Col>
                             </Form.Row>
-
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridState" onChange={this.handleExperienceChange}>
                                     <Form.Label>Experience level</Form.Label>
@@ -227,30 +244,5 @@ function createTagsArray(tags) {
 
     return tagsArray;
 }
-
-//
-// async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, freelancers, deadline, createdOn, start, end) {
-//     const response = await Axios.post(
-//         'https://devops01.eitlab.diplom.dtu.dk/api/Jobs', {
-//             companyName: companyName,
-//             title: title,
-//             salary: salary,
-//             location: location,
-//             description: description,
-//             tags: tags,
-//             paidMonthly: paidMonthly,
-//             paidHourly: paidHourly,
-//             experience: experience,
-//             freelancers: freelancers,
-//             deadline: deadline,
-//             createdOn: createdOn,
-//             jobStart: start,
-//             jobEnd: end
-//         }).then(res => {
-//         console.log(res.data)
-//     }).catch(error => {
-//         console.log(error)
-//     })
-// }
 
 export default CreateJobPage;

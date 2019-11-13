@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {WithContext as ReactTags} from 'react-tag-input';
 import Job from '../Job'
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
+import Input from "./Input";
 
 const http = new AxiosAgent();
 
@@ -93,7 +94,7 @@ class CreateJobPage extends Component {
     render() {
         // const {tags} = this.state;
         const {title, companyName, description, salary, location, tags,
-            paidMonthly, paidHourly, experience, jobStart, jobEnd} = this.state.job;
+            paidMonthly, paidHourly, experience, jobStart, jobEnd, createdOn, deadLine, freelancers} = this.state.job;
         return (
             <div>
                 <Container className="CreateJobTitle">
@@ -104,13 +105,11 @@ class CreateJobPage extends Component {
                     <Form>
                         <Form.Group className="CreateJobFormSummary">
                             <h2>Summary description</h2>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Job title</Form.Label>
-                                <Form.Control name="title"
-                                              value={title}
-                                              placeholder="Enter job title"
-                                              onChange={this.handleInputChange}/>
-                            </Form.Group>
+                            <Input type={'text'}
+                                    title={'title'}
+                                    value={this.state.job.title}
+                                    placeholder={'Job title'}
+                                    handleChange={this.handleInputChange}/>
                             <Form.Group controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Summary description</Form.Label>
                                 <Form.Control as="textarea" rows="3"
@@ -197,7 +196,21 @@ class CreateJobPage extends Component {
                                     </Form.Control>
                                 </Form.Group>
                             </Form.Row>
-
+                            <input
+                                placeholder="deadline"
+                                name="deadLine"
+                            value={deadLine}
+                            onChange={this.handleInputChange}/>
+                            <input
+                                placeholder="deadline"
+                                name="deadLine"
+                                value={deadLine}
+                                onChange={this.handleInputChange}/>
+                            <input
+                                placeholder="deadline"
+                                name="deadLine"
+                                value={deadLine}
+                                onChange={this.handleInputChange}/>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridState"
                                             onChange={this.handlePaymentChange}>
@@ -226,12 +239,12 @@ class CreateJobPage extends Component {
 
     createJob() {
         console.table(this.state.job);
-        // http.Post("Jobs", {...this.state.job})
-        //     .then((data) => {
-        //         console.log(data);
-        //     }).catch((data) => {
-        //     console.log(data);
-        // })
+        http.Post("Jobs", {...this.state.job})
+            .then((data) => {
+                console.log(data);
+            }).catch((data) => {
+            console.log(data);
+        })
     }
 }
 

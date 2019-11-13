@@ -11,6 +11,9 @@ export default interface Job {
     paidMonthly: boolean;
     paidHourly: boolean;
     experience: string;
+    freelancers: number;
+    deadLine: Date;
+    createdOn: Date;
     jobStart: Date;
     jobEnd: Date;
 }

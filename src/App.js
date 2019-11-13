@@ -23,7 +23,7 @@ export default function App() {
                     <Route path={"/market"} component={MarketPage}/>
                     <Route path={"/login"} component={LoginPage}/>
                     <Route path={"/createJob"} component={CreateJobPage}/>
-                    <Route path={"/detailedjob"} component={DetailedJobPage}/>
+                    <Route path={"/detailedjob/:handle"} component={DetailedJobPage}/>
                     <Route exact path={"/"} component={LandingPage}/>
                     <Route path={"/employer/:handle"} component={EmployerPage}/>
                     <Route path={"/profilepage"} component={ProfilePage}/>

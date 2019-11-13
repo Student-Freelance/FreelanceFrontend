@@ -1,25 +1,33 @@
 import React, {Component} from "react";
 import './LoginTab.css';
-import {Button, Dropdown, Form, Row} from 'react-bootstrap';
+import {Button, Dropdown, Form} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import {GoogleLogin} from 'react-google-login';
 import Axios from "axios";
+import {AxiosAgent} from "../../../Shared/Web/AxiosAgent";
+import {withRouter} from "react-router";
 
 class LoginTab extends Component {
     ClientID = "908937238247-c2fr5ag4d8vi7tcd5m8cssa0pffaiccp.apps.googleusercontent.com";
 
     constructor(props) {
         super(props);
+        this.axiosagent = new AxiosAgent();
+        this.responseGoogle= this.responseGoogle.bind(this);
         this.state = {
             userName: "",
-            password: ""
+            password: "",
         }
     }
 
-    googleResponse = (response) => { console.log(response)
-    };
-    onFailure = (error) => {
-        alert(error);
+    responseGoogle = (response) => {
+        this.axiosagent.Post('Account/GoogleAuth', {access_token: response.Zi.id_token}).then(result => {
+            if (!result.isEmpty) {
+                localStorage.setItem('token', result.data.token);
+                this.props.history.push('/profilepage');
+            }
+        });
+
     };
 
     handleUsernameNameChange = (event) => {
@@ -69,13 +77,12 @@ class LoginTab extends Component {
                     <Dropdown.Divider/>
                 </Container>
                 <Container>
-                    <GoogleLogin
-                        clientId= {this.ClientID}
-                        buttonText="Login"
-                        onSuccess={this.googleResponse}
-                        onFailure={this.googleResponse}
+                    <GoogleLogin autoLoad={false}
+                                 clientId={this.ClientID}
+                                 buttonText="Login"
+                                 onSuccess={this.responseGoogle}
+                                 onFailure={this.responseGoogle}
                     />
-
                 </Container>
             </div>
         )
@@ -97,4 +104,5 @@ async function performHTTPRequest(username, password) {
     });
 }
 
-export default LoginTab;
+
+export default withRouter(LoginTab);

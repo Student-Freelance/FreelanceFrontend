@@ -20,7 +20,7 @@ export class AxiosAgent {
     public async Post(endpoint: string, bodyParameter: any) {
         return await Axios.post(
             `${this.url}${endpoint}`,
-            {key: bodyParameter},
+            bodyParameter,
             this.config,
         )
     }

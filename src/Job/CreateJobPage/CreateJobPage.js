@@ -1,12 +1,16 @@
 import React, {Component} from "react";
 import './CreateJobPage.css';
-import {Button, Form, Col} from 'react-bootstrap';
+import {Button, Form, Col, FormGroup} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
-import Axios from "axios";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment';
-import { WithContext as ReactTags } from 'react-tag-input';
+import {WithContext as ReactTags} from 'react-tag-input';
+import Job from '../Job'
+import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
+import Input from "./Input";
+import Select from "./Select";
+import DatePickerInput from "./DatePickerInput";
+
+const http = new AxiosAgent();
 
 class CreateJobPage extends Component {
 
@@ -14,125 +18,92 @@ class CreateJobPage extends Component {
         super(props);
 
         this.state = {
-            companyName: "",
-            title: "",
-            salary: 0,
-            description: "",
+            job: Job,
             tags: [],
-            paidMonthly: false,
-            paidHourly: false,
-            experience: "",
-            freelancers: 0,
-            deadlineDate: "",
+            jobStart: "",
+            jobEnd: "",
+            deadLine: "",
             createdOn: "",
-            startDate: "",
-            endDate: "",
-        }
+            paymentOptions: ['Hourly', 'Monthly', 'Finish'],
+            experienceOptions: ['Junior', 'Senior', 'Inexperienced']
+    };
 
+        this.handleJobStart = this.handleJobStart.bind(this);
+        this.handleJobEnd = this.handleJobEnd.bind(this);
+        this.handleDeadLine = this.handleDeadLine.bind(this);
+        this.handleCreatedOn = this.handleCreatedOn.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
-        this.handleDrag = this.handleDrag.bind(this);
     }
 
-    handleStartDateChange = date => {
-        this.setState({
-            startDate: date
-        })
-    }
+    handleJobStart = date => {
+        let job = {...this.state.job}
+        job.jobStart = date;
+        this.setState({job: job});
+    };
 
-    handleEndDateChange = date => {
-        this.setState({
-            endDate: date
-        })
-    }
+    handleJobEnd = date => {
+        let job = {...this.state.job}
+        job.jobEnd = date;
+        this.setState({job: job});
+    };
 
-    handleDeadlineDateChange = date => {
-        this.setState({
-            deadlineDate: date
-        })
-    }
-
-    handleTitleChange = (event) => {
-        this.setState({
-            title: event.target.value
-        })
-    }
-
-    handleDescriptionChange = (event) => {
-        this.setState({
-            description: event.target.value
-        })
-    }
-
-    handleCompanyNameChange = (event) => {
-        this.setState({
-            companyName: event.target.value
-        })
-    }
-
-    handleJobSaleryChange = (event) => {
-        this.setState({
-            salary: event.target.value
-        })
-    }
-
-    handleLocationChange = (event) => {
-        this.setState({
-            location: event.target.value
-        })
-    }
-
-    handleExperienceChange = (event) => {
-        this.setState({
-            experience: event.target.value
-        })
-    }
-
-    handlePaidHourlyMonthlyChange = (event) => {
-        this.setState({paidMonthly: false})
-        this.setState({paidHourly: false})
-
-        const chosenPaymentInterval = event.target.value;
-
-        this.setState({
-            [chosenPaymentInterval]: true
-        })
-    }
-
-    handleFreelancersChange = (event) => {
-        this.setState({
-            freelancers: event.target.value
-        })
-    }
-
+    handleDeadLine = date => {
+        let job = {...this.state.job}
+        job.deadLine = date;
+        this.setState({job: job});
+    };
+    handleCreatedOn = date => {
+        let job = {...this.state.job}
+        job.createdOn = date;
+        this.setState({job: job});
+    };
     /* React-tags onChange handlers
     https://www.npmjs.com/package/react-tag-input#usage
     */
     handleDelete(i) {
-        const { tags } = this.state;
+        const {tags} = this.state;
         this.setState({
             tags: tags.filter((tag, index) => index !== i),
         });
     }
 
     handleAddition(tag) {
-        this.setState(state => ({ tags: [...state.tags, tag] }));
+        this.setState(state => ({tags: [...state.tags, tag]}));
     }
 
-    handleDrag(tag, currPos, newPos) {
-        const tags = [...this.state.tags];
-        const newTags = tags.slice();
-
-        newTags.splice(currPos, 1);
-        newTags.splice(newPos, 0, tag);
-
-        // Re-render
-        this.setState({ tags: newTags });
+    handleInputChange(e) {
+        const target = e.target;
+        const value = target.value;
+        const name = target.name;
+        let job = {...this.state.job};
+        job[name] = value;
+        this.setState({
+            job: job
+        });
     }
+
+    //
+    // handleDateChange = date => {
+    //     let job = {...this.state.job};
+    //     job.deadLine = date;
+    //     this.setState({
+    //         job: job
+    //     })
+    // };
+
+    handlePaymentChange = event => {
+        this.setState({job: {paidHourly: false}});
+        this.setState({job: {paidMonthly: false}});
+        if (event.target.value === 'paidMonthly') {
+            this.setState({job: {paidMonthly: true}})
+        } else {
+            this.setState({job: {paidHourly: true}})
+        }
+    };
 
     render() {
-        const { tags } = this.state;
-
         return (
             <div>
                 <Container className="CreateJobTitle">
@@ -140,96 +111,88 @@ class CreateJobPage extends Component {
                 </Container>
 
                 <Container className="CreateJobForm">
-                    <Form onSubmit={this.handleSubmit}>
-                        <Form.Group className="CreateJobFormSummary">
-                            <h2>Summary description</h2>
+                    <Form>
+                        <h2>Summary description</h2>
+                        <Input type={'text'}
+                               title={'title'}
+                               name={'title'}
+                               value={this.state.job.title}
+                               placeholder={'Title'}
+                               handleChange={this.handleInputChange}/>
+                        <Input type={'text'}
+                               title={'description'}
+                               name={'description'}
+                               value={this.state.job.description}
+                               placeholder={'Description'}
+                               handleChange={this.handleInputChange}/>
+                        <Input type={'text'}
+                               title={'companyName'}
+                               name={'companyName'}
+                               value={this.state.job.companyName}
+                               placeholder={"Company name"}
+                               handleChange={this.handleInputChange}/>
+                        <Input type={'number'}
+                               name={'salary'}
+                               title={'salary'}
+                               value={this.state.job.salary}
+                               placeholder="Job salary per unit"
+                               handleChange={this.handleInputChange}/>
+                        <Select title={'Payment plan'}
+                                name={'payment'}
+                                options={this.state.paymentOptions}
+                                value = {this.state.job.payment}
+                                placeholder={'Select payment'}
+                                handleChange = {this.handleInputChange}/>
+                        {/*<DatePickerInput*/}
+                        {/*    title={'Start date'}*/}
+                        {/*    name={'startdate'}*/}
+                        {/*    handleChange={this.handleJobStart}*/}
+                        {/*    handleSelected={this.state.jobStart}*/}
+                        {/*/>*/}
+                        {/*<Input type={'text'}*/}
+                        {/*       title={'street'}*/}
+                        {/*       name={'street'}*/}
+                        {/*       value={this.state.job.location.street}*/}
+                        {/*       placeholder={'street'}*/}
+                        {/*       handleChange={this.handleInputChange}/>*/}
 
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Job title</Form.Label>
-                                <Form.Control type="text" value={this.state.title} placeholder="Enter job title" onChange={this.handleTitleChange} />
-                            </Form.Group>
+                        <Form.Label>Job tags</Form.Label>
+                        <div id="app">
+                            <ReactTags classNames={{
+                                tags: 'ReactTags__tags',
+                                tagInput: 'ReactTags__tagInput',
+                                tagInputField: 'ReactTags__tagInputField',
+                                selected: 'ReactTags__selected',
+                                tag: 'ReactTags__tag',
+                                remove: 'ReactTags__remove',
+                                suggestions: 'ReactTags__suggestions',
+                                activeSuggestion: 'ReactTags__activeSuggestionClass'
+                            }}
+                                       tags={this.state.tags}
+                                       // inputFieldPosition="inline" tags={tags}
+                                       handleDelete={this.handleDelete}
+                                       handleAddition={this.handleAddition}/>
+                        </div>
 
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Summary description</Form.Label>
-                                <Form.Control as="textarea" rows="3" value={this.state.description} placeholder="Enter job description" onChange={this.handleDescriptionChange} />
-                            </Form.Group>
 
-                            <Form.Row className="CreateJobFormDetailed">
-                                <Col>
-                                    <Form.Label>Company name</Form.Label>
-                                    <Form.Control type="text" value={this.state.companyName} placeholder="Enter company name" onChange={this.handleCompanyNameChange} />
-                                </Col>
-                                <Col>
-                                    <Form.Label>Job salery</Form.Label>
-                                    <Form.Control type="number" value={this.state.salary} placeholder="Enter job salery" onChange={this.handleJobSaleryChange} />
-                                </Col>
-                            </Form.Row>
+                        <h2>Detailed description</h2>
 
-                            <Form.Group>
-                                <Form.Label>Job location</Form.Label>
-                                <Form.Control type="text" value={this.state.location} placeholder="Enter job location" onChange={this.handleLocationChange} />
-                            </Form.Group>
-
-                            <Form.Group>
-                                <Form.Label>Job tags</Form.Label>
-                                <div id="app">
-                                <ReactTags classNames={{tags: 'ReactTags__tags', tagInput: 'ReactTags__tagInput', tagInputField: 'ReactTags__tagInputField', selected: 'ReactTags__selected', tag: 'ReactTags__tag', remove: 'ReactTags__remove', suggestions: 'ReactTags__suggestions', activeSuggestion: 'ReactTags__activeSuggestionClass'}}
-                                           inputFieldPosition="inline" tags={tags}
-                                           handleDelete={this.handleDelete}
-                                           handleAddition={this.handleAddition}
-                                           handleDrag={this.handleDrag} />
-                                </div>
-                            </Form.Group>
-
-                        </Form.Group>
-
-                        <Form.Group className="CreateJobFormDetailed">
-                            <h2>Detailed description</h2>
-
-                            <Form.Row className="CreateJobFormSeperator">
-                                <Col>
-                                    <Form.Label>Job start</Form.Label>
-                                    <DatePicker todayButton="Today" selected={this.state.startDate} onChange={this.handleStartDateChange} placeholderText="Enter start date." showWeekNumbers />
-                                </Col>
-                                <Col>
-                                    <Form.Label>Job end</Form.Label>
-                                    <DatePicker todayButton="Today" selected={this.state.endDate} onChange={this.handleEndDateChange} placeholderText="Enter end date." showWeekNumbers />
-                                </Col>
-                                <Col>
-                                    <Form.Label>Deadline</Form.Label>
-                                    <DatePicker todayButton="Today" selected={this.state.deadlineDate} onChange={this.handleDeadlineDateChange} placeholderText="Enter deadline date." showWeekNumbers />
-                                </Col>
-                            </Form.Row>
-
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formGridState" onChange={this.handleExperienceChange}>
-                                    <Form.Label>Experience level</Form.Label>
-                                    <Form.Control as="select">
-                                        <option>Choose experience Level</option>
-                                        <option value="junior">Junior</option>
-                                        <option value="senior">Senior</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
-
-                            <Form.Row>
-                                <Col>
-                                    <Form.Label>Amount of freelancers</Form.Label>
-                                    <Form.Control type="number" value={this.state.freelancers} placeholder="Enter amount of freelancers" onChange={this.handleFreelancersChange} />
-                                </Col>
-                                <Form.Group as={Col} controlId="formGridState" onChange={this.handlePaidHourlyMonthlyChange}>
-                                    <Form.Label>Payment method</Form.Label>
-                                    <Form.Control as="select">
-                                        <option>Choose monthly/hourly</option>
-                                        <option value="paidMonthly">Monthly</option>
-                                        <option value="paidHourly">Hourly</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
-
-                        </Form.Group>
-
-                        <Button onClick={() => performHTTPRequest(this.state.companyName, this.state.title, this.state.salary, this.state.location, this.state.description, createTagsArray(this.state.tags), this.state.paidMonthly, this.state.paidHourly, this.state.experience, this.state.freelancers, this.state.deadlineDate, moment().format(),this.state.startDate, this.state.endDate)} variant="primary" type="submit" size="lg" block>
+                        <Select title={'Experience'}
+                                name={'experience'}
+                                options={this.state.experienceOptions}
+                                value = {this.state.job.experience}
+                                placeholder={'Select experience'}
+                                handleChange = {this.handleInputChange}/>
+                        <Input type={'number'}
+                               name={"freelancers"}
+                               title={'Freelancers'}
+                               placeholder="Amount of freelancers"
+                               value={this.state.job.freelancers}
+                               handleChange={this.handleInputChange}/>
+                        <Button variant="primary"
+                                size="lg"
+                                block
+                                onClick={this.createJob.bind(this)}>
                             Submit
                         </Button>
                     </Form>
@@ -237,40 +200,23 @@ class CreateJobPage extends Component {
             </div>
         );
     }
+
+    createJob() {
+        let job = {...this.state.job};
+        job.tags = this.mapTags(this.state.tags);
+
+        console.table(job);
+        // http.Post("Jobs", {...this.state.job})
+        //     .then((data) => {
+        //         console.log(data);
+        //     }).catch((data) => {
+        //     console.log(data);
+        // })
+    }
+
+    mapTags(tags) {
+        const tagArr = tags.map(tag => tag.text);
+        return tagArr;
+    }
 }
-
-function createTagsArray(tags) {
-    let tagsArray = []
-
-    tags.forEach(value => {
-        tagsArray.push(value["text"]);
-    });
-
-    return tagsArray;
-}
-
-async function performHTTPRequest(companyName, title, salary, location, description, tags, paidMonthly, paidHourly, experience, freelancers, deadline, createdOn, start, end) {
-    const response = await Axios.post(
-        'https://devops01.eitlab.diplom.dtu.dk/api/Jobs', {
-            companyName: companyName,
-            title: title,
-            salary: salary,
-            location: location,
-            description: description,
-            tags: tags,
-            paidMonthly: paidMonthly,
-            paidHourly: paidHourly,
-            experience: experience,
-            freelancers: freelancers,
-            deadline: deadline,
-            createdOn: createdOn,
-            jobStart: start,
-            jobEnd: end
-        }).then(res => {
-        console.log(res.data)
-    }).catch(error => {
-        console.log(error)
-    })
-}
-
 export default CreateJobPage;

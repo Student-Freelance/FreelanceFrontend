@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import './CreateJobPage.css';
-import {Button, Form, Col} from 'react-bootstrap';
+import {Button, Form, Col, FormGroup} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {WithContext as ReactTags} from 'react-tag-input';
 import Job from '../Job'
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import Input from "./Input";
 import Select from "./Select";
+import DatePickerInput from "./DatePickerInput";
 
 const http = new AxiosAgent();
 
@@ -20,15 +20,45 @@ class CreateJobPage extends Component {
         this.state = {
             job: Job,
             tags: [],
+            jobStart: "",
+            jobEnd: "",
+            deadLine: "",
+            createdOn: "",
             paymentOptions: ['Hourly', 'Monthly', 'Finish'],
             experienceOptions: ['Junior', 'Senior', 'Inexperienced']
     };
 
+        this.handleJobStart = this.handleJobStart.bind(this);
+        this.handleJobEnd = this.handleJobEnd.bind(this);
+        this.handleDeadLine = this.handleDeadLine.bind(this);
+        this.handleCreatedOn = this.handleCreatedOn.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
     }
 
+    handleJobStart = date => {
+        let job = {...this.state.job}
+        job.jobStart = date;
+        this.setState({job: job});
+    };
+
+    handleJobEnd = date => {
+        let job = {...this.state.job}
+        job.jobEnd = date;
+        this.setState({job: job});
+    };
+
+    handleDeadLine = date => {
+        let job = {...this.state.job}
+        job.deadLine = date;
+        this.setState({job: job});
+    };
+    handleCreatedOn = date => {
+        let job = {...this.state.job}
+        job.createdOn = date;
+        this.setState({job: job});
+    };
     /* React-tags onChange handlers
     https://www.npmjs.com/package/react-tag-input#usage
     */
@@ -113,7 +143,12 @@ class CreateJobPage extends Component {
                                 value = {this.state.job.payment}
                                 placeholder={'Select payment'}
                                 handleChange = {this.handleInputChange}/>
-
+                        {/*<DatePickerInput*/}
+                        {/*    title={'Start date'}*/}
+                        {/*    name={'startdate'}*/}
+                        {/*    handleChange={this.handleJobStart}*/}
+                        {/*    handleSelected={this.state.jobStart}*/}
+                        {/*/>*/}
                         {/*<Input type={'text'}*/}
                         {/*       title={'street'}*/}
                         {/*       name={'street'}*/}

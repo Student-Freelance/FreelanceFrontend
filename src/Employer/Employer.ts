@@ -1,5 +1,5 @@
 import Job from '../Job/Job';
-import {LocationModel} from '../Shared/LocationModel';
+import LocationModel from '../Shared/LocationModel';
 
 export default interface Employer {
     companyName: string;

@@ -1,4 +1,4 @@
-import {LocationModel} from "../Shared/LocationModel";
+import LocationModel from "../Shared/LocationModel";
 
 export default interface Job {
     id: string;
@@ -8,8 +8,7 @@ export default interface Job {
     location: LocationModel;
     description: string;
     tags: string[];
-    paidMonthly: boolean;
-    paidHourly: boolean;
+    payment: string;
     experience: string;
     freelancers: number;
     deadLine: Date;

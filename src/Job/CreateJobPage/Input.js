@@ -1,5 +1,5 @@
 import React from "react";
-import {FormGroup, FormLabel} from "react-bootstrap";
+import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
 
 
 const Input = (props) => {
@@ -8,7 +8,7 @@ const Input = (props) => {
             <FormLabel htmlFor={props.name}>
                 {props.title}
             </FormLabel>
-        <input
+        <FormControl
             className="form-input"
             id={props.name}
             name={props.name}

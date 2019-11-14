@@ -8,6 +8,7 @@ import {WithContext as ReactTags} from 'react-tag-input';
 import Job from '../Job'
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import Input from "./Input";
+import Select from "./Select";
 
 const http = new AxiosAgent();
 
@@ -18,15 +19,14 @@ class CreateJobPage extends Component {
 
         this.state = {
             job: Job,
-            start: new Date(),
-            end: new Date()
-        };
+            tags: [],
+            paymentOptions: ['Hourly', 'Monthly', 'Finish'],
+            experienceOptions: ['Junior', 'Senior', 'Inexperienced']
+    };
 
-        // this.handleExperienceChange = this.handleExperienceChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
-        this.handleDrag = this.handleDrag.bind(this);
     }
 
     /* React-tags onChange handlers
@@ -40,7 +40,7 @@ class CreateJobPage extends Component {
     }
 
     handleAddition(tag) {
-        this.setState(state => ({job: {tags: [...state.job.tags, tag]}}));
+        this.setState(state => ({tags: [...state.tags, tag]}));
     }
 
     handleInputChange(e) {
@@ -54,32 +54,14 @@ class CreateJobPage extends Component {
         });
     }
 
-    handleDrag(tag, currPos, newPos) {
-        const tags = [...this.state.job.tags];
-        const newTags = tags.slice();
-
-        newTags.splice(currPos, 1);
-        newTags.splice(newPos, 0, tag);
-
-        // Re-render
-        this.setState({job: {tags: newTags}});
-    }
-
-    handleStartDateChange = date => {
-        let job = {...this.state.job};
-        job.jobStart = date;
-        this.setState({
-            job: job
-        });
-    };
-
-    handleEndDateChange = date => {
-        let job = {...this.state.job};
-        job.jobEnd = date;
-        this.setState({
-            job: job
-        });
-    };
+    //
+    // handleDateChange = date => {
+    //     let job = {...this.state.job};
+    //     job.deadLine = date;
+    //     this.setState({
+    //         job: job
+    //     })
+    // };
 
     handlePaymentChange = event => {
         this.setState({job: {paidHourly: false}});
@@ -92,9 +74,6 @@ class CreateJobPage extends Component {
     };
 
     render() {
-        // const {tags} = this.state;
-        const {title, companyName, description, salary, location, tags,
-            paidMonthly, paidHourly, experience, jobStart, jobEnd, createdOn, deadLine, freelancers} = this.state.job;
         return (
             <div>
                 <Container className="CreateJobTitle">
@@ -103,128 +82,78 @@ class CreateJobPage extends Component {
 
                 <Container className="CreateJobForm">
                     <Form>
-                        <Form.Group className="CreateJobFormSummary">
-                            <h2>Summary description</h2>
-                            <Input type={'text'}
-                                    title={'title'}
-                                    value={this.state.job.title}
-                                    placeholder={'Job title'}
-                                    handleChange={this.handleInputChange}/>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Summary description</Form.Label>
-                                <Form.Control as="textarea" rows="3"
-                                              name="description"
-                                              value={description}
-                                              placeholder="Enter job description"
-                                              onChange={this.handleInputChange}/>
-                            </Form.Group>
+                        <h2>Summary description</h2>
+                        <Input type={'text'}
+                               title={'title'}
+                               name={'title'}
+                               value={this.state.job.title}
+                               placeholder={'Title'}
+                               handleChange={this.handleInputChange}/>
+                        <Input type={'text'}
+                               title={'description'}
+                               name={'description'}
+                               value={this.state.job.description}
+                               placeholder={'Description'}
+                               handleChange={this.handleInputChange}/>
+                        <Input type={'text'}
+                               title={'companyName'}
+                               name={'companyName'}
+                               value={this.state.job.companyName}
+                               placeholder={"Company name"}
+                               handleChange={this.handleInputChange}/>
+                        <Input type={'number'}
+                               name={'salary'}
+                               title={'salary'}
+                               value={this.state.job.salary}
+                               placeholder="Job salary per unit"
+                               handleChange={this.handleInputChange}/>
+                        <Select title={'Payment plan'}
+                                name={'payment'}
+                                options={this.state.paymentOptions}
+                                value = {this.state.job.payment}
+                                placeholder={'Select payment'}
+                                handleChange = {this.handleInputChange}/>
 
-                            <Form.Row className="CreateJobFormDetailed">
-                                <Col>
-                                    <Form.Label>Company name</Form.Label>
-                                    <Form.Control name="companyName"
-                                                  value={companyName}
-                                                  placeholder="Enter company name"
-                                                  onChange={this.handleInputChange}/>
-                                </Col>
-                                <Col>
-                                    <Form.Label>Job salary</Form.Label>
-                                    <Form.Control name="salary"
-                                                  value={salary}
-                                                  placeholder="Enter job salary"
-                                                  onChange={this.handleInputChange}/>
-                                </Col>
-                            </Form.Row>
-                            <Form.Group>
-                                <Form.Label>Job location</Form.Label>
-                                <Form.Control name="location"
-                                              value={location}
-                                              placeholder="Enter job location"
-                                              onChange={this.handleInputChange}/>
-                            </Form.Group>
+                        {/*<Input type={'text'}*/}
+                        {/*       title={'street'}*/}
+                        {/*       name={'street'}*/}
+                        {/*       value={this.state.job.location.street}*/}
+                        {/*       placeholder={'street'}*/}
+                        {/*       handleChange={this.handleInputChange}/>*/}
 
-                            <Form.Group>
-                                <Form.Label>Job tags</Form.Label>
-                                <div id="app">
-                                    <ReactTags classNames={{
-                                        tags: 'ReactTags__tags',
-                                        tagInput: 'ReactTags__tagInput',
-                                        tagInputField: 'ReactTags__tagInputField',
-                                        selected: 'ReactTags__selected',
-                                        tag: 'ReactTags__tag',
-                                        remove: 'ReactTags__remove',
-                                        suggestions: 'ReactTags__suggestions',
-                                        activeSuggestion: 'ReactTags__activeSuggestionClass'
-                                    }}
-                                               inputFieldPosition="inline" tags={tags}
-                                               handleDelete={this.handleDelete}
-                                               handleAddition={this.handleAddition}
-                                               handleDrag={this.handleDrag}/>
-                                </div>
-                            </Form.Group>
+                        <Form.Label>Job tags</Form.Label>
+                        <div id="app">
+                            <ReactTags classNames={{
+                                tags: 'ReactTags__tags',
+                                tagInput: 'ReactTags__tagInput',
+                                tagInputField: 'ReactTags__tagInputField',
+                                selected: 'ReactTags__selected',
+                                tag: 'ReactTags__tag',
+                                remove: 'ReactTags__remove',
+                                suggestions: 'ReactTags__suggestions',
+                                activeSuggestion: 'ReactTags__activeSuggestionClass'
+                            }}
+                                       tags={this.state.tags}
+                                       // inputFieldPosition="inline" tags={tags}
+                                       handleDelete={this.handleDelete}
+                                       handleAddition={this.handleAddition}/>
+                        </div>
 
-                        </Form.Group>
 
-                        <Form.Group className="CreateJobFormDetailed">
-                            <h2>Detailed description</h2>
+                        <h2>Detailed description</h2>
 
-                            <Form.Row className="CreateJobFormSeperator">
-                                <Col>
-                                    <Form.Label>Job start</Form.Label>
-                                    <DatePicker todayButton="Today"
-                                                placeholderText="Enter start date."
-                                                showWeekNumbers
-                                                selected={this.state.start}
-                                                onChange={this.handleStartDateChange}/>
-                                </Col>
-                                <Col>
-                                    <Form.Label>Job end</Form.Label>
-                                    <DatePicker todayButton="Today"
-                                                placeholderText="Enter end date."
-                                                showWeekNumbers
-                                                selected={this.state.end}
-                                                onChange={this.handleEndDateChange}/>
-                                </Col>
-                            </Form.Row>
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formGridState" onChange={this.handleExperienceChange}>
-                                    <Form.Label>Experience level</Form.Label>
-                                    <Form.Control as="select">
-                                        <option>Choose experience Level</option>
-                                        <option value="junior">Junior</option>
-                                        <option value="senior">Senior</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
-                            <input
-                                placeholder="deadline"
-                                name="deadLine"
-                            value={deadLine}
-                            onChange={this.handleInputChange}/>
-                            <input
-                                placeholder="deadline"
-                                name="deadLine"
-                                value={deadLine}
-                                onChange={this.handleInputChange}/>
-                            <input
-                                placeholder="deadline"
-                                name="deadLine"
-                                value={deadLine}
-                                onChange={this.handleInputChange}/>
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="formGridState"
-                                            onChange={this.handlePaymentChange}>
-                                    <Form.Label>Payment method</Form.Label>
-                                    <Form.Control as="select">
-                                        <option>Choose monthly/hourly</option>
-                                        <option value="paidMonthly">Monthly</option>
-                                        <option value="paidHourly">Hourly</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
-
-                        </Form.Group>
-
+                        <Select title={'Experience'}
+                                name={'experience'}
+                                options={this.state.experienceOptions}
+                                value = {this.state.job.experience}
+                                placeholder={'Select experience'}
+                                handleChange = {this.handleInputChange}/>
+                        <Input type={'number'}
+                               name={"freelancers"}
+                               title={'Freelancers'}
+                               placeholder="Amount of freelancers"
+                               value={this.state.job.freelancers}
+                               handleChange={this.handleInputChange}/>
                         <Button variant="primary"
                                 size="lg"
                                 block
@@ -238,24 +167,21 @@ class CreateJobPage extends Component {
     }
 
     createJob() {
-        console.table(this.state.job);
-        http.Post("Jobs", {...this.state.job})
-            .then((data) => {
-                console.log(data);
-            }).catch((data) => {
-            console.log(data);
-        })
+        let job = {...this.state.job};
+        job.tags = this.mapTags(this.state.tags);
+
+        console.table(job);
+        // http.Post("Jobs", {...this.state.job})
+        //     .then((data) => {
+        //         console.log(data);
+        //     }).catch((data) => {
+        //     console.log(data);
+        // })
+    }
+
+    mapTags(tags) {
+        const tagArr = tags.map(tag => tag.text);
+        return tagArr;
     }
 }
-
-function createTagsArray(tags) {
-    let tagsArray = []
-
-    tags.forEach(value => {
-        tagsArray.push(value["text"]);
-    });
-
-    return tagsArray;
-}
-
 export default CreateJobPage;

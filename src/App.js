@@ -1,35 +1,46 @@
-import React from 'react';
-import './App.css';
-import {Route, Switch} from "react-router-dom";
-import LandingPage from "./LandingPage/LandingPage";
-import MarketPage from "./MarketPage/MarketPage";
-import LoginPage from "./Login/LoginPage";
-import PageNotFound from "./InvalidPage/PageNotFound";
-import NavBar from "./Shared/Views/NavBar"
-import ProfilePage from "./Profile/ProfilePage";
-import DetailedJobPage from "./Job/DetailedJobPage/DetailedJobPage";
-import CreateJobPage from "./Job/CreateJobPage/CreateJobPage";
-import EmployerPage from "./Employer/EmployerPage/EmployerPage";
+import React from 'react'
+import LoginPage from "./NotAuthenticated/LoginPage";
+import Loading from "./Shared/Loading";
+import Provider from 'react-auth-guard'
+import Authenticated from "./Authenticated/Authenticated";
+import {AxiosAgent} from "./Shared/Web/AxiosAgent";
+import {useHistory} from "react-router-dom"
 
 
-export default function App() {
+const fetchUser = ({token}) => new Promise((resolve, reject) => {
+    new AxiosAgent(token).GetMany('Account')
+        .then(result => {
+            localStorage.setItem('User', JSON.stringify(result.data));
+            return resolve()
+        })
+        .catch(error => {
+            console.log(error);
+            return reject()
+        });
+});
+
+const App = () => {
+    let history = useHistory();
     return (
-        <div className="App">
-            <React.Fragment>
-                <NavBar/>
-            </React.Fragment>
-            <div>
-                <Switch>
-                    <Route path={"/market"} component={MarketPage}/>
-                    <Route path={"/login"} component={LoginPage}/>
-                    <Route path={"/createJob"} component={CreateJobPage}/>
-                    <Route path={"/detailedjob/:handle"} component={DetailedJobPage}/>
-                    <Route exact path={"/"} component={LandingPage}/>
-                    <Route path={"/employer/:handle"} component={EmployerPage}/>
-                    <Route path={"/profilepage"} component={ProfilePage}/>
-                    <Route component={PageNotFound}/>
-                </Switch>
-            </div>
-        </div>
+        <Provider
+            fetchUser={fetchUser}
+            onLogout={() => {
+                history.push("/");
+                localStorage.clear();
+                console.log("Logged out")
+            }}
+            onLoginFail={() => console.log("Failed to log in")}
+        >
+            {({authenticating, authenticated}) => (
+                <Loading isLoading={authenticating}>
+                    {
+                        authenticated
+                            ? <Authenticated/>
+                            : <LoginPage/>
+                    }
+                </Loading>
+            )}
+        </Provider>
     );
-}
+};
+export default App

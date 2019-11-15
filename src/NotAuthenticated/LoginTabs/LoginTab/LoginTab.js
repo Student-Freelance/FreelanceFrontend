@@ -2,18 +2,19 @@ import React, {Component} from "react";
 import './LoginTab.css';
 import {Button, Dropdown, Form} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
-import {GoogleLogin} from 'react-google-login';
-import Axios from "axios";
 import {AxiosAgent} from "../../../Shared/Web/AxiosAgent";
-import {withRouter} from "react-router-dom";
+import GoogleLogin from "react-google-login";
+import {withAuth} from "react-auth-guard";
 
 class LoginTab extends Component {
     ClientID = "908937238247-c2fr5ag4d8vi7tcd5m8cssa0pffaiccp.apps.googleusercontent.com";
 
     constructor(props) {
         super(props);
+        this.auth = props.auth;
         this.axiosagent = new AxiosAgent();
         this.responseGoogle = this.responseGoogle.bind(this);
+
         this.state = {
             userName: "",
             password: ""
@@ -23,13 +24,26 @@ class LoginTab extends Component {
     responseGoogle = (response) => {
         this.axiosagent.Post('Account/GoogleAuth', {access_token: response.Zi.id_token}).then(result => {
             if (!result.isEmpty) {
-                localStorage.setItem('token', result.data.token);
-                this.props.history.push('/landingpage');
+                this.auth.updateToken(result.data.token)
             }
         });
 
     };
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.axiosagent.Post("Account/Login", {
+            userName: this.state.userName,
+            password: this.state.password
+        }).then(result => {
+            this.auth.updateToken(result.data.token)
 
+
+        }).catch(error => {
+                console.log(error)
+
+            }
+        )
+    };
     handleUsernameNameChange = (event) => {
         this.setState({
             userName: event.target.value
@@ -41,10 +55,6 @@ class LoginTab extends Component {
             password: event.target.value
         })
     };
-
-    showSignupFormPage() {
-        //this.setState({ showSignupForm: true});
-    }
 
 
     render() {
@@ -64,12 +74,9 @@ class LoginTab extends Component {
                         <Form.Group controlId="formBasicCheckbox">
                             <Form.Check type="checkbox" label="Remember me?"/>
                         </Form.Group>
-                        <Button onClick={() => performHTTPRequest(this.state.userName, this.state.password)}
+                        <Button onClick={(e) => this.handleSubmit(e)}
                                 variant="primary" type="submit" size="lg" block>
                             Sign in
-                        </Button>
-                        <Button onClick={this.showSignupFormPage} variant="secondary" type="submit" size="lg" block>
-                            Sign up
                         </Button>
                     </Form>
                 </Container>
@@ -89,17 +96,4 @@ class LoginTab extends Component {
     }
 }
 
-async function performHTTPRequest(username, password) {
-    await Axios.post(
-        'https://devops01.eitlab.diplom.dtu.dk/api/Account/Login', {
-            userName: username,
-            password: password
-        }).then(res => {
-        localStorage.setItem('token', res.data.token);
-        console.log(res.data.token)
-    }).catch(error => {
-        console.log(error)
-    });
-}
-
-export default withRouter(LoginTab);
+export default withAuth(LoginTab);

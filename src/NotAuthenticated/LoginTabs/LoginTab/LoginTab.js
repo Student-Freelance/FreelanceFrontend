@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import './LoginTab.css';
-import {Button, Dropdown, Form} from 'react-bootstrap';
+import {Button, Dropdown, Form, Col} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import {AxiosAgent} from "../../../Shared/Web/AxiosAgent";
 import GoogleLogin from "react-google-login";
@@ -84,12 +84,22 @@ class LoginTab extends Component {
                     <Dropdown.Divider/>
                 </Container>
                 <Container>
-                    <GoogleLogin autoLoad={false}
-                                 clientId={this.ClientID}
-                                 buttonText="Login"
-                                 onSuccess={this.responseGoogle}
-                                 onFailure={this.responseGoogle}
-                    />
+                    <Form.Row>
+                        <Col>
+                            <GoogleLogin autoLoad={false}
+                                         clientId={this.ClientID}
+                                         buttonText="Sign in with Google"
+                                         onSuccess={this.responseGoogle}
+                                         onFailure={this.responseGoogle}
+                            />
+                        </Col>
+                        <Col>
+                            <Button onClick={(e) => this.handleSubmit(e)}
+                                    variant="danger" type="submit" size="lg" block>
+                                Sign in with DTU Inside
+                            </Button>
+                        </Col>
+                    </Form.Row>
                 </Container>
             </div>
         )

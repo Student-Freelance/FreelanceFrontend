@@ -44,6 +44,11 @@ class LoginTab extends Component {
             }
         )
     };
+    handleInsideDTUSubmit = (e) => {
+        const currentURL = "freelance-portal.herokuapp.com";//window.location.href
+
+        e.preventDefault();
+    };
     handleUsernameNameChange = (event) => {
         this.setState({
             userName: event.target.value
@@ -55,6 +60,10 @@ class LoginTab extends Component {
             password: event.target.value
         })
     };
+
+    redirectToAuthDTU() {
+        this.window.location.href = "https://auth.dtu.dk/dtu/?service=freelance-portal.herokuapp.com";
+    }
 
 
     render() {
@@ -94,7 +103,8 @@ class LoginTab extends Component {
                             />
                         </Col>
                         <Col>
-                            <Button onClick={(e) => this.handleSubmit(e)}
+                            {/*<Button onClick={(e) => this.handleInsideDTUSubmit(e)}*/}
+                            <Button onClick={this.redirectToAuthDTU.bind(this)}
                                     variant="danger" type="submit" size="lg" block>
                                 Sign in with DTU Inside
                             </Button>

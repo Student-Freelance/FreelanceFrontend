@@ -14,6 +14,7 @@ class LoginTab extends Component {
         super(props);
         this.auth = props.auth;
         this.responseGoogle = this.responseGoogle.bind(this);
+        this.redirectToAuthDTU = this.redirectToAuthDTU.bind(this);
         this.state = {
             userName: "",
             password: ""
@@ -58,6 +59,8 @@ class LoginTab extends Component {
 
     redirectToAuthDTU() {
         window.location.href = "https://devops01.eitlab.diplom.dtu.dk/api/Account/CampusNetLogin";
+        //  "https://localhost:5001/api/Account/CampusNetLogin";
+
     }
 
 
@@ -98,10 +101,10 @@ class LoginTab extends Component {
                             />
                         </Col>
                         <Col>
-                            <Button onClick={this.redirectToAuthDTU.bind(this)}
-                                    variant="danger" type="submit" size="md" block>
+                            {<Button onClick={this.redirectToAuthDTU.bind(this)}
+                                     variant="danger" type="submit" size="md" block>
                                 Sign in with DTU Inside
-                            </Button>
+                            </Button>}
                         </Col>
                     </Form.Row>
                 </Container>

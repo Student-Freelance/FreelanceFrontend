@@ -19,17 +19,15 @@ class FreelancerSignupTab extends Component {
     constructor(props) {
         super(props);
         this.auth = props.auth;
-        this.axiosagent = new AxiosAgent();
     }
 
     handleChange = e => {
-        console.log([e.target.name] + "new value", e.target.value);
         this.setState({[e.target.name]: e.target.value})
     };
     handleSubmit = (e) => {
         const body = this.state;
         e.preventDefault();
-        this.axiosagent.Post("Students",
+        AxiosAgent.Post("Students",
             {
                 ...body
             }).then(result => {

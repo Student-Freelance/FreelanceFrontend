@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import './LoginTab.css';
-import {Button, Dropdown, Form, Col} from 'react-bootstrap';
+import {Button, Col, Dropdown, Form} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import {AxiosAgent} from "../../../Shared/Web/AxiosAgent";
 import GoogleLogin from "react-google-login";
 import {withAuth} from "react-auth-guard";
+import {withRouter} from "react-router-dom"
 
 class LoginTab extends Component {
     ClientID = "908937238247-c2fr5ag4d8vi7tcd5m8cssa0pffaiccp.apps.googleusercontent.com";
@@ -12,9 +13,7 @@ class LoginTab extends Component {
     constructor(props) {
         super(props);
         this.auth = props.auth;
-        this.axiosagent = new AxiosAgent();
         this.responseGoogle = this.responseGoogle.bind(this);
-
         this.state = {
             userName: "",
             password: ""
@@ -22,7 +21,7 @@ class LoginTab extends Component {
     }
 
     responseGoogle = (response) => {
-        this.axiosagent.Post('Account/GoogleAuth', {access_token: response.Zi.id_token}).then(result => {
+        AxiosAgent.Post('Account/GoogleAuth', {access_token: response.Zi.id_token}).then(result => {
             if (!result.isEmpty) {
                 this.auth.updateToken(result.data.token)
             }
@@ -31,7 +30,7 @@ class LoginTab extends Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        this.axiosagent.Post("Account/Login", {
+        AxiosAgent.Post("Account/Login", {
             userName: this.state.userName,
             password: this.state.password
         }).then(result => {
@@ -44,11 +43,7 @@ class LoginTab extends Component {
             }
         )
     };
-    handleInsideDTUSubmit = (e) => {
-        const currentURL = "freelance-portal.herokuapp.com";//window.location.href
 
-        e.preventDefault();
-    };
     handleUsernameNameChange = (event) => {
         this.setState({
             userName: event.target.value
@@ -62,7 +57,7 @@ class LoginTab extends Component {
     };
 
     redirectToAuthDTU() {
-        this.window.location.href = "https://auth.dtu.dk/dtu/?service=freelance-portal.herokuapp.com";
+        window.location.href = "https://devops01.eitlab.diplom.dtu.dk/api/Account/CampusNetLogin";
     }
 
 
@@ -103,9 +98,8 @@ class LoginTab extends Component {
                             />
                         </Col>
                         <Col>
-                            {/*<Button onClick={(e) => this.handleInsideDTUSubmit(e)}*/}
                             <Button onClick={this.redirectToAuthDTU.bind(this)}
-                                    variant="danger" type="submit" size="lg" block>
+                                    variant="danger" type="submit" size="md" block>
                                 Sign in with DTU Inside
                             </Button>
                         </Col>
@@ -116,4 +110,4 @@ class LoginTab extends Component {
     }
 }
 
-export default withAuth(LoginTab);
+export default withAuth(withRouter(LoginTab));

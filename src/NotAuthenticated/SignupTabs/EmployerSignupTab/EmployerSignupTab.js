@@ -9,7 +9,6 @@ class EmployerSignupTab extends Component {
     constructor(props) {
         super(props);
         this.auth = props.auth;
-        this.axiosagent = new AxiosAgent();
         this.state = {
             companyreg: {
                 email: "",
@@ -32,7 +31,7 @@ class EmployerSignupTab extends Component {
         const {companyreg} = this.state;
 
         e.preventDefault();
-        this.axiosagent.Post("Companies",
+        AxiosAgent.Post("Companies",
             {...companyreg}
         ).then(result => {
             this.auth.updateToken(result.data.token)

@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 import './DetailedJobPage.css';
-import {Badge, Card, Container, Col, Row} from 'react-bootstrap';
+import {Badge, Card, Col, Container, Row} from 'react-bootstrap';
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import Job from "../Job";
 
-const http = new AxiosAgent();
 
 class DetailedJobPage extends Component {
 
@@ -20,7 +19,7 @@ class DetailedJobPage extends Component {
     componentDidMount() {
         const {handle} = this.props.match.params;
         try {
-            http.GetOne("Jobs", handle)
+            AxiosAgent.GetOne("Jobs", handle)
                 .then((job) => {
                     console.table(job);
                     this.setState({job: job.data});

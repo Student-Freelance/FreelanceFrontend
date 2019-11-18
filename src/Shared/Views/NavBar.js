@@ -6,8 +6,11 @@ import {withAuth} from "react-auth-guard";
 
 
 const NavBar = ({auth}) => {
-    let user = JSON.parse(localStorage.getItem('User'));
-    let name = user.firstname + " " + user.lastname;
+    let name = '';
+    if (auth.authenticated) {
+        let user = JSON.parse(sessionStorage.getItem('User'));
+        name = user.username;
+    }
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Navbar.Brand href="/">Freelancer</Navbar.Brand>
@@ -15,11 +18,11 @@ const NavBar = ({auth}) => {
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/market">Market</Nav.Link>
-                    <NavDropdown title={name} id="basic-nav-dropdown">
+                    {auth.authenticated ? <Nav.Link href="/market">Market</Nav.Link> : ''}
+                    {auth.authenticated ? <NavDropdown title={name} id="basic-nav-dropdown">
                         <NavDropdown.Item href="/profilepage">Profile</NavDropdown.Item>
                         <NavDropdown.Item onClick={auth.logout}>Logout</NavDropdown.Item>
-                    </NavDropdown>
+                    </NavDropdown> : <Nav.Link href="/login">Login</Nav.Link>}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

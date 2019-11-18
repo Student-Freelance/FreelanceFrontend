@@ -5,6 +5,8 @@ import Provider from 'react-auth-guard'
 import Authenticated from "./Authenticated/Authenticated";
 import {AxiosAgent} from "./Shared/Web/AxiosAgent";
 import {useHistory} from "react-router-dom"
+import StudentProfilePage from "./Profile/StudentProfilePage";
+import EmployerPage from "./Employer/EmployerPage/EmployerPage";
 
 
 const fetchUser = ({token}) => new Promise((resolve, reject) => {

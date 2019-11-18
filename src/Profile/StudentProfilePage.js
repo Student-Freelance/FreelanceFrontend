@@ -9,7 +9,7 @@ import editPen from "../Assets/editPen.png"
 
 
 function StudentProfilePage() {
-    let user = JSON.parse(localStorage.getItem('User'));
+    let user = JSON.parse(sessionStorage.getItem('User'));
     let name = user.firstname + " " + user.lastname;
     return(
 

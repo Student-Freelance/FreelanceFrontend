@@ -1,15 +1,8 @@
+import React from "react";
+import StudentProfilePage from "./StudentProfilePage";
 
-import {withAuth} from "react-auth-guard";
-
-const ProfilePage = ({auth}) => {
-    let user = JSON.parse(sessionStorage.getItem('user'));
-
-    if (user.hasOwnProperty('firstname')){
-        let freelancer = true;
-    }
-    if (user.hasOwnProperty('companyname')){
-        let company = true;
-    }
+const ProfilePage = () => {
+    let user = JSON.parse(sessionStorage.getItem('User')).hasOwnProperty('firstname');
+    return user ? <StudentProfilePage/> : <div>Not Implemented Yet</div>
 };
-
-export default withAuth(ProfilePage);
+export default ProfilePage;

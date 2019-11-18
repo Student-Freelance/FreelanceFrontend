@@ -33,6 +33,7 @@ const App = () => {
     const token = new URLSearchParams(window.location.search).get('token');
     if (token != null && token.length > 0) {
         localStorage.setItem("token", token);
+        history.push("/")
     }
     return (
         <Provider

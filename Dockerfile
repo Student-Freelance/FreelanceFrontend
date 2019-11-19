@@ -14,7 +14,5 @@ RUN npm install
 RUN npm install react-scripts@3.0.1 -g
 COPY ./ /app/
 
-EXPOSE 8080
-
 ARG configuration=production
 RUN npm run build -- --output-path=./dist/out --configuration $configuration

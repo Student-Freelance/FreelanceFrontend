@@ -34,9 +34,10 @@ export class AxiosAgent extends Component {
     static async Put(endpoint, bodyParameter) {
         return await Axios.put(
             `${this.url}${endpoint}`,
-            {key: bodyParameter}
+            bodyParameter
         )
     }
+
 
     static async Delete(endpoint, id) {
         return await Axios.delete(

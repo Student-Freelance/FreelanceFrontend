@@ -46,7 +46,7 @@ constructor(props) {
         if (this.state.editMode){
             console.log(this.state.employer);
             try {
-                AxiosAgent.Put("Companies", this.state.employer)
+                AxiosAgent.Put("Companies", {...this.state.employer})
                     .then((data) => {
                         console.log(data);
                     });

@@ -1,26 +1,41 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM tiangolo/node-frontend:10 as build-stage
+# base image
+FROM node:12.2.0-alpine as build-stage
+
+# set working directory
 WORKDIR /app
-COPY package*.json /app/
-RUN npm install --force
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY package.json /app/package.json
+RUN npm install
+RUN npm install react-scripts@3.0.1 -g
 COPY ./ /app/
 ARG configuration=production
 RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
-# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-# FROM nginx:1.15
-# COPY --from=build-stage /app/dist/out/ /usr/share/nginx/html
-# # Copy the default nginx.conf provided by tiangolo/node-frontend
-# COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
+## Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+#FROM nginx:1.15
+#COPY --from=build-stage /app/build/ /usr/share/nginx/html
+## Copy the default nginx.conf provided by tiangolo/node-frontend
+#COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
+#
+#react-build
+#WORKDIR /app
+#COPY . ./
+#RUN yarn
+#RUN yarn build
 
-# base image
-FROM nginx:1.16.0-alpine
+# Stage 2 - the production environment
+#FROM nginx:alpine
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
+#COPY --from=react-build /app/build /usr/share/nginx/html
+#Run Stage Start
+FROM nginx
 
-# copy artifact build from the 'build environment'
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-# expose port 80
+#Copy production build files from builder phase to nginx
+COPY --from=build-stage /app/build /usr/share/nginx/html
 EXPOSE 80
-
-# run nginx
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import './CreateJobPage.css';
-import {Button, Form, Col, FormGroup} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import "react-datepicker/dist/react-datepicker.css";
 import {WithContext as ReactTags} from 'react-tag-input';
@@ -8,7 +8,6 @@ import Job from '../Job'
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import Input from "./Input";
 import Select from "./Select";
-import DatePickerInput from "./DatePickerInput";
 
 const http = new AxiosAgent();
 

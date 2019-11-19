@@ -1,7 +1,6 @@
 import React from "react";
 import {Card} from "react-bootstrap";
-import {Link, Route} from "react-router-dom";
-import DetailedJobPage from "../Job/DetailedJobPage/DetailedJobPage";
+import {Link} from "react-router-dom";
 
 
 const JobCard = (props) => {

@@ -1,11 +1,11 @@
-# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM tiangolo/node-frontend:10 as build-stage
-WORKDIR /app
-COPY package*.json /app/
-RUN npm install --force
-COPY ./ /app/
-ARG configuration=production
-RUN npm run build -- --output-path=./dist/out --configuration $configuration
+FROM gmathieu/node-browsers:3.0.0 AS build
+
+COPY package.json /usr/angular-workdir/
+WORKDIR /usr/angular-workdir
+RUN npm install
+
+COPY ./ /usr/angular-workdir
+RUN npm run build
 
 FROM nginx:1.15.8-alpine
 

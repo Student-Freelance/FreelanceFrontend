@@ -4,60 +4,32 @@ import {Button, Form} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import "react-datepicker/dist/react-datepicker.css";
 import {WithContext as ReactTags} from 'react-tag-input';
-import Job from '../Job'
-import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import Input from "./Input";
 import Select from "./Select";
-import LocationModel from "../../Shared/LocationModel";
+import DateInput from "./DateInput";
+import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
+
+const initialState= {
+    job: {},
+    tags: [],
+    location: {},
+    dateFields: {},
+    paymentOptions: ['Hourly', 'Monthly', 'Finish'],
+    experienceOptions: ['Junior', 'Senior', 'Inexperienced']
+};
 
 class CreateJobPage extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            job: {},
-            tags: [],
-            location: {},
-            jobStart: "",
-            jobEnd: "",
-            deadLine: "",
-            createdOn: "",
-            paymentOptions: ['Hourly', 'Monthly', 'Finish'],
-            experienceOptions: ['Junior', 'Senior', 'Inexperienced']
-    };
+        this.state = initialState;
 
-        this.handleJobStart = this.handleJobStart.bind(this);
-        this.handleJobEnd = this.handleJobEnd.bind(this);
-        this.handleDeadLine = this.handleDeadLine.bind(this);
-        this.handleCreatedOn = this.handleCreatedOn.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
     }
 
-    handleJobStart = date => {
-        let job = {...this.state.job}
-        job.jobStart = date;
-        this.setState({job: job});
-    };
-
-    handleJobEnd = date => {
-        let job = {...this.state.job}
-        job.jobEnd = date;
-        this.setState({job: job});
-    };
-
-    handleDeadLine = date => {
-        let job = {...this.state.job}
-        job.deadLine = date;
-        this.setState({job: job});
-    };
-    handleCreatedOn = date => {
-        let job = {...this.state.job}
-        job.createdOn = date;
-        this.setState({job: job});
-    };
     /* React-tags onChange handlers
     https://www.npmjs.com/package/react-tag-input#usage
     */
@@ -69,37 +41,19 @@ class CreateJobPage extends Component {
     }
 
     handleAddition(tag) {
-        this.setState(state => ({tags: [...state.tags, tag]}));
+            this.setState({tags: [...this.state.tags, tag]});
     }
 
-    handleInputChange(e) {
-        const target = e.target;
-        const value = target.value;
-        const name = target.name;
-        let job = {...this.state.job};
-        job[name] = value;
+    handleInputChange = (fieldName, fieldValue, fieldType) => {
+        const field = {...this.state[fieldType]};
+        // Events from Input.js (normal inputelements) parses SyntheticEvent instead of Event
+        (fieldValue.nativeEvent instanceof Event) ?
+            field[fieldName] = fieldValue.target.value
+            : field[fieldName]= fieldValue;
+
         this.setState({
-            job: job
+            [fieldType]: field
         });
-    }
-
-    //
-    // handleDateChange = date => {
-    //     let job = {...this.state.job};
-    //     job.deadLine = date;
-    //     this.setState({
-    //         job: job
-    //     })
-    // };
-
-    handlePaymentChange = event => {
-        this.setState({job: {paidHourly: false}});
-        this.setState({job: {paidMonthly: false}});
-        if (event.target.value === 'paidMonthly') {
-            this.setState({job: {paidMonthly: true}})
-        } else {
-            this.setState({job: {paidHourly: true}})
-        }
     };
 
     render() {
@@ -117,44 +71,85 @@ class CreateJobPage extends Component {
                                name={'title'}
                                value={this.state.job.title}
                                placeholder={'Title'}
-                               handleChange={this.handleInputChange}/>
+                               handleChange={(value) => this.handleInputChange('title', value, 'job')}/>
                         <Input type={'text'}
                                title={'description'}
                                name={'description'}
                                value={this.state.job.description}
                                placeholder={'Description'}
-                               handleChange={this.handleInputChange}/>
+                               handleChange={(value) => this.handleInputChange('description', value, 'job')}/>
                         <Input type={'text'}
                                title={'companyName'}
                                name={'companyName'}
                                value={this.state.job.companyName}
                                placeholder={"Company name"}
-                               handleChange={this.handleInputChange}/>
+                               handleChange={(value) => this.handleInputChange('companyName', value, 'job')}/>
                         <Input type={'number'}
                                name={'salary'}
                                title={'salary'}
                                value={this.state.job.salary}
                                placeholder="Job salary per unit"
-                               handleChange={this.handleInputChange}/>
+                               handleChange={(value) => this.handleInputChange('salary', value, 'job')}/>
                         <Select title={'Payment plan'}
                                 name={'payment'}
                                 options={this.state.paymentOptions}
-                                value = {this.state.job.payment}
+                                value={this.state.job.payment}
                                 placeholder={'Select payment'}
-                                handleChange = {this.handleInputChange}/>
-                        {/*<DatePickerInput*/}
-                        {/*    title={'Start date'}*/}
-                        {/*    name={'startdate'}*/}
-                        {/*    handleChange={this.handleJobStart}*/}
-                        {/*    handleSelected={this.state.jobStart}*/}
-                        {/*/>*/}
-                        {/*<Input type={'text'}*/}
-                        {/*       title={'street'}*/}
-                        {/*       name={'street'}*/}
-                        {/*       value={this.state.job.location.street}*/}
-                        {/*       placeholder={'street'}*/}
-                        {/*       handleChange={this.handleInputChange}/>*/}
+                                handleChange={(value) => this.handleInputChange('payment', value, 'job')}/>
+                        <h2>Time and dates</h2>
+                        <DateInput
+                            name={'jobStart'}
+                            title={'Job start'}
+                            value={this.state.dateFields['jobStart']}
+                            handleChange={(value) => this.handleInputChange("jobStart", value, 'dateFields')}/>
+                        <DateInput
+                            name={'jobEnd'}
+                            title={'Job end'}
+                            value={this.state.dateFields['jobEnd']}
+                            handleChange={(value) => this.handleInputChange("jobEnd", value, 'dateFields')}/>
+                        <DateInput
+                            name={'deadLine'}
+                            title={'Deadline'}
+                            value={this.state.dateFields['deadLine']}
+                            handleChange={(value) => this.handleInputChange("deadLine", value, 'dateFields')}/>
 
+                        <h2>Location</h2>
+                        <Input title={"Street"}
+                               name={"street"}
+                               value={this.state.location.street}
+                               placeholder="Street name"
+                               handleChange={(value) => this.handleInputChange('street', value, 'location')}/>
+                        <Input title={"Number"}
+                               name={"number"}
+                               value={this.state.location.number}
+                               placeholder="Number"
+                               handleChange={(value) => this.handleInputChange('number', value, 'location')}/>
+                        <Input title={"Zip"}
+                               name={"zip"}
+                               value={this.state.location.zip}
+                               placeholder="Zip"
+                               handleChange={(value) => this.handleInputChange('zip', value, 'location')}/>
+                        <Input title={"City"}
+                               name={"city"}
+                               value={this.state.location.city}
+                               placeholder="City"
+                               handleChange={(value) => this.handleInputChange('city', value, 'location')}/>
+
+
+                        <h2>Detailed description</h2>
+
+                        <Select title={'Experience'}
+                                name={'experience'}
+                                options={this.state.experienceOptions}
+                                value={this.state.job.experience}
+                                placeholder={'Select experience'}
+                                handleChange={(value) => this.handleInputChange('experience', value, 'job')}/>
+                        <Input type={'number'}
+                               name={"freelancers"}
+                               title={'Freelancers'}
+                               placeholder="Amount of freelancers"
+                               value={this.state.job.freelancers}
+                               handleChange={(value) => this.handleInputChange('freelancers', value, 'job')}/>
                         <Form.Label>Job tags</Form.Label>
                         <div id="app">
                             <ReactTags classNames={{
@@ -168,33 +163,11 @@ class CreateJobPage extends Component {
                                 activeSuggestion: 'ReactTags__activeSuggestionClass'
                             }}
                                        tags={this.state.tags}
-                                       // inputFieldPosition="inline" tags={tags}
+                                // inputFieldPosition="inline" tags={tags}
                                        handleDelete={this.handleDelete}
                                        handleAddition={this.handleAddition}/>
                         </div>
-
-
-                        <h2>Detailed description</h2>
-
-                        <Input title={"Street"}
-                               name={"street"}
-                               value={this.state.location.street}
-                               placeholder="street name"
-                               handleChange={this.handleInputChange}
-                        />
-
-                        <Select title={'Experience'}
-                                name={'experience'}
-                                options={this.state.experienceOptions}
-                                value = {this.state.job.experience}
-                                placeholder={'Select experience'}
-                                handleChange = {this.handleInputChange}/>
-                        <Input type={'number'}
-                               name={"freelancers"}
-                               title={'Freelancers'}
-                               placeholder="Amount of freelancers"
-                               value={this.state.job.freelancers}
-                               handleChange={this.handleInputChange}/>
+                        <hr></hr>
                         <Button variant="primary"
                                 size="lg"
                                 block
@@ -207,22 +180,32 @@ class CreateJobPage extends Component {
         );
     }
 
-    createJob() {
-        let job = {...this.state.job};
-        job.tags = this.mapTags(this.state.tags);
-        job.location = {...this.state.location};
-        console.table(job);
-        // http.Post("Jobs", {...this.state.job})
-        //     .then((data) => {
-        //         console.log(data);
-        //     }).catch((data) => {
-        //     console.log(data);
-        // })
+    async createJob() {
+        const tags = this.state.tags.map(tag => tag.text);
+        const location = {...this.state.location};
+        const {jobStart, jobEnd, deadLine} = {...this.state.dateFields};
+        const createdOn = new Date();
+        this.setState(prevState => ({
+            job: {
+                ...prevState.job,
+                location: location,
+                createdOn: createdOn,
+                jobStart: jobStart,
+                jobEnd: jobEnd,
+                deadLine: deadLine,
+                tags: tags
+            }
+        }), () => this.postJob());
     }
 
-    mapTags(tags) {
-        const tagArr = tags.map(tag => tag.text);
-        return tagArr;
+    async postJob() {
+            AxiosAgent.Post("Jobs", {...this.state.job})
+                .then(() => {
+                    this.setState(initialState);
+                    window.alert('Job was succesfully created')
+                })
+                .catch((e) => console.log(e))
     }
 }
+
 export default CreateJobPage;

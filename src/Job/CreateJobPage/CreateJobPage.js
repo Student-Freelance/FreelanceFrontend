@@ -16,9 +16,9 @@ class CreateJobPage extends Component {
         super(props);
 
         this.state = {
-            job: Job,
+            job: {},
             tags: [],
-            location: LocationModel,
+            location: {},
             jobStart: "",
             jobEnd: "",
             deadLine: "",
@@ -176,6 +176,13 @@ class CreateJobPage extends Component {
 
                         <h2>Detailed description</h2>
 
+                        <Input title={"Street"}
+                               name={"street"}
+                               value={this.state.location.street}
+                               placeholder="street name"
+                               handleChange={this.handleInputChange}
+                        />
+
                         <Select title={'Experience'}
                                 name={'experience'}
                                 options={this.state.experienceOptions}
@@ -203,7 +210,7 @@ class CreateJobPage extends Component {
     createJob() {
         let job = {...this.state.job};
         job.tags = this.mapTags(this.state.tags);
-
+        job.location = {...this.state.location};
         console.table(job);
         // http.Post("Jobs", {...this.state.job})
         //     .then((data) => {

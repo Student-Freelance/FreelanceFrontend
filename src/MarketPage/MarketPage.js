@@ -6,7 +6,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import Axios from "axios";
+import {AxiosAgent} from "../Shared/Web/AxiosAgent";
 
 class MarketPage extends React.Component {
 
@@ -21,18 +21,19 @@ class MarketPage extends React.Component {
     }
 
     async getMarketPostsFromAPI() {
-        const token = localStorage.getItem('token');
-
-        const response = await Axios.get("https://devops01.eitlab.diplom.dtu.dk/api/Jobs", { headers: {"Authorization" : `Bearer ${token}`} });
-
-        try {
-            this.setState({
-                jobs: response.data,
-                isLoading: false
-            });
-        } catch (error) {
-            this.setState({error, isLoading: false});
-        }
+        AxiosAgent.GetMany("Jobs")
+            .then(
+                (response) => this.setState({jobs: response.data, isLoading: false})
+            )
+        //
+        // try {
+        //     this.setState({
+        //         jobs: response.data,
+        //         isLoading: false
+        //     });
+        // } catch (error) {
+        //     this.setState({error, isLoading: false});
+        // }
     }
 
     componentDidMount() {
@@ -93,14 +94,15 @@ class MarketPage extends React.Component {
                             {!isLoading ? (jobs.map(job => {
                                     const {id, title, description, location, createdOn} = job;
                                     return (
-                                        <CardDeck>
+                                        <CardDeck key={id}
+                                                  style={{padding: "5px", width: "20vh"}}
+                                                  onClick={() => this.props.history.push(`detailedJob/${id}`)}>
                                             <JobCard
                                                 jobId={id}
                                                 title={title}
-                                                text={description}
-                                                url={location}
-                                                date={createdOn}
-                                            />
+                                                location={location}
+                                                description={description}
+                                                date={createdOn}/>
                                         </CardDeck>
                                     );
                                 })

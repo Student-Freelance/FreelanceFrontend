@@ -1,25 +1,22 @@
 import React from "react";
 import {Card} from "react-bootstrap";
-import {Link} from "react-router-dom";
 
 
 const JobCard = (props) => {
     return (
             <Card>
-                <Card.Img variant="top"
-                             src={props.url}/>
+                <Card.Img variant="top"/>
                 <Card.Body>
                     <Card.Title>
                         {props.title}
                     </Card.Title>
                     <Card.Text>
-                        {props.text}
+                        {props.description}
                     </Card.Text>
-                    <Card.Link><Link to={'detailedJob/'+props.jobId}>Visit post</Link></Card.Link>
 
                 </Card.Body>
                 <Card.Footer>
-                    <small className="text-muted">Created at {props.date}</small>
+                    <small className="text-muted">Created at {new Date(props.date).toDateString()}</small>
                 </Card.Footer>
             </Card>
     )

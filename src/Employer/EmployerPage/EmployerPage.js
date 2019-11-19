@@ -5,10 +5,8 @@ import Employer from "../Employer";
 import {Card, Container} from "react-bootstrap";
 import EmployerToChange from "./Views/EmployerToChange";
 import EmployerToView from "./Views/EmployerToView";
-import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import EmployerError from "./Views/EmployerError";
-
-const http = new AxiosAgent();
+import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 
 class EmployerPage extends Component {
 
@@ -27,7 +25,7 @@ constructor(props) {
     componentDidMount(){
         const {handle} = this.props.match.params;
         try {
-            http.GetOne("Companies", handle)
+            AxiosAgent.GetOne("Companies", handle)
                 .then((company) => {
                     console.table(company.data);
                     this.setState({employer: company.data});
@@ -46,8 +44,9 @@ constructor(props) {
         this.state.editMode ? this.setState({btnText: "edit"}) : this.setState({btnText: "save"});
 
         if (this.state.editMode){
+            console.log(this.state.employer);
             try {
-                AxiosAgent.Put("Companies", {...this.state.employer})
+                AxiosAgent.Put("Companies", this.state.employer)
                     .then((data) => {
                         console.log(data);
                     });
@@ -56,7 +55,6 @@ constructor(props) {
             }
         }
     };
-
 
     render() {
         return (

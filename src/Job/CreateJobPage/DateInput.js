@@ -1,23 +1,23 @@
 import React from "react";
 import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
+import DatePicker from "react-datepicker/es";
 
 
-const Input = (props) => {
+const DateInput = (props) => {
     return (
         <FormGroup>
             <FormLabel htmlFor={props.name}>
                 {props.title}
             </FormLabel>
-            <FormControl
-                className="form-input"
+            <DatePicker
                 id={props.name}
                 name={props.name}
-                // type={props.type}
+                value={props.value}
+                selected={props.value}
                 onChange={props.handleChange}
-                placeholder={props.placeholder}
             />
         </FormGroup>
     )
 };
 
-export default Input;
+export default DateInput;

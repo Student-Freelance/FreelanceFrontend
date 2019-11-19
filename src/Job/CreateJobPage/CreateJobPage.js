@@ -8,8 +8,7 @@ import Job from '../Job'
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import Input from "./Input";
 import Select from "./Select";
-
-const http = new AxiosAgent();
+import LocationModel from "../../Shared/LocationModel";
 
 class CreateJobPage extends Component {
 
@@ -19,6 +18,7 @@ class CreateJobPage extends Component {
         this.state = {
             job: Job,
             tags: [],
+            location: LocationModel,
             jobStart: "",
             jobEnd: "",
             deadLine: "",

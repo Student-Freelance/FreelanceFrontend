@@ -4,7 +4,7 @@ import {Card} from "react-bootstrap";
 
 const JobCard = (props) => {
     return (
-            <Card>
+            <Card style={{cursor: "pointer"}}>
                 <Card.Img variant="top"/>
                 <Card.Body>
                     <Card.Title>

@@ -20,8 +20,8 @@ const Authenticated = () => (
             <Switch>
                 <Route exact path="/" component={LandingPage}/>
                 <Route path="/market" component={MarketPage}/>
-                <Route path="/createJob" component={CreateJobPage}/>
-                <Route path="/detailedjob/:handle" component={DetailedJobPage}/>
+                <Route path="/create" component={CreateJobPage}/>
+                <Route path="/job/:handle" component={DetailedJobPage}/>
                 <Route path="/employer/:handle" component={EmployerPage}/>
                 <Route path="/profilepage" component={ProfilePage}/>
                 <Route path="/login" component={LoginPage}/>

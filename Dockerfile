@@ -34,7 +34,9 @@ RUN npm run build -- --output-path=./dist/out --configuration $configuration
 #COPY --from=react-build /app/build /usr/share/nginx/html
 #Run Stage Start
 FROM nginx
-
+LABEL io.k8s.display-name="app name" \
+      io.k8s.description="container description..." \
+      io.openshift.expose-services="8080:http"
 #Copy production build files from builder phase to nginx
 COPY --from=build-stage /app/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]

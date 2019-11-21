@@ -16,18 +16,19 @@ class MarketPage extends React.Component {
 
         this.state = {
             jobs: [],
+            filteredJobs: [],
             isLoading: true,
             errors: null,
             tags: []
         };
-
+        this.filterSearch = this.filterSearch.bind(this);
     }
 
     async getMarketPostsFromAPI() {
         AxiosAgent.GetMany("Jobs")
             .then(
                 (response) => {
-                    this.setState({jobs: response.data}, () => this.createLabels());
+                    this.setState({jobs: response.data, filtered: response.data}, () => this.createLabels());
                 }
             )
     }
@@ -47,8 +48,17 @@ class MarketPage extends React.Component {
         this.setState({tags: result, isLoading: false});
     }
 
+    filterSearch = value => {
+        let jobs = [...this.state.jobs];
+        let filtered = jobs.filter(job => {
+            return job.tags.includes(value);
+            }
+        );
+        this.setState({filtered: filtered})
+    };
+
     render() {
-        const {isLoading, jobs, tags} = this.state;
+        const {isLoading, jobs, filtered, tags} = this.state;
         return (
             <Container fluid>
                 {isLoading ? <p>Loading ...</p> :
@@ -56,7 +66,9 @@ class MarketPage extends React.Component {
                         <Col xl={2} className="d-none d-lg-block">
                             <h1 className="d-flex justify-content-left">Labels</h1>
                             <ul className="list-group">
-                                {tags.slice(0,10).map(tag => <Label key={tag[0]} tag={tag}/>)}
+                                {tags.slice(0,10).map(tag =>
+                                    <Label key={tag[0]} tag={tag}
+                                           clickHandler={() => this.filterSearch(tag[0])}/>)}
                             </ul>
                         </Col>
                         <Col xl={9} xs={12} className="cards">
@@ -74,18 +86,20 @@ class MarketPage extends React.Component {
                             <Row><Button onClick={() => this.props.history.push('/create')}>Create job</Button></Row>
                             <Row>
 
-                                {(jobs.map(job => {
-                                        const {id, title, description, location, createdOn} = job;
+                                {(filtered.map(job => {
+                                        const {id, title, description, location, createdOn, companyName} = job;
                                         return (
                                             <CardDeck key={id}
-                                                      style={{padding: "5px", width: "20vh"}}
-                                                      onClick={() => this.props.history.push(`job/${id}`)}>
+                                                      style={{padding: "5px", width: "20vh"}}>
                                                 <JobCard
                                                     jobId={id}
                                                     title={title}
+                                                    companyName={companyName}
                                                     location={location}
                                                     description={description}
-                                                    date={createdOn}/>
+                                                    date={createdOn}
+                                                    handleJobClick={() => this.props.history.push(`job/${id}`)}
+                                                    handleCompanyClick={() => this.props.history.push(`employer/${companyName}`)}/>
                                             </CardDeck>
                                         );
                                     })
@@ -98,6 +112,5 @@ class MarketPage extends React.Component {
         )
     }
 }
-
 
 export default MarketPage;

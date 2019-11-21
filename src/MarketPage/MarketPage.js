@@ -8,6 +8,7 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import {AxiosAgent} from "../Shared/Web/AxiosAgent";
 import Label from "./Label";
+import ActiveLabel from "./ActiveLabel";
 
 class MarketPage extends React.Component {
 
@@ -15,13 +16,15 @@ class MarketPage extends React.Component {
         super(props);
 
         this.state = {
+            search: '',
             jobs: [],
             filteredJobs: [],
             isLoading: true,
-            errors: null,
-            tags: []
+            tags: [],
+            activeTag: {},
         };
-        this.filterSearch = this.filterSearch.bind(this);
+        this.filterLabel = this.filterLabel.bind(this);
+        this.searchJob = this.searchJob.bind(this)
     }
 
     async getMarketPostsFromAPI() {
@@ -48,17 +51,33 @@ class MarketPage extends React.Component {
         this.setState({tags: result, isLoading: false});
     }
 
-    filterSearch = value => {
+    filterLabel = value => {
+        if (value === this.state.activeTag) {
+            this.setState({filtered: [...this.state.jobs], activeTag: ''})
+        } else {
+            let jobs = [...this.state.jobs];
+            let filtered = jobs.filter(job => {
+                    return job.tags.includes(value);
+                }
+            );
+            this.setState({filtered: filtered, activeTag: value})
+        }
+    };
+
+    searchJob = () => {
+        const filter = this.state.search;
         let jobs = [...this.state.jobs];
-        let filtered = jobs.filter(job => {
-            return job.tags.includes(value);
+        const filtered = jobs.filter(job => {
+                if (!(job.title == null)) {
+                    return job.description.includes(filter);
+                }
             }
         );
-        this.setState({filtered: filtered})
+        this.setState({filtered: filtered});
     };
 
     render() {
-        const {isLoading, jobs, filtered, tags} = this.state;
+        const {isLoading, jobs, filtered, tags, activeTag, search} = this.state;
         return (
             <Container fluid>
                 {isLoading ? <p>Loading ...</p> :
@@ -66,9 +85,14 @@ class MarketPage extends React.Component {
                         <Col xl={2} className="d-none d-lg-block">
                             <h1 className="d-flex justify-content-left">Labels</h1>
                             <ul className="list-group">
-                                {tags.slice(0,10).map(tag =>
-                                    <Label key={tag[0]} tag={tag}
-                                           clickHandler={() => this.filterSearch(tag[0])}/>)}
+                                {tags.slice(0, 10).map(tag =>
+                                    (tag[0] === activeTag) ?
+                                        <ActiveLabel key={tag[0]} tag={tag}
+                                                     clickHandler={() => this.filterLabel(tag[0])}/>
+                                        :
+                                        <Label key={tag[0]} tag={tag}
+                                               clickHandler={() => this.filterLabel(tag[0])}/>
+                                )}
                             </ul>
                         </Col>
                         <Col xl={9} xs={12} className="cards">
@@ -76,9 +100,12 @@ class MarketPage extends React.Component {
                                 <Col>
                                     <InputGroup className="mb-5">
                                         <FormControl
-                                            placeholder="Job titel eller søge ord"/>
+                                            value={search}
+                                            onChange={(e) => this.setState({search: e.target.value})}
+                                            placeholder="Search job titles"/>
                                         <InputGroup.Append>
-                                            <Button variant="outline-primary">Søg</Button>
+                                            <Button variant="outline-primary"
+                                                    onClick={() => this.searchJob()}>Search</Button>
                                         </InputGroup.Append>
                                     </InputGroup>
                                 </Col>

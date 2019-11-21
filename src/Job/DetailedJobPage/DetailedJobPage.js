@@ -4,7 +4,6 @@ import {Badge, Card, Col, Container, Row} from 'react-bootstrap';
 import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
 import Job from "../Job";
 
-
 class DetailedJobPage extends Component {
 
     constructor(props) {
@@ -134,12 +133,8 @@ class DetailedJobPage extends Component {
                         </Col>
                     </Row>
                 </Container>
-
             </Container>
         </div>;
     }
-
-
 }
-
 export default DetailedJobPage;

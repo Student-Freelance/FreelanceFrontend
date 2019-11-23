@@ -10,6 +10,7 @@ import NavBar from "../Shared/Views/NavBar";
 import {withAuth} from "react-auth-guard";
 import {Route, Switch} from "react-router-dom";
 import LoginPage from "../NotAuthenticated/LoginPage";
+import CompanyProfilePage from "../Profile/CompanyProfilePage";
 
 const Authenticated = () => (
     <div>
@@ -24,6 +25,7 @@ const Authenticated = () => (
                 <Route path="/job/:handle" component={DetailedJobPage}/>
                 <Route path="/employer/:handle" component={EmployerPage}/>
                 <Route path="/profilepage" component={ProfilePage}/>
+                <Route path="/companypage" component={CompanyProfilePage}/>
                 <Route path="/login" component={LoginPage}/>
                 <Route component={PageNotFound}/>
             </Switch>

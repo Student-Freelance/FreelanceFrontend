@@ -6,13 +6,15 @@ import GoogleLogin from "react-google-login";
 import {withRouter} from "react-router-dom"
 import {observer} from "mobx-react";
 import {useStores} from "../../../index";
+import {toast} from "react-toastify";
+
 
 const LoginTab = (props) => {
     const ClientID = "908937238247-c2fr5ag4d8vi7tcd5m8cssa0pffaiccp.apps.googleusercontent.com";
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const {userStore, authStore} = useStores();
-
+    const notify = () => toast("default");
 
     const responseGoogle = (response) => {
         userStore.googlelogin({access_token: response.Zi.id_token}).then(result => {
@@ -22,11 +24,12 @@ const LoginTab = (props) => {
                 props.history.push("/")
             }
         });
-
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        userStore.login(userName, password).then(props.history.push("/"));
+        userStore.login(userName, password).catch((err) => {
+            toast.error(err.response.text)
+        });
     };
 
     const handleUsernameNameChange = (event) => {

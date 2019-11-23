@@ -16,9 +16,11 @@ import {useStores} from "./index";
 
 const App = () => {
     const {userStore, authStore} = useStores();
-    if (localStorage.getItem("Token") && userStore.companyUser === undefined && userStore.studentUser === undefined)
+    if (localStorage.getItem("Token") && userStore.companyUser === undefined && userStore.studentUser === undefined) {
         userStore.pullUser();
-    authStore.setAuthenticated(true);
+        authStore.setAuthenticated(true);
+    }
+
 
 
     return (

@@ -33,8 +33,7 @@ class AuthStore {
         this.setAuthenticated(false);
         clearTimeout(this.timer);
         if (exp) {
-            debugger;
-            alert("Token expired, logging out")
+            console.log("Token expired, logging out")
         }
     }
 

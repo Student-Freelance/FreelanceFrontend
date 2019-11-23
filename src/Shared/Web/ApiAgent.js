@@ -4,9 +4,9 @@ import _superagent from 'superagent';
 const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'https://localhost:5001/api/';
 
-const handleErrors = err => {
+const handleErrors = (err) => {
     if (err && err.response && err.response.status === 401) {
-
+        console.log(err.response.text)
     }
     return err;
 };
@@ -25,25 +25,25 @@ const requests = {
         superagent
             .del(`${API_ROOT}${url}`)
             .use(tokenPlugin)
-            .end(handleErrors)
+            .catch(handleErrors)
             .then(responseBody),
     get: (url) =>
         superagent
             .get(`${API_ROOT}${url}`)
             .use(tokenPlugin)
-            .end(handleErrors)
+            .catch(handleErrors)
             .then(responseBody),
     put: (url, body) =>
         superagent
             .put(`${API_ROOT}${url}`, body)
             .use(tokenPlugin)
-            .end(handleErrors)
+            .catch(handleErrors)
             .then(responseBody),
     post: (url, body) =>
         superagent
             .post(`${API_ROOT}${url}`, body)
             .use(tokenPlugin)
-            .end(handleErrors)
+            .catch(handleErrors)
             .then(responseBody),
 };
 

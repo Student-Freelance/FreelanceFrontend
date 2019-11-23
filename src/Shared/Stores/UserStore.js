@@ -10,7 +10,8 @@ class UserStore {
     updatingUser;
 
     constructor(authStore) {
-        this.authStore = authStore
+        this.authStore = authStore;
+
     }
 
     pullUser() {
@@ -19,17 +20,12 @@ class UserStore {
             .then(action((body) => {
                 if (body.hasOwnProperty('firstname')) {
                     Object.assign(this.studentUser, body);
-                    this.companyUser = companyObject;
-
                 } else if (body.hasOwnProperty('companyName')) {
                     Object.assign(this.companyUser, body);
-                    this.studentUser = studentObject;
                 }
             }))
             .finally(action(() => {
                 this.loadingUser = false;
-                console.log(this.companyUser);
-                console.log(this.studentUser);
             }))
     }
 
@@ -53,18 +49,22 @@ class UserStore {
     }
 
     logout() {
-        this.authStore.logout();
-        this.companyUser = companyObject;
-        this.studentUser = studentObject;
+        this.authStore.logout(true);
+        this.authStore.setAuthenticated(false);
+        this.companyUser = undefined;
+        this.studentUser = undefined;
+        window.location.replace("/");
     }
 
     login(username, password) {
         return ApiAgent.UserActions.login(username, password).then(result => {
-            if (!result.isEmpty) {
+            if (!result === undefined) {
                 this.authStore.setToken(result.token);
                 this.pullUser();
+                this.authStore.setAuthenticated(true);
+                window.location.replace("/")
             }
-        });
+        })
 
     }
 
@@ -95,9 +95,12 @@ class UserStore {
 }
 
 decorate(UserStore, {
-    currentUser: observable,
+    studentUser: observable,
+    companyUser: observable,
     loadingUser: observable,
     updatingUser: observable,
+    authStore: observable,
+    logout: action,
     forgetUser: action,
     updateUser: action,
     pullUser: action,

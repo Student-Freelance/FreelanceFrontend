@@ -1,4 +1,4 @@
-import LocationModel from "../Shared/LocationModel";
+import LocationModel from "../Shared/Models/LocationModel";
 
 export default interface Job {
     id: string;

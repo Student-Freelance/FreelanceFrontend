@@ -7,7 +7,9 @@ import EmployerSignupTab from "./SignupTabs/EmployerSignupTab/EmployerSignupTab"
 import FreelancerSignupTab from "./SignupTabs/FreelancerSignupTab/FreelancerSignupTab";
 
 
-function LoginPage() {
+const LoginPage = () => {
+
+
     return (
         <div className="LoginMargins">
             <Container className="LoginTitle">
@@ -29,6 +31,6 @@ function LoginPage() {
             </Container>
         </div>
     )
-}
+};
 
 export default LoginPage;

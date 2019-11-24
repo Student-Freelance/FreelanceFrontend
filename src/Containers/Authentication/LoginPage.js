@@ -7,8 +7,7 @@ import EmployerSignupTab from "./SignupTabs/EmployerSignupTab/EmployerSignupTab"
 import FreelancerSignupTab from "./SignupTabs/FreelancerSignupTab/FreelancerSignupTab";
 import ClipLoader from "react-spinners/ClipLoader";
 import {observer} from "mobx-react";
-import {useStores} from "../index";
-
+import {useStores} from "../../index";
 
 
 const LoginPage = () => {

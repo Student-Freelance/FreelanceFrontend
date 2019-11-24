@@ -7,7 +7,8 @@ import {WithContext as ReactTags} from 'react-tag-input';
 import Input from "./Input";
 import Select from "./Select";
 import DateInput from "./DateInput";
-import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
+import {AxiosAgent} from "../../../Web/AxiosAgent";
+
 
 const initialState= {
     job: {},
@@ -99,12 +100,12 @@ class CreateJobPage extends Component {
                         <h2>Time and dates</h2>
                         <DateInput
                             name={'jobStart'}
-                            title={'Job start'}
+                            title={'JobPage start'}
                             value={this.state.dateFields['jobStart']}
                             handleChange={(value) => this.handleInputChange("jobStart", value, 'dateFields')}/>
                         <DateInput
                             name={'jobEnd'}
-                            title={'Job end'}
+                            title={'JobPage end'}
                             value={this.state.dateFields['jobEnd']}
                             handleChange={(value) => this.handleInputChange("jobEnd", value, 'dateFields')}/>
                         <DateInput
@@ -202,7 +203,7 @@ class CreateJobPage extends Component {
             AxiosAgent.Post("Jobs", {...this.state.job})
                 .then(() => {
                     this.setState(initialState);
-                    window.alert('Job was succesfully created')
+                    window.alert('JobPage was succesfully created')
                 })
                 .catch((e) => console.log(e))
     }

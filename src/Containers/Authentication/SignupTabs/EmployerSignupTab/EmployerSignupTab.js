@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import './EmployerSignupTab.css';
 import {Button, Col, Form} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
-import {AxiosAgent} from "../../../Shared/Web/AxiosAgent";
+import {AxiosAgent} from "../../../../Web/AxiosAgent";
 import {withAuth} from "react-auth-guard";
 
 class EmployerSignupTab extends Component {

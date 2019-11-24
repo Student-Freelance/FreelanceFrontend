@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import {NavDropdown} from "react-bootstrap";
 import {observer} from "mobx-react";
 import {Link} from 'react-router-dom';
-import {useStores} from "../../index";
+import {useStores} from "../index";
 
 
 const NavBar = () => {

@@ -5,10 +5,9 @@ import "./StudentProfilePage.css"
 import Image from "react-bootstrap/Image";
 import ProfilePicture from "../Assets/profilepic.png"
 import {Col, Row} from "react-bootstrap";
-import editPen from "../Assets/editPen.png"
-import ProfileCard from "../Card/ProfileCard";
+import ProfileCard from "../Components/Card/ProfileCard";
 
-class StudentProfilePage extends Component{
+class StudentProfilePage extends Component {
 
     constructor(props) {
         super(props);
@@ -81,4 +80,5 @@ class StudentProfilePage extends Component{
         )
     }
 }
+
 export default StudentProfilePage;

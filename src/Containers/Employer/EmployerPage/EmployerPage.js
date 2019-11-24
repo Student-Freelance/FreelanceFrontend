@@ -6,7 +6,7 @@ import {Card, Container} from "react-bootstrap";
 import EmployerToChange from "./Views/EmployerToChange";
 import EmployerToView from "./Views/EmployerToView";
 import EmployerError from "./Views/EmployerError";
-import {AxiosAgent} from "../../Shared/Web/AxiosAgent";
+import {AxiosAgent} from "../../../Web/AxiosAgent";
 
 class EmployerPage extends Component {
 

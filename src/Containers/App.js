@@ -1,17 +1,17 @@
 import React from "react";
 import {observer} from "mobx-react";
-import NavBar from "./Shared/Views/NavBar";
+import NavBar from "../Components/NavBar";
 import LandingPage from "./LandingPage/LandingPage";
 import MarketPage from "./MarketPage/MarketPage";
-import CreateJobPage from "./Job/CreateJobPage/CreateJobPage";
-import DetailedJobPage from "./Job/DetailedJobPage/DetailedJobPage";
+import CreateJobPage from "./JobPage/CreateJobPage/CreateJobPage";
+import DetailedJobPage from "./JobPage/DetailedJobPage/DetailedJobPage";
 import EmployerPage from "./Employer/EmployerPage/EmployerPage";
-import ProfilePage from "./Profile/ProfilePage";
-import LoginPage from "./NotAuthenticated/LoginPage";
+import ProfilePage from "../Profile/ProfilePage";
+import LoginPage from "./Authentication/LoginPage";
 import PageNotFound from "./InvalidPage/PageNotFound";
 import {Route, Switch, withRouter} from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
-import {useStores} from "./index";
+import PrivateRoute from "../PrivateRoute";
+import {useStores} from "../index";
 import {ToastContainer} from "react-toastify";
 
 

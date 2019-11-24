@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../Shared/Views/NavBar";
+import NavBar from "../../Components/NavBar";
 import {withAuth} from "react-auth-guard";
 import {Route, Switch} from "react-router-dom";
 import LandingPage from "../LandingPage/LandingPage";

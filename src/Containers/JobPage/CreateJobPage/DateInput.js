@@ -1,5 +1,5 @@
 import React from "react";
-import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
+import {FormGroup, FormLabel} from "react-bootstrap";
 import DatePicker from "react-datepicker/es";
 
 

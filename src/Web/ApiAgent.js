@@ -4,7 +4,7 @@ import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const superagent = superagentPromise(_superagent, global.Promise);
-const API_ROOT = 'https://localhost:5001/api/';
+const API_ROOT = 'https://devops01.eitlab.diplom.dtu.dk/api/'; //'https://localhost:5001/api/';
 
 const handleErrors = (err) => {
     console.log(err);
@@ -13,8 +13,8 @@ const handleErrors = (err) => {
         toast.error("Der er problemer med at forbinde til serveren" )
     }
     if (err && err.response && err.response.status === 401) {
-        console.log(err.response.text)
-        toast.error("Brugernavn eller kodeord er forkert!"  )
+        console.log(err.response.text);
+        toast.error("Brugernavn eller kodeord er forkert!");
         return err.response.text;
     }
    return err;

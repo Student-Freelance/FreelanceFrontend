@@ -3,24 +3,21 @@ import {Col, Container, Row} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import ProfilePicture from "../Assets/profilepic.png";
-import ProfileCard from "../Card/ProfileCard";
-import {string} from "prop-types";
+import ProfileCard from "../Components/Card/ProfileCard";
 
 
 class CompanyProfilePage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-
-        };
+        this.state = {};
 
 
     }
 
     render() {
         let company = JSON.parse(sessionStorage.getItem('User'));
-        return(
+        return (
             <div>
                 <Container>
                     <h3 className="profilHeadline">Profile</h3>

@@ -1,6 +1,6 @@
 import React from "react";
 import "./LandingPage.css"
-import FrontPagePic from "../Assets/FrontPagePic.jpg"
+import FrontPagePic from "../../Assets/FrontPagePic.jpg"
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";

@@ -5,12 +5,23 @@ import Container from "react-bootstrap/Container";
 import LoginTab from "./LoginTabs/LoginTab/LoginTab";
 import EmployerSignupTab from "./SignupTabs/EmployerSignupTab/EmployerSignupTab";
 import FreelancerSignupTab from "./SignupTabs/FreelancerSignupTab/FreelancerSignupTab";
+import ClipLoader from "react-spinners/ClipLoader";
+import {observer} from "mobx-react";
+import {useStores} from "../index";
+
 
 
 const LoginPage = () => {
-
+    const {userStore} = useStores();
 
     return (
+        userStore.loadingUser? <div className='sweet-loading, LoaderMargins'
+            >
+            <ClipLoader
+                size={150} // or 150px
+                color={'#123abc'}
+            />
+        </div>:
         <div className="LoginMargins">
             <Container className="LoginTitle">
                 <h1>Login</h1>
@@ -33,4 +44,4 @@ const LoginPage = () => {
     )
 };
 
-export default LoginPage;
+export default observer(LoginPage);

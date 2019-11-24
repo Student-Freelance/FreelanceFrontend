@@ -1,14 +1,23 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'https://localhost:5001/api/';
 
 const handleErrors = (err) => {
+    console.log(err);
+    let string= err + '';
+    if(string.includes('Request has been terminated')){
+        toast.error("Der er problemer med at forbinde til serveren" )
+    }
     if (err && err.response && err.response.status === 401) {
         console.log(err.response.text)
+        toast.error("Brugernavn eller kodeord er forkert!"  )
+        return err.response.text;
     }
-    return err;
+   return err;
 };
 
 const responseBody = res => res.body;
@@ -39,7 +48,7 @@ const requests = {
             .use(tokenPlugin)
             .catch(handleErrors)
             .then(responseBody),
-    post: (url, body) =>
+    post: (url, body,) =>
         superagent
             .post(`${API_ROOT}${url}`, body)
             .use(tokenPlugin)

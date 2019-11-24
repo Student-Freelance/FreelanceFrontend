@@ -12,11 +12,12 @@ import PageNotFound from "./InvalidPage/PageNotFound";
 import {Route, Switch, withRouter} from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import {useStores} from "./index";
+import {ToastContainer} from "react-toastify";
 
 
 const App = () => {
     const {userStore, authStore} = useStores();
-    if (localStorage.getItem("Token") && userStore.companyUser === undefined && userStore.studentUser === undefined) {
+    if (localStorage.getItem("Token")) {
         userStore.pullUser();
         authStore.setAuthenticated(true);
     }
@@ -29,6 +30,7 @@ const App = () => {
                 <React.Fragment>
                     <NavBar/>
                 </React.Fragment>
+                <ToastContainer position="bottom-right" autoClose={2000}/>
                 <Switch>
                     <Route exact path="/" component={LandingPage}/>
                     <PrivateRoute authenticated={authStore.authenticated} path="/market"
@@ -45,6 +47,7 @@ const App = () => {
                     <Route component={PageNotFound}/>
                 </Switch>
             </div>
+            <ToastContainer position="bottom-right" autoClose={2000}/>
         </div>
     );
 

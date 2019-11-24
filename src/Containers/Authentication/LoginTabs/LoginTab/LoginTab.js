@@ -6,7 +6,6 @@ import GoogleLogin from "react-google-login";
 import {withRouter} from "react-router-dom"
 import {observer} from "mobx-react";
 import {useStores} from "../../../index";
-import {toast} from "react-toastify";
 
 
 const LoginTab = (props) => {
@@ -14,7 +13,6 @@ const LoginTab = (props) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const {userStore, authStore} = useStores();
-    const notify = () => toast("default");
 
     const responseGoogle = (response) => {
         userStore.googlelogin({access_token: response.Zi.id_token}).then(result => {
@@ -27,9 +25,10 @@ const LoginTab = (props) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        userStore.login(userName, password).catch((err) => {
-            toast.error(err.response.text)
-        });
+        userStore.login(userName, password).finally(()=>{
+            userStore.loadingUser = false;
+            props.history.push("/")
+        })
     };
 
     const handleUsernameNameChange = (event) => {
@@ -93,6 +92,7 @@ const LoginTab = (props) => {
                 </Form.Row>
             </Container>
         </div>
+
     )
 
 };

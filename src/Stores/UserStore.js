@@ -5,6 +5,7 @@ import {companyObject, studentObject} from '../Models/userObjects'
 class UserStore {
     companyUser = companyObject;
     studentUser = studentObject;
+    isStudent = false;
     authStore;
     loadingUser;
     updatingUser;
@@ -39,6 +40,7 @@ class UserStore {
             .then(action((body) => {
                 if (body.hasOwnProperty('firstname')) {
                     Object.assign(this.studentUser, body);
+                    this.isStudent = true;
                 } else if (body.hasOwnProperty('companyName')) {
                     Object.assign(this.companyUser, body);
                 }
@@ -51,20 +53,24 @@ class UserStore {
     logout() {
         this.authStore.logout(true);
         this.authStore.setAuthenticated(false);
+        this.isStudent = false;
         this.companyUser = undefined;
         this.studentUser = undefined;
-        window.location.replace("/");
+        window.location.replace("/login");
     }
 
     login(username, password) {
+        this.loadingUser = true;
         return ApiAgent.UserActions.login(username, password).then(result => {
-            if (!result === undefined) {
+            if (result) {
                 this.authStore.setToken(result.token);
-                this.pullUser();
-                this.authStore.setAuthenticated(true);
-                window.location.replace("/")
+                this.pullUser().then(() => {
+                        this.authStore.setAuthenticated(true);
+                    }
+                );
             }
         })
+
 
     }
 
@@ -99,6 +105,7 @@ decorate(UserStore, {
     companyUser: observable,
     loadingUser: observable,
     updatingUser: observable,
+    isStudent: observable,
     authStore: observable,
     logout: action,
     forgetUser: action,

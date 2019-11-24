@@ -1,7 +1,7 @@
 import React from "react";
 import "./MarketPage.css"
 import CardDeck from "react-bootstrap/CardDeck";
-import JobCard from "../Card/JobCard";
+import JobCard from "../Components/Card/JobCard";
 import {Col, Container, Row} from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";

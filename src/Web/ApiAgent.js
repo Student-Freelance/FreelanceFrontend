@@ -4,15 +4,15 @@ import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const superagent = superagentPromise(_superagent, global.Promise);
-const API_ROOT = 'https://devops01.eitlab.diplom.dtu.dk/api/'; //'https://localhost:5001/api/';
+const API_ROOT = 'https://devops01.eitlab.diplom.dtu.dk/api/';//'https://localhost:5001/api/';
 
 const handleErrors = (err) => {
     console.log(err);
     let string= err + '';
     if(string.includes('Request has been terminated')){
-        toast.error("Der er problemer med at forbinde til serveren" )
-    }
-    if (err && err.response && err.response.status === 401) {
+        toast.error("Der er problemer med at forbinde til serveren");
+        return;
+    } else if (err.response.status === 401 || err.response.status === 400) {
         console.log(err.response.text);
         toast.error("Brugernavn eller kodeord er forkert!");
         return err.response.text;

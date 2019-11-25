@@ -1,22 +1,16 @@
-import React, {Component} from "react";
+import React from "react";
 import {Col, Container, Row} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import ProfilePicture from "../Assets/profilepic.png";
 import ProfileCard from "../Components/Card/ProfileCard";
+import {observer} from "mobx-react";
+import {useStores} from "../index";
 
 
-class CompanyProfilePage extends Component {
+const CompanyProfilePage = () => {
+    const {userStore} = useStores();
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-
-
-    }
-
-    render() {
-        let company = JSON.parse(sessionStorage.getItem('User'));
         return (
             <div>
                 <Container>
@@ -26,17 +20,19 @@ class CompanyProfilePage extends Component {
                             <Card body>
                                 <Row sm={12} md={12} xl={12}>
                                     <Col xl={5} sm={5} md={5} xs={5}>
-                                        <Image fluid src={company.logo} alt={ProfilePicture} roundedCircle/>
+                                        <Image fluid
+                                               src={(userStore.companyUser.logo === '' || userStore.companyUser.logo == null) ? ProfilePicture : userStore.companyUser.logo}
+                                               alt={"No image found"} roundedCircle/>
                                     </Col>
                                     <Col xl={6} sm={6} md={6} xs={6}>
                                         <br/>
-                                        <h6>Name: {company.companyName}</h6>
-                                        <h6>Email: {company.email}</h6>
+                                        <h6>Name: {userStore.companyUser.companyName}</h6>
+                                        <h6>Email: {userStore.companyUser.email}</h6>
                                     </Col>
                                     <Col>
-                                        <h6>Vat: {company.vat} </h6>
-                                        <h6>Website: {company.website || 'no website'} </h6>
-                                        <h6>Phone Number: {company.phoneNumber}</h6>
+                                        <h6>Vat: {userStore.companyUser.vat} </h6>
+                                        <h6>Website: {userStore.companyUser.website || 'no website'} </h6>
+                                        <h6>Phone Number: {userStore.companyUser.phoneNumber}</h6>
                                         <h6>Address: </h6>
                                     </Col>
                                 </Row>
@@ -54,7 +50,6 @@ class CompanyProfilePage extends Component {
                 </Container>
             </div>
         )
-    }
-}
+};
 
-export default CompanyProfilePage;
+export default observer(CompanyProfilePage);

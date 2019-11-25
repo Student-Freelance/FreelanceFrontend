@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import "./StudentProfilePage.css"
@@ -6,17 +6,11 @@ import Image from "react-bootstrap/Image";
 import ProfilePicture from "../Assets/profilepic.png"
 import {Col, Row} from "react-bootstrap";
 import ProfileCard from "../Components/Card/ProfileCard";
+import {observer} from "mobx-react";
+import {useStores} from "../index";
 
-class StudentProfilePage extends Component {
-
-    constructor(props) {
-        super(props);
-
-    }
-
-    render() {
-        let user = JSON.parse(sessionStorage.getItem('User'));
-        let name = user.firstname + " " + user.lastname;
+const StudentProfilePage = () => {
+    const {userStore} = useStores();
         return (
             <div>
                 <Container>
@@ -26,12 +20,14 @@ class StudentProfilePage extends Component {
                             <Card body>
                                 <Row sm={12} md={12} xl={12}>
                                     <Col xl={5} sm={5} md={5} xs={5}>
-                                        <Image fluid src={user.logo} alt={ProfilePicture} roundedCircle/>
+                                        <Image fluid
+                                               src={((userStore.studentUser.logo) === '' || null || 'string') ? ProfilePicture : userStore.studentUser.logo}
+                                               alt={"No image found"} roundedCircle/>
                                     </Col>
                                     <Col xl={6} sm={6} md={6} xs={6}>
                                         <br/>
-                                        <h6>Name: {name} </h6>
-                                        <h6>Email: {user.email} </h6>
+                                        <h6>Name: {userStore.studentUser.firstname + " " + userStore.studentUser.lastname} </h6>
+                                        <h6>Email: {userStore.studentUser.email} </h6>
                                     </Col>
                                 </Row>
                             </Card>
@@ -78,7 +74,6 @@ class StudentProfilePage extends Component {
                 </Container>
             </div>
         )
-    }
-}
+};
 
-export default StudentProfilePage;
+export default observer(StudentProfilePage);

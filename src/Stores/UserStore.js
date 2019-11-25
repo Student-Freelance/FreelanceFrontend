@@ -20,8 +20,10 @@ class UserStore {
         return ApiAgent.UserActions.current()
             .then(action((body) => {
                 if (body.hasOwnProperty('firstname')) {
+                    this.isStudent = true;
                     Object.assign(this.studentUser, body);
                 } else if (body.hasOwnProperty('companyName')) {
+                    this.isStudent = false;
                     Object.assign(this.companyUser, body);
                 }
             }))
@@ -33,16 +35,13 @@ class UserStore {
     updateUser(newUser) {
         this.updatingUser = true;
         let endpoint = 'Students';
-        if (newUser.hasOwnProperty('companyName')) {
+        if (!this.isStudent) {
             endpoint = 'Companies'
         }
         return ApiAgent.UserActions.save(newUser, endpoint)
-            .then(action((body) => {
-                if (body.hasOwnProperty('firstname')) {
-                    Object.assign(this.studentUser, body);
-                    this.isStudent = true;
-                } else if (body.hasOwnProperty('companyName')) {
-                    Object.assign(this.companyUser, body);
+            .then(action((response) => {
+                if (response.status === 200) {
+                    this.pullUser();
                 }
             }))
             .finally(action(() => {

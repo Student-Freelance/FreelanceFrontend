@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import GoogleLogin from "react-google-login";
 import {withRouter} from "react-router-dom"
 import {observer} from "mobx-react";
-import {useStores} from "../../../../index";
+import {useStores} from "../../../index";
 
 
 const LoginTab = (props) => {

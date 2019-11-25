@@ -2,7 +2,7 @@ import React from "react";
 import './LoginPage.css';
 import {Tab, Tabs} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
-import LoginTab from "./LoginTabs/LoginTab/LoginTab";
+import LoginTab from "./LoginTab/LoginTab";
 import EmployerSignupTab from "./SignupTabs/EmployerSignupTab/EmployerSignupTab";
 import FreelancerSignupTab from "./SignupTabs/FreelancerSignupTab/FreelancerSignupTab";
 import ClipLoader from "react-spinners/ClipLoader";

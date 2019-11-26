@@ -42,7 +42,7 @@ const LoginTab = (props) => {
     };
 
     const redirectToAuthDTU = () => {
-        window.location.href = "https://devops01.eitlab.diplom.dtu.dk/api/Account/CampusNetLogin";
+        window.location.href = "https://devops01.eitlab.diplom.dtu.dk/backend/api/Account/CampusNetLogin";
         // "https://localhost:5001/api/Account/CampusNetLogin";
 
     };

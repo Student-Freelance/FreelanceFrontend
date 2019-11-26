@@ -12,7 +12,6 @@ class UserStore {
 
     constructor(authStore) {
         this.authStore = authStore;
-
     }
 
     pullUser() {
@@ -69,8 +68,6 @@ class UserStore {
                 );
             }
         })
-
-
     }
 
     googlelogin(token) {
@@ -87,9 +84,7 @@ class UserStore {
                     this.login(username, password)
                 }
             }
-
         });
-
     }
 
     registerCompany(body) {
@@ -101,9 +96,7 @@ class UserStore {
                 this.login(username, password)
             }
         });
-
     }
-
 }
 
 decorate(UserStore, {

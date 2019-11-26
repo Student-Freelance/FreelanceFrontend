@@ -15,7 +15,7 @@ pipeline {
 
     stage('Completed') {
       steps {
-        timestamps()
+        echo 'Done'
       }
     }
 

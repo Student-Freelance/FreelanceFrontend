@@ -1,35 +1,19 @@
-## Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-## base image
-#FROM node:12.2.0-alpine as build-stage
-#
-## set working directory
-#WORKDIR /app
-#
-## add `/app/node_modules/.bin` to $PATH
-#ENV PATH /app/node_modules/.bin:$PATH
-#
-## install and cache app dependencies
-#COPY package.json /app/package.json
-#RUN npm install
-#RUN npm install react-scripts@3.0.1 -g
-#COPY ./ /app/
-#
-#ARG configuration=production
-#RUN npm run build -- --output-path=./dist/out --configuration $configuration
-
-# base image
-FROM node:13.1.0-alpine
-
-# set working directory
-WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /app/package.json
-RUN npm installdocker
-RUN npm install react-scripts@3.0.1 -g
-
-# start app
-CMD ["npm", "start"]
+FROM alpine
+EXPOSE 80
+ADD default.conf /etc/nginx/conf.d/default.conf
+COPY . /var/www/localhost/htdocs
+RUN apk add nginx && \
+    mkdir /run/nginx && \
+    apk add nodejs && \
+    apk add npm && \
+    cd /var/www/localhost/htdocs && \
+    npm install && \
+    npm run build && \
+    apk del nodejs && \
+    apk del npm && \
+    mv /var/www/localhost/htdocs/build /var/www/localhost && \
+    cd /var/www/localhost/htdocs && \
+    rm -rf * && \
+    mv /var/www/localhost/build /var/www/localhost/htdocs;
+CMD ["/bin/sh", "-c", "exec nginx -g 'daemon off;';"]
+WORKDIR /var/www/localhost/htdocs

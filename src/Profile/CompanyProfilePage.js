@@ -16,7 +16,7 @@ const CompanyProfilePage = () => {
                 <Container>
                     <h3 className="profilHeadline">Profile</h3>
                     <Row sm={12} md={12} xl={12}>
-                        <Col xl={4}>
+                        <Col xl={5}>
                             <Card body>
                                 <Row sm={12} md={12} xl={12}>
                                     <Col xl={5} sm={5} md={5} xs={5}>
@@ -29,22 +29,38 @@ const CompanyProfilePage = () => {
                                         <h6>Name: {userStore.companyUser.companyName}</h6>
                                         <h6>Email: {userStore.companyUser.email}</h6>
                                     </Col>
-                                    <Col>
-                                        <h6>Vat: {userStore.companyUser.vat} </h6>
-                                        <h6>Website: {userStore.companyUser.website || 'no website'} </h6>
-                                        <h6>Phone Number: {userStore.companyUser.phoneNumber}</h6>
-                                        <h6>Address: </h6>
-                                    </Col>
                                 </Row>
                             </Card>
                             <br/>
+                            <Card body>
+                                <Row sm={12} md={12} xl={12}>
+                                    <Col xl={7}>
+                                        <h6>Vat: {userStore.companyUser.vat} </h6>
+                                        <h6>Website: {userStore.companyUser.website || 'no website'} </h6>
+                                        <h6>Phone Number: {userStore.companyUser.phoneNumber}</h6>
+                                        <h6>Email: {userStore.companyUser.email}</h6>
+                                        <h6>Address:</h6>
+                                    </Col>
+                                </Row>
+                            </Card>
                         </Col>
-                        <Col xl={8}>
-                            <Row sm={12} md={12} xl={12}>
-                                <ProfileCard>
-
-                                </ProfileCard>
-                            </Row>
+                        <Col xl={7}>
+                            <Card body>
+                                <Row sm={12} md={12} xl={12}>
+                                    <Col xl={10} md={10} sm={10} xs={10}>
+                                        <h6 className="About"> Om</h6>
+                                    </Col>
+                                    <p> {userStore.companyUser.about}</p>
+                                </Row>
+                                <hr/>
+                            </Card>
+                            <br/>
+                            <Card body>
+                                <h6 className="jobs">Jobs</h6>
+                                <hr/>
+                                <p>{userStore.companyUser.jobs}</p>
+                            </Card>
+                            <br/>
                         </Col>
                     </Row>
                 </Container>

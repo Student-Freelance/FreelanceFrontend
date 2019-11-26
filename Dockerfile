@@ -8,6 +8,7 @@ RUN apk add nginx && \
     apk add npm && \
     cd /var/www/localhost/htdocs && \
     npm install && \
+    npm install --save react-toastify && \
     npm run build && \
     apk del nodejs && \
     apk del npm && \

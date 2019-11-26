@@ -10,6 +10,7 @@ import UserStore from "./Stores/UserStore";
 import AuthStore from "./Stores/AuthStore";
 import JobStore from "./Stores/JobStore";
 
+
 let authStore = new AuthStore();
 export const storesContext = React.createContext({
     userStore: new UserStore(authStore),

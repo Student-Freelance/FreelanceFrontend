@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import './DetailedJobPage.css';
 import {Badge, Card, Col, Container, Row} from 'react-bootstrap';
 
-import Job from "../Job";
 import {AxiosAgent} from "../../../Web/AxiosAgent";
+import {Job} from "../Job";
 
 class DetailedJobPage extends Component {
 

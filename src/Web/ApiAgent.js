@@ -89,7 +89,15 @@ const UserActions = {
         requests.put(endpoint, user)
 };
 
+const JobActions = {
+    fetchAll: () =>
+        requests.get('Jobs'),
+    fetchOne: async (id) =>
+        requests.get(`Jobs/${id}`)
+};
+
 
 export default {
-    UserActions
+    UserActions,
+    JobActions
 };

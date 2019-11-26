@@ -96,9 +96,11 @@ class UserStore {
         this.loadingUser = true;
         let username = body.userName;
         let password = body.password;
-        return ApiAgent.UserActions.registerCompany(body).then(response => {
-            if (response.result === "User created") {
-                this.login(username, password)
+        return ApiAgent.UserActions.registerCompany(body).then(result => {
+            if (!(result === undefined)) {
+                if (result.statusCode === 201) {
+                    this.login(username, password)
+                }
             }
         });
 

@@ -10,66 +10,51 @@ import Label from "./Label";
 import ActiveLabel from "./ActiveLabel";
 import {observer} from "mobx-react";
 import {useStores} from "../../index";
+import {useHistory} from "react-router-dom";
+import {toJS} from "mobx";
 
 const MarketPage = () => {
 
+    let history = useHistory();
     const {jobStore} = useStores();
-
     let search = '';
-    let filteredJobs = [];
-    let tags = [];
-    let activeTag = {};
-    let isLoading = true;
-
-
-    createLabels();
-
-    function createLabels() {
-        console.log(jobStore);
-        let tags = [];
-        jobStore.jobs.map(job => job.tags.map((tag) => tags.push(tag)));
-        let counts = {};
-        for (let i = 0; i < tags.length; i++) {
-            counts[tags[i]] = 1 + (counts[tags[i]] || 0);
-        }
-        this.tags = Object.keys(counts).map(key => [key, counts[key]]);
-        this.isLoading = false;
-    }
+    let activeTag = '';
 
     function filterLabel(value) {
-        if (value === this.activeTag) {
-            this.filtered = [...jobStore.jobs];
-            this.activeTag = '';
-        } else {
-            let jobs = [...jobStore.jobs];
-            let filtered = jobs.filter(job => {
-                    return job.tags.includes(value);
-                }
-            );
-            this.filtered = filtered;
-            this.activeTag = value;
+        if (!jobStore.isLoading) {
+            if (value === activeTag) {
+                jobStore.filteredJobs = [toJS(...jobStore.jobs)];
+                activeTag = '';
+            } else {
+                let jobs = [toJS(...jobStore.jobs)];
+                jobStore.filteredJobs = jobs.filter(job => {
+                        return job.tags.includes(value);
+                    }
+                );
+                activeTag = value;
+            }
         }
     }
 
     function searchJob() {
-        const filter = this.search;
-        let jobs = [...jobStore.jobs];
-        this.filtered = jobs.filter(job => {
-                if (!(job.title == null)) {
-                    return job.description.includes(filter);
-                }
-            }
-        );
+        // const filter = this.search;
+        // let jobs = [...jobStore.jobs];
+        // this.filtered = jobs.filter(job => {
+        //         if (!(job.title == null)) {
+        //             return job.description.includes(filter);
+        //         }
+        //     }
+        // );
     }
 
     return (
         <Container fluid>
-            {isLoading ? <p>Loading ...</p> :
+            {jobStore.isLoading ? <p>Loading ...</p> :
                 <Row sm={12} md={12} xl={12}>
                     <Col xl={2} className="d-none d-lg-block">
                         <h1 className="d-flex justify-content-left">Labels</h1>
                         <ul className="list-group">
-                            {tags.slice(0, 10).map(tag =>
+                            {jobStore.tags.slice(0, 10).map(tag =>
                                 (tag[0] === activeTag) ?
                                     <ActiveLabel key={tag[0]} tag={tag}
                                                  clickHandler={() => filterLabel(tag[0])}/>
@@ -96,8 +81,7 @@ const MarketPage = () => {
                         </Row>
                         <Row><Button onClick={() => this.props.history.push('/create')}>Create job</Button></Row>
                         <Row>
-
-                            {(this.filtered.map(job => {
+                            {(jobStore.filteredJobs.map(job => {
                                     const {id, title, description, location, createdOn, companyName} = job;
                                     return (
                                         <CardDeck key={id}
@@ -109,8 +93,8 @@ const MarketPage = () => {
                                                 location={location}
                                                 description={description}
                                                 date={createdOn}
-                                                handleJobClick={() => this.props.history.push(`job/${id}`)}
-                                                handleCompanyClick={() => this.props.history.push(`employer/${companyName}`)}/>
+                                                handleJobClick={() => history.push(`job/${id}`)}
+                                                handleCompanyClick={() => history.push(`employer/${companyName}`)}/>
                                         </CardDeck>
                                     );
                                 })

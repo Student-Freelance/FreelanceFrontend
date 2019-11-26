@@ -16,10 +16,11 @@ import {ToastContainer} from "react-toastify";
 
 
 const App = () => {
-    const {userStore, authStore} = useStores();
+    const {userStore, authStore, jobStore} = useStores();
     if (localStorage.getItem("Token")) {
         userStore.pullUser();
         authStore.setAuthenticated(true);
+        jobStore.pullJobs();
     }
 
 
@@ -35,7 +36,7 @@ const App = () => {
                     <Route exact path="/" component={LandingPage}/>
                     <PrivateRoute authenticated={authStore.authenticated} path="/market"
                                   component={MarketPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path="/createJob"
+                    <PrivateRoute authenticated={authStore.authenticated} path="/create"
                                   component={CreateJobPage}/>
                     <PrivateRoute authenticated={authStore.authenticated} path="/detailedjob/:handle"
                                   component={DetailedJobPage}/>

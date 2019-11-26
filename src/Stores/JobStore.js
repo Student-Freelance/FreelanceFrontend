@@ -3,7 +3,7 @@ import ApiAgent from '../Web/ApiAgent';
 import {Job} from "../Containers/JobPage/Job";
 
 class JobStore {
-    jobs = Job
+    jobs = Job;
     loadingJobs;
 
     pullJobs() {
@@ -18,3 +18,10 @@ class JobStore {
             }))
     }
 }
+
+decorate(JobStore, {
+    jobs: observable,
+    loadingJobs: observable
+});
+
+export default JobStore;

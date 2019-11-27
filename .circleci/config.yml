@@ -19,7 +19,7 @@
 
 version: 2
 jobs:
-  build:
+#   build:
   deploy:
     steps:
       - checkout

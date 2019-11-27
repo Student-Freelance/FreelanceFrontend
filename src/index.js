@@ -26,7 +26,7 @@ if (token != null && token.length > 0) {
 }
 
 ReactDOM.render(
-    <BrowserRouter><App/></BrowserRouter>,
+    <BrowserRouter basename={'/free'}><App/></BrowserRouter>,
     document.getElementById('root')
 );
 

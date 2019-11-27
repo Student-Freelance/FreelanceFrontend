@@ -34,17 +34,19 @@ const App = () => {
                 <ToastContainer position="bottom-right" autoClose={2000}/>
                 <Switch>
                     <Route exact path="/" component={LandingPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path="/market"
+                    <PrivateRoute authenticated={authStore.authenticated} path={`${process.env.PUBLIC_URL}/market`}
                                   component={MarketPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path="/create"
+                    <PrivateRoute authenticated={authStore.authenticated} path={`${process.env.PUBLIC_URL}/create`}
                                   component={CreateJobPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path="/detailedjob/:handle"
+                    <PrivateRoute authenticated={authStore.authenticated}
+                                  path={`${process.env.PUBLIC_URL}/detailedjob/:handle`}
                                   component={DetailedJobPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path="/employer/:handle"
+                    <PrivateRoute authenticated={authStore.authenticated}
+                                  path={`${process.env.PUBLIC_URL}/employer/:handle`}
                                   component={EmployerPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path="/profilepage"
+                    <PrivateRoute authenticated={authStore.authenticated} path={`${process.env.PUBLIC_URL}/profilepage`}
                                   component={ProfilePage}/>
-                    <Route path="/login" component={LoginPage}/>
+                    <Route path={`${process.env.PUBLIC_URL}/login`} component={LoginPage}/>
                     <Route component={PageNotFound}/>
                 </Switch>
             </div>

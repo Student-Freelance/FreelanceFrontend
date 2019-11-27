@@ -21,7 +21,7 @@ const StudentProfilePage = () => {
                                 <Row sm={12} md={12} xl={12}>
                                     <Col xl={5} sm={5} md={5} xs={5}>
                                         <Image fluid
-                                               src={((userStore.studentUser.logo) === '' || null || 'string') ? ProfilePicture : userStore.studentUser.logo}
+                                               src={((userStore.studentUser.logo) === '' || null) ? ProfilePicture : userStore.studentUser.logo}
                                                alt={"No image found"} roundedCircle/>
                                     </Col>
                                     <Col xl={6} sm={6} md={6} xs={6}>

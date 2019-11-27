@@ -22,6 +22,7 @@ constructor(props) {
         };
     }
 
+    //after all of the elements of the page is render corretly this methods is called
     componentDidMount(){
         const {handle} = this.props.match.params;
         try {

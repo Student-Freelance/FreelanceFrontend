@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import "./StudentProfilePage.css"
 import Image from "react-bootstrap/Image";
 import ProfilePicture from "../Assets/profilepic.png"
-import {Col, Row} from "react-bootstrap";
+import {Col, InputGroup, Row} from "react-bootstrap";
 import ProfileCard from "../Components/Card/ProfileCard";
 import {observer} from "mobx-react";
 import {useStores} from "../index";
@@ -14,7 +14,7 @@ import Button from "react-bootstrap/Button";
 const StudentProfilePage = (props) => {
 
     const {userStore} = useStores();
-    const [form, setState] = useState({
+    const [student, setStudent] = useState({
         email: "",
         userName: "",
         firstName: "",
@@ -29,18 +29,20 @@ const StudentProfilePage = (props) => {
         university: "",
     });
 
+    const handleIndputChange = event => {
+        const {name, value} = event.target
+        setStudent({...student, [name]: value})
+    };
+
     const toggleEdit = () => {
         this.setState(state => (
             {editMode: !state.editMode}));
-        this.state().editMode ? this.setState({btnText: "edit"}) : this.setState({btnText: "save"})
+        this.state().editMode ? this.setState({btnText: "edit"}) : this.setState({btnText: "save"});
 
         if (this.state.editMode) {
             console.log(this.state.editMode);
             try {
-                AxiosAgent.Put("Students", {...this.state.editMode})
-                    .then((data) => {
-                        console.log(data);
-                    });
+                userStore.updateUser(...student)
             } catch (e) {
                 console.log(e)
             }
@@ -50,8 +52,10 @@ const StudentProfilePage = (props) => {
         return (
             <div>
                 <Container>
+                    {this.state.isLoaded} ?
                     <h3 className="profilHeadline">Profile</h3>
                     <Row sm={12} md={12} xl={12}>
+                        <InputGroup>
                         <Col xl={5}>
                             <Card body>
                                 <Row sm={12} md={12} xl={12}>
@@ -63,7 +67,7 @@ const StudentProfilePage = (props) => {
                                     <Col xl={7} sm={7} md={7} xs={7}>
                                         <br/>
                                         <h6>Name: {userStore.studentUser.firstname + " " + userStore.studentUser.lastname} </h6>
-                                        <h6>Email: {userStore.studentUser.email} </h6>
+                                        <h6>Email: {userStore.studentUser.email}</h6>
                                     </Col>
                                 </Row>
                             </Card>
@@ -71,7 +75,19 @@ const StudentProfilePage = (props) => {
                             <Card body>
                                 <Row sm={12} md={12} xl={12}>
                                     <Col xl={7}>
-                                        <h6>Telefon nummer: {userStore.studentUser.phoneNumber}</h6>
+                                        <label>Telefon nummer:</label>
+                                        {this.state.editMode} ?
+                                        <input
+                                            type="number" maxLength={8} value={student.phoneNumber} name="phoneNumber"
+                                            placeholder={userStore.studentUser.phoneNumber}
+                                            onChange={handleIndputChange}
+                                        />
+                                        <Button
+                                            onClick={(e) => toggleEdit(e)}
+                                            variant="primary" type="submit" size="sm" block>
+                                            {this.state.btnText}
+                                        </Button>
+                                        <h6>Telefon nummer: {student.email}</h6>
                                         <h6>Tag: {userStore.studentUser.tags}</h6>
                                         <h6>Semester: {userStore.studentUser.semester}</h6>
                                     </Col>
@@ -86,7 +102,7 @@ const StudentProfilePage = (props) => {
                                     <h6 className="resume"> Resume</h6>
                                 </Col>
                                 <hr/>
-                                <p> {userStore.studentUser.resume}</p>
+                                <p>{userStore.studentUser.resume}</p>
                             </Row>
                             <hr/>
                         </Card>
@@ -108,7 +124,9 @@ const StudentProfilePage = (props) => {
                             <hr/>
                             <p>{userStore.studentUser.experience}</p>
                         </Card>
+
                         </Col>
+                        </InputGroup>
                     </Row>
                 </Container>
             </div>

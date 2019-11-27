@@ -16,16 +16,11 @@ const NavBar = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link as={Link} to='/'>Home</Nav.Link>
-                    {authStore.authenticated ?
-                        <Nav.Link as={Link} to='/market'>Market</Nav.Link> : ''}
-                    {authStore.authenticated ? <NavDropdown title={userStore.companyUser.companyName === '' ?
-                        userStore.studentUser.firstname + " " + userStore.studentUser.lastname : userStore.companyUser.companyName}
-                                                            id="basic-nav-dropdown">
-                        <NavDropdown.Item as={Link}
-                                          to='/profilepage'>Profile</NavDropdown.Item>
-                        <NavDropdown.Item onClick={() => {
-                            userStore.logout();
-                        }}>Logout</NavDropdown.Item>
+                    <Nav.Link as={Link} to='/market'>Market</Nav.Link>
+                    {authStore.authenticated ? <NavDropdown title= {userStore.isStudent?
+                        userStore.studentUser.firstname + " " + userStore.studentUser.lastname : userStore.companyUser.companyName} id="basic-nav-dropdown">
+                        <NavDropdown.Item as={Link} to='/profilepage'>Profile</NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => {userStore.logout();}}>Logout</NavDropdown.Item>
                     </NavDropdown> : <Nav.Link as={Link} to='/login'>Login</Nav.Link>}
                 </Nav>
             </Navbar.Collapse>

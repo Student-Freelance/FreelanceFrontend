@@ -12,23 +12,26 @@ const LoginTab = (props) => {
     const ClientID = "908937238247-c2fr5ag4d8vi7tcd5m8cssa0pffaiccp.apps.googleusercontent.com";
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const {userStore, authStore} = useStores();
+    const {userStore} = useStores();
 
     const responseGoogle = (response) => {
-        userStore.googlelogin({access_token: response.Zi.id_token}).then(result => {
-            if (!result.isEmpty) {
-                authStore.setToken(result.token);
-                userStore.pullUser();
+        userStore.googlelogin({access_token: response.Zi.id_token}).then((result) => {
+            if (result) {
                 props.history.push("/")
             }
-        });
+            userStore.loadingUser = false;
+        })
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        userStore.login(userName, password).finally(()=>{
+        userStore.login(userName, password).then((result) => {
+            console.log(result);
+            if (result) {
+                props.history.push("/")
+            }
             userStore.loadingUser = false;
-            props.history.push("/")
         })
+
     };
 
     const handleUsernameNameChange = (event) => {

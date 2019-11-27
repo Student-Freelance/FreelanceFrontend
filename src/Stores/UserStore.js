@@ -53,28 +53,40 @@ class UserStore {
         this.authStore.logout(true);
         this.authStore.setAuthenticated(false);
         this.isStudent = false;
-        this.companyUser = undefined;
-        this.studentUser = undefined;
-        window.location.replace("/login");
+        this.companyUser = companyObject;
+        this.studentUser = studentObject;
     }
 
     login(username, password) {
         this.loadingUser = true;
         return ApiAgent.UserActions.login(username, password).then(result => {
+
             if (result) {
                 this.authStore.setToken(result.token);
                 this.pullUser().then(() => {
                         this.authStore.setAuthenticated(true);
                     }
                 );
+                return true;
             }
+            else return false;
         })
-
-
     }
 
     googlelogin(token) {
-        return ApiAgent.UserActions.googlelogin(token)
+        this.loadingUser = true;
+        return ApiAgent.UserActions.googlelogin(token).then(result => {
+
+            if (result) {
+                this.authStore.setToken(result.token);
+                this.pullUser().then(()=>{
+                    this.authStore.setAuthenticated(true);
+
+                });
+                return true;
+            }
+            else return false;
+        });
     }
 
     registerStudent(body) {
@@ -87,9 +99,7 @@ class UserStore {
                     this.login(username, password)
                 }
             }
-
         });
-
     }
 
     registerCompany(body) {
@@ -103,9 +113,7 @@ class UserStore {
                 }
             }
         });
-
     }
-
 }
 
 decorate(UserStore, {

@@ -30,9 +30,7 @@ const handleErrors = (err) => {
     if (err.response.status === 404) {
         console.log(err);
         toast.error("Brugeren blev ikke fundet");
-        return;
     }
-   return err;
 };
 
 const responseBody = res => {

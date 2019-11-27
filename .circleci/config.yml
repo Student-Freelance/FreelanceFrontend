@@ -20,9 +20,7 @@
 version: 2
 jobs:
   deploy:
-    build:
     steps:
-      - checkout
       - run:
           name: Deploy Master to Heroku
           command: |
@@ -32,10 +30,7 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
       - deploy:
-          requires:
-            - build
           filters:
             branches:
               only: master    

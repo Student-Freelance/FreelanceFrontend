@@ -9,7 +9,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh '''docker login -u emilvinkel@gmail.com -p $Htoken registry.heroku.com
+        sh '''docker login -u emilvinkel@gmail.com -p $HToken registry.heroku.com
 docker tag frontend registry.heroku.com/free-lancer/web
 docker push registry.heroku.com/free-lancer/web'''
       }

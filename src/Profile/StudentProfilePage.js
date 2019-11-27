@@ -30,29 +30,18 @@ const StudentProfilePage = (props) => {
     });
 
     const handleIndputChange = event => {
-        const {name, value} = event.target
+        const {name, value} = event.target;
         setStudent({...student, [name]: value})
     };
 
-    const toggleEdit = () => {
-        this.setState(state => (
-            {editMode: !state.editMode}));
-        this.state().editMode ? this.setState({btnText: "edit"}) : this.setState({btnText: "save"});
-
-        if (this.state.editMode) {
-            console.log(this.state.editMode);
-            try {
-                userStore.updateUser(...student)
-            } catch (e) {
-                console.log(e)
-            }
-        }
-     };
+    const handleSubmit = event => {
+        event.preventDefault();
+        props.userStore.updateUser({...student});
+    };
 
         return (
             <div>
                 <Container>
-                    {this.state.isLoaded} ?
                     <h3 className="profilHeadline">Profile</h3>
                     <Row sm={12} md={12} xl={12}>
                         <InputGroup>
@@ -76,17 +65,11 @@ const StudentProfilePage = (props) => {
                                 <Row sm={12} md={12} xl={12}>
                                     <Col xl={7}>
                                         <label>Telefon nummer:</label>
-                                        {this.state.editMode} ?
                                         <input
                                             type="number" maxLength={8} value={student.phoneNumber} name="phoneNumber"
                                             placeholder={userStore.studentUser.phoneNumber}
                                             onChange={handleIndputChange}
                                         />
-                                        <Button
-                                            onClick={(e) => toggleEdit(e)}
-                                            variant="primary" type="submit" size="sm" block>
-                                            {this.state.btnText}
-                                        </Button>
                                         <h6>Telefon nummer: {student.email}</h6>
                                         <h6>Tag: {userStore.studentUser.tags}</h6>
                                         <h6>Semester: {userStore.studentUser.semester}</h6>

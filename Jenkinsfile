@@ -9,7 +9,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh '''heroku container:login
+        sh '''docker login --username=emilvinkel@gmail.com --password=$Htoken registry.heroku.com
 docker tag frontend registry.heroku.com/free-lancer/web
 docker push registry.heroku.com/free-lancer/web'''
       }

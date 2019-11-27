@@ -9,7 +9,9 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh 'docker run -it -d -p 4000:80 --name dfrontend frontend'
+        sh '''heroku container:login
+docker tag frontend registry.heroku.com/free-lancer/web
+docker push registry.heroku.com/free-lancer/web'''
       }
     }
 

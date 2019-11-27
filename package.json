@@ -33,7 +33,6 @@
     "toastify": "^2.0.0",
     "typescript": "^3.7.2"
   },
-  "homepage": "https://devops01.eitlab.diplom.dtu.dk/free",
   "scripts": {
     "dev": "react-scripts start",
     "start": "serve -s build",

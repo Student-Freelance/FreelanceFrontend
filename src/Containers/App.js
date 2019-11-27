@@ -24,7 +24,6 @@ const App = () => {
     }
 
 
-
     return (
         <div>
             <div>
@@ -34,19 +33,19 @@ const App = () => {
                 <ToastContainer position="bottom-right" autoClose={2000}/>
                 <Switch>
                     <Route exact path="/" component={LandingPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path={`${process.env.PUBLIC_URL}/market`}
+                    <PrivateRoute authenticated={authStore.authenticated} path='/market'
                                   component={MarketPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path={`${process.env.PUBLIC_URL}/create`}
+                    <PrivateRoute authenticated={authStore.authenticated} path='/create'
                                   component={CreateJobPage}/>
                     <PrivateRoute authenticated={authStore.authenticated}
-                                  path={`${process.env.PUBLIC_URL}/detailedjob/:handle`}
+                                  path='detailedjob/:handle'
                                   component={DetailedJobPage}/>
                     <PrivateRoute authenticated={authStore.authenticated}
-                                  path={`${process.env.PUBLIC_URL}/employer/:handle`}
+                                  path='/employer/:handle'
                                   component={EmployerPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated} path={`${process.env.PUBLIC_URL}/profilepage`}
+                    <PrivateRoute authenticated={authStore.authenticated} path='/profilepage'
                                   component={ProfilePage}/>
-                    <Route path={`${process.env.PUBLIC_URL}/login`} component={LoginPage}/>
+                    <Route path='/login' component={LoginPage}/>
                     <Route component={PageNotFound}/>
                 </Switch>
             </div>

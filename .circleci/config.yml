@@ -30,7 +30,7 @@ workflows:
   version: 2
   minimal:
     jobs:
-      - build
+      - build: "skriv test her"
       - tests:
           requires:
             - build

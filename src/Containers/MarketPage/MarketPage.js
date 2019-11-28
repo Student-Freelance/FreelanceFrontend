@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./MarketPage.css"
 import CardDeck from "react-bootstrap/CardDeck";
 import JobCard from "../../Components/Card/JobCard";
@@ -13,17 +13,20 @@ import {useStores} from "../../index";
 import {useHistory} from "react-router-dom";
 import {toJS} from "mobx";
 
+let activeTag = '';
+
 const MarketPage = () => {
 
+    const [search, setSearchState] = useState([
+        {search: ''}
+    ]);
     let history = useHistory();
     const {jobStore} = useStores();
-    let search = '';
-    let activeTag = '';
 
     function filterLabel(value) {
         if (!jobStore.isLoading) {
             if (value === activeTag) {
-                jobStore.filteredJobs = [toJS(...jobStore.jobs)];
+                jobStore.filteredJobs = [...jobStore.jobs];
                 activeTag = '';
             } else {
                 let jobs = [toJS(...jobStore.jobs)];
@@ -37,14 +40,21 @@ const MarketPage = () => {
     }
 
     function searchJob() {
-        // const filter = this.search;
-        // let jobs = [...jobStore.jobs];
-        // this.filtered = jobs.filter(job => {
-        //         if (!(job.title == null)) {
-        //             return job.description.includes(filter);
-        //         }
-        //     }
-        // );
+        const filter = search.search;
+        console.log(filter);
+        let jobs = ([...toJS(jobStore.jobs)]);
+        let filtered = jobs.filter(job => {
+                if (!(job.title == null)) {
+                    return job.description.includes(filter);
+                }
+            }
+        );
+        console.log(jobStore.filteredJobs);
+        jobStore.filteredJobs = filtered;
+    }
+
+    function onSearchChange(event){
+        setSearchState({search: event.target.value})
     }
 
     return (
@@ -69,12 +79,12 @@ const MarketPage = () => {
                             <Col>
                                 <InputGroup className="mb-5">
                                     <FormControl
-                                        value={search}
-                                        onChange={(e) => this.search = e.target.value}
+                                        value={search.value}
+                                        onChange={onSearchChange}
                                         placeholder="Search job titles"/>
                                     <InputGroup.Append>
                                         <Button variant="outline-primary"
-                                                onClick={() => searchJob()}>Search</Button>
+                                                onClick={searchJob}>Search</Button>
                                     </InputGroup.Append>
                                 </InputGroup>
                             </Col>

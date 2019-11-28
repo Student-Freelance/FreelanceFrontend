@@ -29,7 +29,7 @@ const MarketPage = () => {
                 jobStore.filteredJobs = [...jobStore.jobs];
                 activeTag = '';
             } else {
-                let jobs = [toJS(...jobStore.jobs)];
+                let jobs = [...jobStore.jobs];
                 jobStore.filteredJobs = jobs.filter(job => {
                         return job.tags.includes(value);
                     }
@@ -103,7 +103,9 @@ const MarketPage = () => {
                                                 location={location}
                                                 description={description}
                                                 date={createdOn}
-                                                handleJobClick={() => history.push(`job/${id}`)}
+                                                handleJobClick={() => {
+                                                    history.push(`job/${id}`);
+                                                }}
                                                 handleCompanyClick={() => history.push(`employer/${companyName}`)}/>
                                         </CardDeck>
                                     );

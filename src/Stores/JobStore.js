@@ -6,6 +6,7 @@ class JobStore {
     isLoading = true;
     tags = [];
     filteredJobs = [];
+    currentJob = {};
 
 
     pullJobs() {

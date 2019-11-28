@@ -34,18 +34,18 @@ jobs:
  - build:
     machine:
      steps:
-      - checkout
-      - run: npm i
+       - checkout
+       - run: npm i
  - test:
     machine: 
      steps:
-      - checkout
-      - run: npm test
+       - checkout
+       - run: npm test
  - deploy:
     machine:
      steps:
-      - checkout
-      - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+       - checkout
+       - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
    
 workflows:
   version: 2

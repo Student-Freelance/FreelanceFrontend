@@ -27,7 +27,7 @@
 version: 2
 jobs:
  build:
-  - run:
+  run: |
    git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
   
  

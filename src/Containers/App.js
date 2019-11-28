@@ -38,7 +38,7 @@ const App = () => {
                     <PrivateRoute authenticated={authStore.authenticated} path='/create'
                                   component={CreateJobPage}/>
                     <PrivateRoute authenticated={authStore.authenticated}
-                                  path='/detailedjob/:handle'
+                                  path='/job/:handle'
                                   component={DetailedJobPage}/>
                     <PrivateRoute authenticated={authStore.authenticated}
                                   path='/employer/:handle'

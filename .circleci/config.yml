@@ -24,15 +24,12 @@
 #       steps:
 #         run: |
 #             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-      
-
-workflows:
-  version: 2
-  minimal:
-   jobs:
-    - tests:
-    - deploy:
-#        requires:
-#         - tests
-       run:
-        git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+workflows:      
+ version: 2
+ jobs:
+  build:
+   run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+  
+ 
+        
+        

@@ -19,6 +19,7 @@ class UserStore {
         this.loadingUser = true;
         return ApiAgent.UserActions.current()
             .then(action((body) => {
+                if (!(body === undefined)){
                 if (body.hasOwnProperty('firstname')) {
                     this.isStudent = true;
                     Object.assign(this.studentUser, body);
@@ -26,7 +27,7 @@ class UserStore {
                     this.isStudent = false;
                     Object.assign(this.companyUser, body);
                 }
-            }))
+            }}))
             .finally(action(() => {
                 this.loadingUser = false;
             }))
@@ -40,8 +41,10 @@ class UserStore {
         }
         return ApiAgent.UserActions.save(newUser, endpoint)
             .then(action((response) => {
-                if (response.status === 200) {
-                    this.pullUser();
+                if (!(response === undefined)){
+                    if (response.status === 200) {
+                        this.pullUser();
+                    }
                 }
             }))
             .finally(action(() => {

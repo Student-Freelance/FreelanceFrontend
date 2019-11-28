@@ -10,23 +10,20 @@ import {observer} from "mobx-react";
 import {useStores} from "../index";
 import {AxiosAgent} from "../Web/AxiosAgent";
 import Button from "react-bootstrap/Button";
+import {studentObject} from "../Models/userObjects";
 
 const StudentProfilePage = (props) => {
 
     const {userStore} = useStores();
     const [student, setStudent] = useState({
         email: "",
-        userName: "",
-        firstName: "",
-        lastName: "",
-        competence: [],
-        education: [],
-        experience: [],
         phoneNumber: "",
-        resume: [],
         semester: 0,
-        tags: [],
-        university: "",
+        resume: "",
+        education: "",
+        experience: "",
+        competences: "",
+        isStudent: true
     });
 
     const handleIndputChange = event => {
@@ -36,7 +33,7 @@ const StudentProfilePage = (props) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        props.userStore.updateUser({...student});
+        userStore.updateUser({...student});
     };
 
         return (
@@ -70,6 +67,11 @@ const StudentProfilePage = (props) => {
                                             placeholder={userStore.studentUser.phoneNumber}
                                             onChange={handleIndputChange}
                                         />
+                                        <Button
+                                            onClick={(event) => handleSubmit(event)}
+                                            variant="primary" type="submit" size="lg" block>
+                                            Edit
+                                        </Button>
                                         <h6>Telefon nummer: {student.email}</h6>
                                         <h6>Tag: {userStore.studentUser.tags}</h6>
                                         <h6>Semester: {userStore.studentUser.semester}</h6>
@@ -105,7 +107,7 @@ const StudentProfilePage = (props) => {
                         <Card body>
                             <h6 className="skills">Mine kompetencer</h6>
                             <hr/>
-                            <p>{userStore.studentUser.experience}</p>
+                            <p>{userStore.studentUser.competences}</p>
                         </Card>
 
                         </Col>

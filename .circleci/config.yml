@@ -36,8 +36,8 @@ jobs:
     steps: 
        - run: 
            name: pushing to heroku
-           command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-#            command: git push https://git.heroku.com/freelance-portal.git
+#            command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+           command: git push https://git.heroku.com/freelance-portal.git
 
    
 workflows: 

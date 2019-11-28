@@ -24,13 +24,33 @@
 #       steps:
 #         run: |
 #             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master   
-version: 2
-jobs:
- build:
-   - run:
-    command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+# version: 2
+# jobs:
+#  build:
+#    - run:
+#     command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
       
-  
+jobs:
+  build:
+    steps:
+      - checkout
+      - run: npm i
+  test:
+    steps:
+      - checkout
+      - run: npm test
+  deploy:
+    steps:
+      - checkout
+      - run: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+   
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test 
+      - deploy   
  
         
         

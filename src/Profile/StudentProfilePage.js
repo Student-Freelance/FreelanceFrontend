@@ -33,13 +33,13 @@ const StudentProfilePage = (props) => {
 
     const handleIndputChange = event => {
         const {name, value} = event.target;
+
         setStudent({...student, [name]: value});
     };
 
     const handleSubmit = event => {
         setEdit( {editMode: !edit.editMode});
         console.log(edit.editMode);
-        // edit.editMode ? setEdit({btnText: "edit"}) : setEdit({btnText: "save"});
         if(edit.editMode){
             console.log(student);
             event.preventDefault();
@@ -76,14 +76,16 @@ const StudentProfilePage = (props) => {
                                         <Col xl={7}>
                                             <label>Telefon nummer: {userStore.studentUser.phoneNumber}</label>
                                             <input
-                                                type="number" maxLength={8} value={student.phoneNumber} name="phoneNumber"
+                                                type="number" maxLength={8} value={
+                                                    student.phoneNumber
+                                                } name="phoneNumber"
                                                 placeholder={userStore.studentUser.phoneNumber}
                                                 onChange={handleIndputChange}
                                             />
                                             <h6>Tag: {userStore.studentUser.tags}</h6>
                                             <label>Semester: {userStore.studentUser.semester}</label>
                                             <input
-                                                type="number" maxLength={1} value={student.semester.length} name="semester"
+                                                type="number" maxLength={2} value={student.semester} name="semester"
                                                 placeholder={userStore.studentUser.semester}
                                                 onChange={handleIndputChange}
                                             />

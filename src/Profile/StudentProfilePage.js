@@ -20,9 +20,9 @@ const StudentProfilePage = (props) => {
         phoneNumber: "",
         semester: 0,
         resume: "",
-        education: "",
+       /* education: "",
         experience: "",
-        competences: "",
+        competences: "",*/
         isStudent: true
     });
 
@@ -33,7 +33,7 @@ const StudentProfilePage = (props) => {
 
     const handleIndputChange = event => {
         const {name, value} = event.target;
-        setStudent({...student, [name]: value})
+        setStudent({...student, [name]: value});
     };
 
     const handleSubmit = event => {
@@ -74,14 +74,19 @@ const StudentProfilePage = (props) => {
                                 <Card body>
                                     <Row sm={12} md={12} xl={12}>
                                         <Col xl={7}>
-                                            <label>Telefon nummer:</label>
+                                            <label>Telefon nummer: {userStore.studentUser.phoneNumber}</label>
                                             <input
                                                 type="number" maxLength={8} value={student.phoneNumber} name="phoneNumber"
                                                 placeholder={userStore.studentUser.phoneNumber}
                                                 onChange={handleIndputChange}
                                             />
                                             <h6>Tag: {userStore.studentUser.tags}</h6>
-                                            <h6>Semester: {userStore.studentUser.semester}</h6>
+                                            <label>Semester: {userStore.studentUser.semester}</label>
+                                            <input
+                                                type="number" maxLength={1} value={student.semester.length} name="semester"
+                                                placeholder={userStore.studentUser.semester}
+                                                onChange={handleIndputChange}
+                                            />
                                         </Col>
                                     </Row>
                                 </Card>
@@ -94,13 +99,16 @@ const StudentProfilePage = (props) => {
                                             <h6 className="resume"> Resume</h6>
                                         </Col>
                                         <hr/>
-                                        <p>{userStore.studentUser.resume}</p>
-                                        <Form.Group controlId="exampleForm.ControlTextarea1">
-                                            <Form.Label>Example textarea</Form.Label>
-                                            <Form.Control as="textarea" rows="3" />
-                                        </Form.Group>
                                     </Row>
                                     <hr/>
+                                    <Form.Label>{userStore.studentUser.resume}</Form.Label>
+                                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                                        <Form.Label>Rediger resume</Form.Label>
+                                        <Form.Control as="textarea" rows="3"
+                                                      value={student.resume} name="resume"
+                                                      onChange={handleIndputChange}
+                                        />
+                                    </Form.Group>
                                 </Card>
                                 <br/>
                                 <Card body>
@@ -155,7 +163,7 @@ const StudentProfilePage = (props) => {
                                     <Col xl={7}>
                                         <label>Telefon nummer: {userStore.studentUser.phoneNumber}</label>
                                         <h6>Tag: {userStore.studentUser.tags}</h6>
-                                        <h6>Semester: {userStore.studentUser.semester}</h6>
+                                        <label>Semester: {userStore.studentUser.semester}</label>
                                     </Col>
                                 </Row>
                             </Card>
@@ -168,9 +176,9 @@ const StudentProfilePage = (props) => {
                                     <h6 className="resume"> Resume</h6>
                                 </Col>
                                 <hr/>
-                                <p>{userStore.studentUser.resume}</p>
                             </Row>
                             <hr/>
+                                <Form.Label>{userStore.studentUser.resume}</Form.Label>
                         </Card>
                         <br/>
                         <Card body>

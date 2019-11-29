@@ -39,9 +39,12 @@ class UserStore {
         }
         return ApiAgent.UserActions.save(newUser, endpoint)
             .then(action((response) => {
-                if (response.status === 200) {
-                    this.pullUser();
+                if(response!=null){
+                    if (response.statusCode === 201) {
+                        this.pullUser();
+                    }
                 }
+
             }))
             .finally(action(() => {
                 this.updatingUser = false;

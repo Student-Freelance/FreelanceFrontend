@@ -37,6 +37,7 @@ const handleErrors = (err) => {
 };
 
 const responseBody = res => {
+    console.log(res)
     if (!(res === undefined)) return res.body;
 };
 

@@ -2,7 +2,7 @@ import {Card} from "react-bootstrap";
 import React from "react";
 
 
-const JobCard = (props) => {
+const ProfileCard = (props) => {
     return (
         <Card>
             <Card.Body>
@@ -18,4 +18,4 @@ const JobCard = (props) => {
     )
 };
 
-export default JobCard;
+export default ProfileCard;

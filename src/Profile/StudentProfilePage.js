@@ -155,7 +155,7 @@ const StudentProfilePage = () => {
                                                     </div>
                                                     <div className="form__group">
                                                         <input
-                                                            type="text" value={userStore.studentUser.locationModel.zip}
+                                                            type="number" value={userStore.studentUser.locationModel.zip}
                                                             name="zip" onChange={handleLocationChange}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}

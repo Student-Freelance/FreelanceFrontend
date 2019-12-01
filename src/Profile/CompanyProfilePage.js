@@ -7,13 +7,12 @@ import {observer} from "mobx-react";
 import {useStores} from "../index";
 import {ClipLoader} from "react-spinners";
 import Button from "react-bootstrap/Button";
+import {set} from "mobx";
+import ArrayComponent from "../Components/ArrayComponent";
 
 
 const CompanyProfilePage = () => {
     const {userStore} = useStores();
-    const [company, setCompany] = useState({
-        ...userStore.companyUser
-    });
 
     const [edit, setEdit] = useState({
         editMode: false,
@@ -21,15 +20,18 @@ const CompanyProfilePage = () => {
     });
 
     const handleInputChange = event => {
-        const {name, value} = event.target;
-        setCompany({...company, [name]: value});
+        set(userStore.companyUser, event.target.name, event.target.value);
+    };
+
+    const handleLocationChange = event => {
+      set(userStore.companyUser.locationModel, event.target.name, event.target.value);
     };
 
     const handleSubmit = event => {
         setEdit({editMode: !edit.editMode, btnText: "Submit Changes"});
         if (edit.editMode) {
             event.preventDefault();
-            userStore.updateUser({...company}).then(setEdit({editMode: !edit.editMode, btnText: "Edit"}));
+            userStore.updateUser({...userStore.companyUser}).then(setEdit({editMode: !edit.editMode, btnText: "Edit"}));
         }
     };
 
@@ -58,7 +60,7 @@ const CompanyProfilePage = () => {
                                             <div className="form-group">
                                                 <label className="control-label-sm">Email</label>
                                                 <input
-                                                    type="email" value={company.email} id="email"
+                                                    type="email" value={userStore.companyUser.email} id="email"
                                                     name="email" onChange={handleInputChange}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
@@ -67,7 +69,7 @@ const CompanyProfilePage = () => {
                                             <div className="form-group">
                                                 <label className="col-form-label-sm"> Mobile Number</label>
                                                 <input
-                                                    type="number" maxLength={8} value={company.phoneNumber}
+                                                    type="number" maxLength={8} value={userStore.companyUser.phoneNumber}
                                                     name="phoneNumber" onChange={handleInputChange}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
@@ -81,7 +83,7 @@ const CompanyProfilePage = () => {
                                                     <div className="form-group">
                                                         <label className='col-form-label-sm'>Name</label>
                                                         <input
-                                                            type="text" value={company.companyName}
+                                                            type="text" value={userStore.companyUser.companyName}
                                                             name="companyName" onChange={handleInputChange}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
@@ -99,7 +101,7 @@ const CompanyProfilePage = () => {
                                             <div className="form-group">
                                                 <label className='col-form-label-sm'>Vat:</label>
                                                 <input
-                                                    type="number" maxLength={6} value={company.vat}
+                                                    type="number" maxLength={6} value={userStore.companyUser.vat}
                                                     name="vat" onChange={handleInputChange}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
@@ -108,7 +110,7 @@ const CompanyProfilePage = () => {
                                             <div className="form-group">
                                                 <label className='col-form-label-sm'>Website:</label>
                                                 <input
-                                                    type="text" value={company.website || 'no website'}
+                                                    type="text" value={userStore.companyUser.website}
                                                     name="webSite" onChange={handleInputChange}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
@@ -118,8 +120,28 @@ const CompanyProfilePage = () => {
                                                 <label className="col-form-label-sm">Address:</label>
                                                 <input
                                                     type="text"
-                                                    value={company.locationModel.street + " " + company.locationModel.number}
-                                                    name="address" onChange={handleInputChange}
+                                                    value={userStore.companyUser.locationModel.street}
+                                                    name="street" onChange={handleLocationChange}
+                                                    disabled={!edit.editMode}
+                                                    className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                />
+                                                <input
+                                                    type="number"
+                                                    value={userStore.companyUser.locationModel.number}
+                                                    name="number" onChange={handleLocationChange}
+                                                    disabled={!edit.editMode}
+                                                    className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                />
+                                                <input type="number"
+                                                       value={userStore.companyUser.locationModel.zip}
+                                                       name="zip" onChange={handleLocationChange}
+                                                       disabled={!edit.editMode}
+                                                       className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={userStore.companyUser.locationModel.city}
+                                                    name="city" onChange={handleLocationChange}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
@@ -134,14 +156,13 @@ const CompanyProfilePage = () => {
                                         <Col xl={10} md={10} sm={10} xs={10}>
                                             <h6 className="About">About</h6>
                                         </Col>
-                                        <p> {userStore.companyUser.about}</p>
                                     </Row>
                                     <hr/>
                                     <Form.Group>
                                         <Form.Control
                                             as="textarea" rows="3"
-                                            value={company.about} name="about"
-                                            onchange={handleInputChange}
+                                            value={userStore.companyUser.about}
+                                            name="about" onChange={handleInputChange}
                                             disabled={!edit.editMode}
                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                         />
@@ -149,9 +170,12 @@ const CompanyProfilePage = () => {
                                 </Card>
                                 <br/>
                                 <Card body>
-                                    <h6 className="jobs">Jobs</h6>
+                                    <label>Jobs</label>
                                     <hr/>
-                                    <p>{userStore.companyUser.jobs}</p>
+                                    <ArrayComponent
+                                        storelink={userStore.companyUser.jobs}
+                                        name="job"
+                                    />
                                 </Card>
                                 <Button
                                     onClick={(event) => handleSubmit(event)}

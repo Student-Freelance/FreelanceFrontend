@@ -1,5 +1,6 @@
 import {action, decorate, observable, reaction} from "mobx";
 import jwt from "jsonwebtoken";
+import {toast} from "react-toastify";
 
 class AuthStore {
     token = localStorage.getItem('Token');
@@ -33,7 +34,7 @@ class AuthStore {
         this.setAuthenticated(false);
         clearTimeout(this.timer);
         if (exp) {
-            console.log("Token expired, logging out")
+            toast.error("Token expired, logging out");
         }
     }
 

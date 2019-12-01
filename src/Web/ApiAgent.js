@@ -7,7 +7,6 @@ const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'https://devops01.eitlab.diplom.dtu.dk/api/'; //'https://localhost:5001/api/'; 
 
 const handleErrors = (err) => {
-    console.log(err);
     let string= err + '';
     if(string.includes('Request has been terminated')){
         toast.error("Der er problemer med at forbinde til serveren");
@@ -37,7 +36,6 @@ const handleErrors = (err) => {
 };
 
 const responseBody = res => {
-    console.log(res)
     if (!(res === undefined)) return res.body;
 };
 

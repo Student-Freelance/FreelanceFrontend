@@ -9,168 +9,226 @@ import {observer} from "mobx-react";
 import {useStores} from "../index";
 import Button from "react-bootstrap/Button";
 import ClipLoader from "react-spinners/ClipLoader";
+import {set} from 'mobx';
+import ArrayComponent from "../Components/ArrayComponent";
 
-const StudentProfilePage = (props) => {
+
+const StudentProfilePage = () => {
 
     const {userStore} = useStores();
-    const [student, setStudent] = useState({
-        ...userStore.studentUser
-    });
-
+    const [skill, setSkill] = useState("");
     const [edit, setEdit] = useState({
         editMode: false,
         btnText: "Edit"
     });
+    const handleChange = (event) => {
+        set(userStore.studentUser, event.target.name, event.target.value);
 
-    const handleIndputChange = event => {
-        const {name, value} = event.target;
-        setStudent({...student, [name]: value});
+    };
+    const handleLocationChange = event => {
+        set(userStore.studentUser.locationModel, event.target.name, event.target.value);
     };
 
     const handleSubmit = event => {
         setEdit({editMode: !edit.editMode, btnText: "Submit Changes"});
         if (edit.editMode) {
             event.preventDefault();
-            userStore.updateUser({...student}).then(setEdit({editMode: !edit.editMode, btnText: "Edit"}));
+            userStore.updateUser({...userStore.studentUser}).then(setEdit({editMode: !edit.editMode, btnText: "Edit"}));
         }
     };
-
     return (
-        userStore.updatingUser? <div className='sweet-loading, LoaderMargins'
+        userStore.updatingUser ? <div className='sweet-loading, LoaderMargins'
             >
                 <ClipLoader
                     size={150} // or 150px
                     color={'#123abc'}
                 />
-            </div>:
-        <div>
-            <Container>
-                <h3 className="profilHeadline">Profile</h3>
-                <Row sm={12} md={12} xl={12}>
-                    <InputGroup>
-                        <Col xl={5}>
-                            <Card body>
-                                <Row sm={12} md={12} xl={12}>
-                                    <Col xl={5} sm={5} md={5} xs={5}>
-                                        <Image fluid
-                                               src={((userStore.studentUser.logo) === '' || null || 'string') ? ProfilePicture : userStore.studentUser.logo}
-                                               alt={"No image found"} roundedCircle/>
-                                    </Col>
-                                    <br/>
-                                    <Col xl={7} sm={7} md={7} xs={7}>
-                                        <div className="form-group">
-                                        <label className="control-label-sm">Email</label>
-                                        <input
-                                            type="email" value={student.email} id="email"
-                                            name="email" onChange={handleIndputChange}
-                                            disabled={!edit.editMode}
-                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
-                                        />
-                                        </div>
-                                        <div className="form-group">
-                                        <label className='col-form-label-sm'>Mobilnummer:</label>
-                                        <input
-                                            type="number" maxLength={8} value={student.phoneNumber}
-                                            name="phoneNumber" onChange={handleIndputChange}
-                                            disabled={!edit.editMode}
-                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
-                                        />
-                                        </div>
-                                    </Col>
-                                    <br/>
-                                    <div className="container">
-                                        <Row>
-                                            <Col>
-                                                <label className='col-form-label-sm'>Fornavn</label>
-                                            <input
-                                                type="text" value={student.firstname}
-                                                name="firstname" onChange={handleIndputChange}
-                                                disabled={!edit.editMode}
-                                                className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
-                                            />
-                                            </Col>
-                                            <Col>
-                                                <label className='col-form-label-sm'>Efternavn</label>
-                                            <input
-                                                type="text" value={student.lastname}
-                                                name="lastname" onChange={handleIndputChange}
-                                                disabled={!edit.editMode}
-                                                className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
-                                            />
-                                            </Col>
-                                            <Col>
-                                                <label className='col-form-label-sm'>Brugernavn</label>
+            </div> :
+            <div>
+                <Container>
+                    <Row>
+                        <Col><h3>Profile</h3>
+
+                            <div className="input-group"><input
+                                type="text" value={userStore.studentUser.username}
+                                name="username" onChange={handleChange}
+                                disabled={!edit.editMode}
+                                className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                            />
+                                <input
+                                    type="number" maxLength='2' value={userStore.studentUser.semester}
+                                    name="semester" onChange={handleChange}
+                                    disabled={!edit.editMode}
+                                    className={'text-right ' + (!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                />
+                                <div className="input-group-append form-control-plaintext">Semester</div>
+                            </div>
+                        </Col>
+                        <Col> </Col>
+                    </Row>
+                    <Row sm={12} md={12} xl={12}>
+                        <InputGroup>
+                            <Col xl={5}>
+                                <Card body>
+                                    <Row sm={12} md={12} xl={12}>
+                                        <Col>
+                                            {edit.editMode ?
+                                                <div><label className="control-label-sm">Enter picture link</label>
+                                                    <input
+                                                        type="url" value={userStore.studentUser.logo}
+                                                        name="logo" onChange={handleChange}
+                                                        className='form-control'
+                                                    />
+                                                </div>
+                                                :
+                                                <Image fluid
+                                                       src={(userStore.studentUser.logo === null) ? ProfilePicture : userStore.studentUser.logo}
+                                                       alt={"No image found"} roundedCircle/>
+                                            }
+                                        </Col>
+                                        <br/>
+                                        <Col>
+                                            <div className="form-group">
+                                                <label className="control-label-sm">Contact Information</label>
                                                 <input
-                                                    type="text" value={student.username}
-                                                    name="username" onChange={handleIndputChange}
+                                                    type="email" value={userStore.studentUser.email} id="email"
+                                                    name="email" onChange={handleChange}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </Row>
-                            </Card>
-                            <br/>
-                            <Card body>
+                                                <input
+                                                    type="url"
+                                                    value={userStore.studentUser.website}
+                                                    name="website" onChange={handleChange}
+                                                    disabled={!edit.editMode}
+                                                    className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                />
+                                                <input
+                                                    type="number" maxLength='8'
+                                                    value={userStore.studentUser.phoneNumber}
+                                                    name="phoneNumber" onChange={handleChange}
+                                                    disabled={!edit.editMode}
+                                                    className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                />
+                                            </div>
+                                        </Col>
+                                        <br/>
+                                        <div className="container">
+                                            <Row>
+                                                <Col>
+                                                    <label className='col-form-label-sm'>Name</label>
+                                                    <div className="form__group">
+                                                        <input
+                                                            type="text" value={userStore.studentUser.firstname}
+                                                            name="firstname" onChange={handleChange}
+                                                            disabled={!edit.editMode}
+                                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                        />
+                                                        <input
+                                                            type="text" value={userStore.studentUser.lastname}
+                                                            name="lastname" onChange={handleChange}
+                                                            disabled={!edit.editMode}
+                                                            className={"input-group-append " + (!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                        />
+                                                    </div>
+
+                                                </Col>
+                                                <Col>
+                                                    <label
+                                                        className='col-form-label-sm'>Address</label>
+                                                    <div className="form__group">
+                                                        <input
+                                                            type="text"
+                                                            value={userStore.studentUser.locationModel.street}
+                                                            name="street"
+                                                            onChange={handleLocationChange}
+                                                            disabled={!edit.editMode}
+                                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            value={userStore.studentUser.locationModel.number}
+                                                            name="number" onChange={handleLocationChange}
+                                                            disabled={!edit.editMode}
+                                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                        />
+                                                    </div>
+                                                    <div className="form__group">
+                                                        <input
+                                                            type="text" value={userStore.studentUser.locationModel.zip}
+                                                            name="zip" onChange={handleLocationChange}
+                                                            disabled={!edit.editMode}
+                                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                        />
+                                                        <input
+                                                            type="text" value={userStore.studentUser.locationModel.city}
+                                                            name="city"
+                                                            onChange={handleLocationChange}
+                                                            disabled={!edit.editMode}
+                                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                        />
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    </Row>
+                                </Card>
+                                <br/>
                                 <Row sm={12} md={12} xl={12}>
-                                    <Col xl={7}>
-                                        <label className='col-form-label-sm'>Semester:</label>
-                                        <input
-                                            type="number" maxLength={2} value={student.semester}
-                                            name="semester" onChange={handleIndputChange}
-                                            disabled={!edit.editMode}
-                                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                    <Col>
+                                        <ArrayComponent storelink={userStore.studentUser.tags}
+                                                        description="Technologies" editMode={edit.editMode}
+                                                        name="tags"/>
+                                    </Col>
+                                    <Col>
+                                        <ArrayComponent storelink={userStore.studentUser.competences}
+                                                        description="Competences:" editMode={edit.editMode}
+                                                        name="competences"/>
+                                    </Col>
+                                </Row>
+                                <br/>
+                            </Col>
+                            <Col xl={7}>
+                                <Card body>
+                                    <Row sm={12} md={12} xl={12}>
+                                        <Col xl={10} md={10} sm={10} xs={10}>
+                                            <h6 className="resume"> Resume</h6>
+                                        </Col>
+                                        <hr/>
+                                    </Row>
+                                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                                        <Form.Control as="textarea" rows="3"
+                                                      disabled={!edit.editMode}
+                                                      value={userStore.studentUser.resume} name="resume"
+                                                      onChange={handleChange}
                                         />
-                                        <h6>Tag: {userStore.studentUser.tags}</h6>
-                                    </Col>
-                                </Row>
-                            </Card>
-                            <br/>
-                        </Col>
-                        <Col xl={7}>
-                            <Card body>
+                                    </Form.Group>
+                                </Card>
+                                <br/>
                                 <Row sm={12} md={12} xl={12}>
-                                    <Col xl={10} md={10} sm={10} xs={10}>
-                                        <h6 className="resume"> Resume</h6>
+                                    <Col>
+                                        <ArrayComponent storelink={userStore.studentUser.education}
+                                                        description="Education:" editMode={edit.editMode}
+                                                        name="education"/>
                                     </Col>
-                                    <hr/>
+                                    <Col>
+                                        <ArrayComponent storelink={userStore.studentUser.experience}
+                                                        description="Experience:" editMode={edit.editMode}
+                                                        name="experience"/>
+                                    </Col>
+                                    <br/>
                                 </Row>
-                                <Form.Group controlId="exampleForm.ControlTextarea1">
-                                    <Form.Control as="textarea" rows="3"
-                                                  value={student.resume} name="resume"
-                                                  onChange={handleIndputChange}
-                                    />
-                                </Form.Group>
-                            </Card>
-                            <br/>
-                            <Card body>
-                                <h6 className="education">Min uddannelse</h6>
-                                <hr/>
-                                <p>{userStore.studentUser.education}</p>
-                            </Card>
-                            <br/>
-                            <Card body>
-                                <h6 className="experience">Min erfaring</h6>
-                                <hr/>
-                                <p>{userStore.studentUser.experience}</p>
-                            </Card>
-                            <br/>
-                            <Card body>
-                                <h6 className="skills">Mine kompetencer</h6>
-                                <hr/>
-                                <p>{userStore.studentUser.competences}</p>
-                            </Card>
-                            <Button
-                                onClick={(event) => handleSubmit(event)}
-                                variant="primary" type="submit" size="lg" block>
-                                {edit.btnText}
-                            </Button>
-                        </Col>
-                    </InputGroup>
-                </Row>
-            </Container>
-        </div>
+                                <br/>
+                                <Button
+                                    onClick={(event) => handleSubmit(event)}
+                                    variant="primary" type="submit" size="lg" block>
+                                    {edit.btnText}
+                                </Button>
+                            </Col>
+                        </InputGroup>
+                    </Row>
+                </Container>
+            </div>
     )
 };
 

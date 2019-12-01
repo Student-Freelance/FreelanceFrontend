@@ -1,4 +1,4 @@
-import {action, decorate, observable} from 'mobx';
+import {action, decorate, extendObservable, observable, reaction} from 'mobx';
 import ApiAgent from '../Web/ApiAgent';
 import {companyObject, studentObject} from '../Models/userObjects'
 
@@ -14,6 +14,7 @@ class UserStore {
         this.authStore = authStore;
     }
 
+
     pullUser() {
         this.loadingUser = true;
         return ApiAgent.UserActions.current()
@@ -21,6 +22,8 @@ class UserStore {
                 if (body.hasOwnProperty('firstname')) {
                     this.isStudent = true;
                     Object.assign(this.studentUser, body);
+
+
                 } else if (body.hasOwnProperty('companyName')) {
                     this.isStudent = false;
                     Object.assign(this.companyUser, body);

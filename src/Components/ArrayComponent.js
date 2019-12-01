@@ -14,7 +14,7 @@ const ArrayComponent = (props) => {
     };
 
     return (
-        <Container>
+        <Container className='text-center'>
             <label className='col-form-label-sm'>{props.description}</label>
             {
                 props.storelink.map((value, key) => {
@@ -25,8 +25,9 @@ const ArrayComponent = (props) => {
                                     type="text" value={props.storelink[key]}
                                     name={props.name} onChange={(e) => handleArrayChange(e, key)}
                                     disabled={!props.editMode}
-                                    className={(!props.editMode ? 'form-control-plaintext' : 'form-control')}
+                                    className={(!props.editMode ? 'form-control-plaintext text-center' : 'form-control')}
                                 />
+                                {props.editMode?
                                 <div className="input-group-append">
                                     <button className="btn btn-danger"
                                             type="button"
@@ -36,7 +37,7 @@ const ArrayComponent = (props) => {
                                             }}
                                     >Delete
                                     </button>
-                                </div>
+                                </div>: ''}
                             </div>
                         </Card>
 
@@ -44,6 +45,7 @@ const ArrayComponent = (props) => {
                 })
             }
             <br/>
+            {props.editMode?
             < div
                 className="input-group mb-3">
                 < input
@@ -57,7 +59,7 @@ const ArrayComponent = (props) => {
                     }
                 />
                 <div className="input-group-append">
-                    <button className="btn btn-success"
+                    <button className= "btn btn-success"
                             type="submit"
                             onClick={() => {
                                 props.storelink.push(input);
@@ -66,7 +68,8 @@ const ArrayComponent = (props) => {
                     >Add new
                     </button>
                 </div>
-            </div>
+            </div>: ''
+            }
         </Container>
     );
 };

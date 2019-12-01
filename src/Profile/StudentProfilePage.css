@@ -4,9 +4,6 @@ h3{
 Image{
     max-width: 100%;
 }
-.profilHeadline{
-    color: gray;
-}
 .resume {
     color: gray;
 }
@@ -19,3 +16,7 @@ Image{
 .skills{
     color: gray;
 }
+.form__group {
+    display: flex;
+}
+h3 span { font-size:16px; }

@@ -41,8 +41,8 @@ class UserStore {
         }
         return ApiAgent.UserActions.save(newUser, endpoint)
             .then(action((response) => {
-                if (!(response === undefined)){
-                    if (response.status === 200) {
+                if(response!=null){
+                    if (response.statusCode === 201) {
                         this.pullUser();
                     }
                 }
@@ -74,6 +74,8 @@ class UserStore {
             }
             else return false;
         })
+
+
     }
 
     googlelogin(token) {
@@ -116,7 +118,9 @@ class UserStore {
                 }
             }
         });
+
     }
+
 }
 
 decorate(UserStore, {

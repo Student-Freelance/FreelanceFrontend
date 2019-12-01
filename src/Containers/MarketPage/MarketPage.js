@@ -12,6 +12,7 @@ import {observer} from "mobx-react";
 import {useStores} from "../../index";
 import {useHistory} from "react-router-dom";
 import {toJS} from "mobx";
+import ClipLoader from "react-spinners/ClipLoader";
 
 let activeTag = '';
 
@@ -21,7 +22,7 @@ const MarketPage = () => {
         {search: ''}
     ]);
     let history = useHistory();
-    const {jobStore} = useStores();
+    const {jobStore, userStore} = useStores();
 
     function filterLabel(value) {
         if (!jobStore.isLoading) {
@@ -59,7 +60,12 @@ const MarketPage = () => {
 
     return (
         <Container fluid>
-            {jobStore.isLoading ? <p>Loading ...</p> :
+            {jobStore.isLoading ?  <div className='sweet-loading, LoaderMargins'
+            >
+                <ClipLoader
+                    size={150} // or 150px
+                    color={'#123abc'}
+                /> </div> :
                 <Row sm={12} md={12} xl={12}>
                     <Col xl={2} className="d-none d-lg-block">
                         <h1 className="d-flex justify-content-left">Labels</h1>
@@ -89,7 +95,7 @@ const MarketPage = () => {
                                 </InputGroup>
                             </Col>
                         </Row>
-                        <Row><Button onClick={() => this.props.history.push('/create')}>Create job</Button></Row>
+                        <Row>{!userStore.isStudent? <Button onClick={() => this.props.history.push('/create')}>Create job</Button>:''}</Row>
                         <Row>
                             {(jobStore.filteredJobs.map(job => {
                                     const {id, title, description, location, createdOn, companyName} = job;

@@ -89,7 +89,7 @@ const MarketPage = () => {
                                 </InputGroup>
                             </Col>
                         </Row>
-                        <Row><Button onClick={() => this.props.history.push('/create')}>Create job</Button></Row>
+                        <Row><Button onClick={() => history.push('/create')}>Create job</Button></Row>
                         <Row>
                             {(jobStore.filteredJobs.map(job => {
                                     const {id, title, description, location, createdOn, companyName} = job;

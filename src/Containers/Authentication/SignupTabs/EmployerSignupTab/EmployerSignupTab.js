@@ -1,10 +1,34 @@
 import React, {useState} from "react";
 import './EmployerSignupTab.css';
-import {Button, Col, Form} from 'react-bootstrap';
+import {Button, Col} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import {observer} from "mobx-react";
 import {useStores} from "../../../../index";
 import {withRouter} from "react-router-dom";
+import * as Yup from "yup";
+import {Field, Form, Formik} from "formik";
+
+const SignupSchema = Yup.object().shape({
+    email: Yup.string()
+        .email('Invalid email')
+        .required('Required'),
+    password: Yup.string()
+        .matches(
+            "^(?=.*[A-Za-z])(?=.*d)[A-Za-zd@$!%*#?&]{8,}$",
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One numnber"
+        )
+        .required('Required'),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], "Must match password")
+        .required('Required'),
+    vat: Yup.string()
+    // .test('len', 'Must have a length of 8', val => val.length === 8)
+        .required('Required'),
+    userName: Yup.string()
+        .required('Required'),
+    companyName: Yup.string()
+        .required('Required')
+});
 
 const EmployerSignupTab = (props) => {
     const {userStore} = useStores();
@@ -16,71 +40,71 @@ const EmployerSignupTab = (props) => {
         companyName: "",
         vat: ""
     });
-    const handleChange = event => {
-        setState({
-            ...form,
-            [event.target.name]: event.target.value
-        });
-    };
-    const handleSubmit = e => {
-        e.preventDefault();
-        userStore.registerCompany({...form}).finally(() => {
-            userStore.loadingUser = false;
-            props.history.push("/")
-        })
-    };
+    // const handleChange = event => {
+    //     setState({
+    //         ...form,
+    //         [event.target.name]: event.target.value
+    //     });
+    // };
+    // const handleSubmit = e => {
+    //     e.preventDefault();
+    //     userStore.registerCompany({...form}).finally(() => {
+    //         userStore.loadingUser = false;
+    //         props.history.push("/")
+    //     })
+    // };
     return (
         <div>
             <Container className="LoginForm">
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group>
-                        <Form.Row>
-                            <Col>
-                                <Form.Label>Company name</Form.Label>
-                                <Form.Control type="text" value={form.companyName} placeholder="Enter company name"
-                                              name="companyName" onChange={handleChange}/>
-                            </Col>
-                            <Col>
-                                <Form.Label>Company CVR</Form.Label>
-                                <Form.Control type="number" maxLength={8} value={form.vat} name="vat"
-                                              placeholder="Enter company cvr"
-                                              onChange={handleChange}/>
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" value={form.email} placeholder="Enter email" name="email"
-                                      onChange={handleChange}/>
-                    </Form.Group>
-
-                    <Form.Group controlId="formBasicUsername">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control type="text" value={form.userName} placeholder="Enter username" name="userName"
-                                      onChange={handleChange}/>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Row>
-                            <Col>
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" value={form.password} name="password"
-                                              placeholder="Enter password" onChange={handleChange}/>
-                            </Col>
-                            <Col>
-                                <Form.Label>Confirm password</Form.Label>
-                                <Form.Control type="password" value={form.confirmPassword} name="confirmPassword"
-                                              placeholder="Re-enter password"
-                                              onChange={handleChange}/>
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-                    <Button
-                        onClick={(e) => handleSubmit(e)}
-                        variant="primary" type="submit" size="lg" block>
-                        Sign up
-                    </Button>
-                </Form>
+                <Formik
+                    initialValues={{
+                        email: "",
+                        userName: "",
+                        password: "",
+                        confirmPassword: "",
+                        companyName: "",
+                        vat: ""
+                    }}
+                    validationSchema={SignupSchema}
+                    onSubmit={values => console.log(values)}
+                >
+                    {({values, errors, touched, handleChange, handleBlur}) => (
+                        <Form>
+                            <label htmlFor="companyName">Company name: </label>
+                            <Field name="companyName"
+                                   onBlur={handleBlur}
+                                   onChange={handleChange}
+                                   className={touched.companyName && errors.companyName ? (
+                                       <div>{errors.companyName}</div>) : null}/>
+                            <Field name="email"
+                                   onBlur={handleBlur}
+                                   onChange={handleChange}
+                                   className={touched.email && errors.email ? (<div>{errors.email}</div>) : null}/>
+                            <Field name="vat"
+                                   onBlur={handleBlur}
+                                   onChange={handleChange}
+                                   className={touched.vat && errors.vat ? (<div>{errors.vat}</div>) : null}/>
+                            <Field name="username"
+                                   onBlur={handleBlur}
+                                   onChange={handleChange}
+                                   className={touched.username && errors.username ? (<div>{errors.username}</div>) : null}/>
+                            <Field name="password"
+                                   onBlur={handleBlur}
+                                   onChange={handleChange}
+                                   className={touched.password && errors.password ? (<div>{errors.password}</div>) : null}/>
+                            <Field name="confirmPassword"
+                                   onBlur={handleBlur}
+                                   onChange={handleChange}
+                                   className={touched.confirmPassword && errors.confirmPassword ? (<div>{errors.confirmPassword}</div>) : null}/>
+                            <button type="submit">submit</button>
+                            {/*<Button*/}
+                            {/*    onClick={(e) => handleSubmit(e)}*/}
+                            {/*    variant="primary" type="submit" size="lg" block>*/}
+                            {/*    Sign up*/}
+                            {/*</Button>*/}
+                        </Form>
+                    )}
+                </Formik>
             </Container>
         </div>
     );

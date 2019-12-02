@@ -100,6 +100,7 @@ const StudentProfilePage = () => {
                                                     type="url"
                                                     value={userStore.studentUser.website}
                                                     name="website" onChange={handleChange}
+                                                    placeholder="Website"
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
@@ -107,6 +108,7 @@ const StudentProfilePage = () => {
                                                     type="number" maxLength='8'
                                                     value={userStore.studentUser.phoneNumber}
                                                     name="phoneNumber" onChange={handleChange}
+                                                    placeholder="Phonenumber"
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />

@@ -8,8 +8,13 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import {withRouter,useHistory} from "react-router-dom";
+import {useStores} from "../../index";
+import {observer} from "mobx-react";
 
 const LandingPage = () => {
+    const history= useHistory();
+    const {authStore} = useStores();
     return (
         <div>
             <Container>
@@ -30,7 +35,7 @@ const LandingPage = () => {
                                     aria-describedby="basic-addon2"
                                 />
                                 <InputGroup.Append>
-                                    <Button variant="outline-primary">Søg</Button>
+                                    <Button variant="outline-primary" onClick={()=> {  authStore.authenticated?history.push("/market"): history.push("/login")}} >Søg</Button>
                                 </InputGroup.Append>
                             </InputGroup>
                         </div>
@@ -44,4 +49,4 @@ const LandingPage = () => {
     )
 };
 
-export default LandingPage;
+export default observer(withRouter(LandingPage));

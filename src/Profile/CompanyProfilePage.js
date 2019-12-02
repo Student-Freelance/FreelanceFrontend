@@ -52,9 +52,19 @@ const CompanyProfilePage = () => {
                                 <Card body>
                                     <Row sm={12} md={12} xl={12}>
                                         <Col xl={5} sm={5} md={5} xs={5}>
-                                            <Image fluid
-                                                   src={(userStore.companyUser.logo === '' || null || 'string') ? ProfilePicture : userStore.companyUser.logo}
-                                                   alt={"No image found"} roundedCircle/>
+                                            {edit.editMode ?
+                                                <div><label className="control-label-sm">Enter picture link</label>
+                                                    <input
+                                                        type="url" value={userStore.companyUser.logo}
+                                                        name="logo" onChange={handleInputChange}
+                                                        className='form-control'
+                                                    />
+                                                </div>
+                                                :
+                                                <Image fluid
+                                                       src={(userStore.companyUser.logo === null) ? ProfilePicture : userStore.companyUser.logo}
+                                                       alt={"No image found"} />
+                                            }
                                         </Col>
                                         <br/>
                                         <Col xl={7} sm={7} md={7} xs={7}>

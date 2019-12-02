@@ -7,6 +7,7 @@ import EmployerToChange from "./Views/EmployerToChange";
 import EmployerToView from "./Views/EmployerToView";
 import EmployerError from "./Views/EmployerError";
 import {AxiosAgent} from "../../../Web/AxiosAgent";
+import ClipLoader from "react-spinners/ClipLoader";
 
 class EmployerPage extends Component {
 
@@ -17,6 +18,7 @@ constructor(props) {
         this.state = {
             employer: Employer,
             isLoaded: false,
+            spinner: true
         };
     }
 
@@ -26,9 +28,9 @@ constructor(props) {
         try {
             AxiosAgent.GetOne("Companies", handle)
                 .then((company) => {
-                    console.table(company.data);
                     this.setState({employer: company.data});
                     this.setState({isLoaded: true});
+                    this.setState({spinner:false})
                 })
         } catch (e) {
             console.log(e);
@@ -38,6 +40,13 @@ constructor(props) {
 
     render() {
         return (
+            this.state.spinner? <div className='sweet-loading, LoaderMargins'
+                >
+                    <ClipLoader
+                        size={150} // or 150px
+                        color={'#123abc'}
+                    />
+                </div>:
             <Container fluid>
                 {this.state.isLoaded ?
                 <Card className="col-sm-11 col-xl-6">

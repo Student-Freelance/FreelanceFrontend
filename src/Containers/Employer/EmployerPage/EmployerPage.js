@@ -16,9 +16,7 @@ constructor(props) {
         // //TODO: skal hentes fra backend (bortset fra editMode)
         this.state = {
             employer: Employer,
-            editMode: false,
             isLoaded: false,
-            btnText: "edit",
         };
     }
 
@@ -38,25 +36,6 @@ constructor(props) {
 
     }
 
-    //Changes state if user wants to edit
-    toggleEdit = () => {
-        this.setState(state => (
-            {editMode: !state.editMode}));
-        this.state.editMode ? this.setState({btnText: "edit"}) : this.setState({btnText: "save"});
-
-        if (this.state.editMode){
-            console.log(this.state.employer);
-            try {
-                AxiosAgent.Put("Companies", {...this.state.employer})
-                    .then((data) => {
-                        console.log(data);
-                    });
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    };
-
     render() {
         return (
             <Container fluid>
@@ -68,10 +47,6 @@ constructor(props) {
                             <EmployerToChange employer={this.state.employer}/> :
                             <EmployerToView employer={this.state.employer}/>}
                         <EmployerJobs jobs={this.state.employer.jobs}/>
-                        <Button color="primary"
-                                onClick={() => this.toggleEdit()}>
-                            {this.state.btnText}
-                        </Button>
                     </Card.Body>
                 </Card>
             : <EmployerError companyName={this.props.match.params.handle}/> }

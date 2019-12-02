@@ -35,7 +35,7 @@ const App = () => {
                     <Route exact path="/" component={LandingPage}/>
                     <PrivateRoute authenticated={authStore.authenticated} path='/market'
                                   component={MarketPage}/>
-                    <PrivateRoute authenticated={authStore.authenticated&&!userStore.isStudent} path='/create'
+                    <PrivateRoute authenticated={authStore.authenticated&&!userStore.isStudent} path='/create/:handle'
                                   component={CreateJobPage}/>
                     <PrivateRoute authenticated={authStore.authenticated}
                                   path='/job/:handle'

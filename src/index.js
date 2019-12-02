@@ -12,10 +12,11 @@ import JobStore from "./Stores/JobStore";
 
 
 let authStore = new AuthStore();
+let jobStore = new JobStore();
 export const storesContext = React.createContext({
-    userStore: new UserStore(authStore),
+    userStore: new UserStore(authStore, jobStore),
     authStore: authStore,
-    jobStore: new JobStore(),
+    jobStore: jobStore
 });
 export const useStores = () => React.useContext(storesContext);
 //Handle DTU inside login, when getting callback from backend, find the token, extract it and set it to localstorage.
@@ -31,4 +32,4 @@ ReactDOM.render(
 );
 
 
-serviceWorker.unregister();
+serviceWorker.register();

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import './CreateJobPage.css';
-import {Button, Form} from 'react-bootstrap';
+import {Button, Form, FormControl, FormGroup, FormLabel} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import "react-datepicker/dist/react-datepicker.css";
 import {WithContext as ReactTags} from 'react-tag-input';
@@ -8,6 +8,7 @@ import Input from "./Input";
 import Select from "./Select";
 import DateInput from "./DateInput";
 import {AxiosAgent} from "../../../Web/AxiosAgent";
+import {toast} from "react-toastify";
 
 
 const initialState= {
@@ -23,8 +24,11 @@ class CreateJobPage extends Component {
 
     constructor(props) {
         super(props);
-
+        const {handle} = this.props.match.params;
+        this.name= handle;
         this.state = initialState;
+
+
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -68,31 +72,36 @@ class CreateJobPage extends Component {
                     <Form>
                         <h2>Summary description</h2>
                         <Input type={'text'}
-                               title={'title'}
+                               title={'Title'}
                                name={'title'}
                                value={this.state.job.title}
                                placeholder={'Title'}
                                handleChange={(value) => this.handleInputChange('title', value, 'job')}/>
                         <Input type={'text'}
-                               title={'description'}
+                               title={'Description'}
                                name={'description'}
                                value={this.state.job.description}
                                placeholder={'Description'}
                                handleChange={(value) => this.handleInputChange('description', value, 'job')}/>
-                        <Input type={'text'}
-                               title={'companyName'}
-                               name={'companyName'}
-                               value={this.state.job.companyName}
-                               placeholder={"Company name"}
-                               handleChange={(value) => this.handleInputChange('companyName', value, 'job')}/>
+                        <FormGroup>
+                            <FormLabel htmlFor={'companyName'}>
+                                Companyname
+                            </FormLabel>
+                            <FormControl
+                                type={'text'}
+                                className="form-input"
+                                value={this.name}
+                                readOnly
+                            />
+                        </FormGroup>
                         <Input type={'number'}
                                name={'salary'}
-                               title={'salary'}
+                               title={'Salary'}
                                value={this.state.job.salary}
                                placeholder="Job salary per unit"
                                handleChange={(value) => this.handleInputChange('salary', value, 'job')}/>
                         <Select title={'Payment plan'}
-                                name={'payment'}
+                                name={'Payment'}
                                 options={this.state.paymentOptions}
                                 value={this.state.job.payment}
                                 placeholder={'Select payment'}
@@ -100,12 +109,12 @@ class CreateJobPage extends Component {
                         <h2>Time and dates</h2>
                         <DateInput
                             name={'jobStart'}
-                            title={'JobPage start'}
+                            title={'Job start'}
                             value={this.state.dateFields['jobStart']}
                             handleChange={(value) => this.handleInputChange("jobStart", value, 'dateFields')}/>
                         <DateInput
                             name={'jobEnd'}
-                            title={'JobPage end'}
+                            title={'Job end'}
                             value={this.state.dateFields['jobEnd']}
                             handleChange={(value) => this.handleInputChange("jobEnd", value, 'dateFields')}/>
                         <DateInput
@@ -194,7 +203,8 @@ class CreateJobPage extends Component {
                 jobStart: jobStart,
                 jobEnd: jobEnd,
                 deadLine: deadLine,
-                tags: tags
+                tags: tags,
+                companyName:this.name
             }
         }), () => this.postJob());
     }
@@ -205,7 +215,12 @@ class CreateJobPage extends Component {
                     this.setState(initialState);
                     window.alert('JobPage was succesfully created')
                 })
-                .catch((e) => console.log(e))
+                .catch((e) =>{
+                    if(e.statusCode===500){
+                        toast.error("Something went wrong on the server")
+                    }
+                    console.log(e)
+                } )
     }
 }
 

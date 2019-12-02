@@ -9,10 +9,11 @@ import {ClipLoader} from "react-spinners";
 import Button from "react-bootstrap/Button";
 import {set} from "mobx";
 import ArrayComponent from "../Components/ArrayComponent";
+import JobObjectComponent from "../Components/JobObjectComponent";
 
 
 const CompanyProfilePage = () => {
-    const {userStore} = useStores();
+    const {userStore, jobStore} = useStores();
 
     const [edit, setEdit] = useState({
         editMode: false,
@@ -36,7 +37,7 @@ const CompanyProfilePage = () => {
     };
 
     return (
-        userStore.updatingUser ? <div className='sweet-loading, LoaderMargins'>
+        userStore.updatingUser||jobStore.isLoading ? <div className='sweet-loading, LoaderMargins'>
                 <ClipLoader
                     size={150} // or 150px
                     color={'#123abc'}
@@ -123,6 +124,7 @@ const CompanyProfilePage = () => {
                                                     value={userStore.companyUser.locationModel.street}
                                                     name="street" onChange={handleLocationChange}
                                                     disabled={!edit.editMode}
+                                                    placeholder="Street"
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
                                                 <input
@@ -130,11 +132,13 @@ const CompanyProfilePage = () => {
                                                     value={userStore.companyUser.locationModel.number}
                                                     name="number" onChange={handleLocationChange}
                                                     disabled={!edit.editMode}
+                                                    placeholder="Number"
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
                                                 <input type="number"
                                                        value={userStore.companyUser.locationModel.zip}
                                                        name="zip" onChange={handleLocationChange}
+                                                       placeholder="Zip"
                                                        disabled={!edit.editMode}
                                                        className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
@@ -142,6 +146,7 @@ const CompanyProfilePage = () => {
                                                     type="text"
                                                     value={userStore.companyUser.locationModel.city}
                                                     name="city" onChange={handleLocationChange}
+                                                    placeholder="City"
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
@@ -170,11 +175,12 @@ const CompanyProfilePage = () => {
                                 </Card>
                                 <br/>
                                 <Card body>
-                                    <label>Jobs</label>
                                     <hr/>
-                                    <ArrayComponent
-                                        storelink={userStore.companyUser.jobs}
+                                    <JobObjectComponent
+                                        description="Jobs"
+                                        storelink={userStore.userJobs}
                                         name="job"
+                                        editMode={edit.editMode}
                                     />
                                 </Card>
                                 <Button

@@ -141,12 +141,14 @@ const StudentProfilePage = () => {
                                                             type="text"
                                                             value={userStore.studentUser.locationModel.street}
                                                             name="street"
+                                                            placeholder="Street"
                                                             onChange={handleLocationChange}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                         />
                                                         <input
                                                             type="text"
+                                                            placeholder="Streetnumber"
                                                             value={userStore.studentUser.locationModel.number}
                                                             name="number" onChange={handleLocationChange}
                                                             disabled={!edit.editMode}
@@ -157,12 +159,14 @@ const StudentProfilePage = () => {
                                                         <input
                                                             type="number" value={userStore.studentUser.locationModel.zip}
                                                             name="zip" onChange={handleLocationChange}
+                                                            placeholder="Zip"
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                         />
                                                         <input
                                                             type="text" value={userStore.studentUser.locationModel.city}
                                                             name="city"
+                                                            placeholder="City"
                                                             onChange={handleLocationChange}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}

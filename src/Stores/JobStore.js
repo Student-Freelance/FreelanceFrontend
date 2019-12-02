@@ -9,6 +9,7 @@ class JobStore {
     currentJob = {};
 
 
+
     pullJobs() {
         this.isLoading = true;
         return ApiAgent.JobActions.fetchAll()
@@ -21,7 +22,11 @@ class JobStore {
                 this.isLoading = false;
             }))
     }
+    deleteJob(id){
+        this.isLoading = true;
+        return ApiAgent.JobActions.deleteOne(id).then(this.pullJobs()).finally(this.isLoading=false)
 
+    }
     createLabels() {
         let tags = [];
         this.jobs.map(job => job.tags.map((tag) => tags.push(tag)));
@@ -36,7 +41,8 @@ class JobStore {
 decorate(JobStore, {
     jobs: observable,
     isLoading: observable,
-    filteredJobs: observable
+    filteredJobs: observable,
+    deleteJob:action
 });
 
 export default JobStore;

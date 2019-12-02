@@ -25,6 +25,7 @@ export class AxiosAgent extends Component {
     }
 
     static async Post(endpoint, bodyParameter) {
+        this.SetConfig(localStorage.getItem("Token"));
         return await Axios.post(
             `${this.url}${endpoint}`,
             bodyParameter

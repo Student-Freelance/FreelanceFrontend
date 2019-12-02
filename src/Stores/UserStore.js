@@ -9,9 +9,11 @@ class UserStore {
     authStore;
     loadingUser;
     updatingUser;
+    userJobs = [];
 
-    constructor(authStore) {
+    constructor(authStore, jobStore) {
         this.authStore = authStore;
+        this.jobStore = jobStore;
 
     }
 
@@ -26,6 +28,7 @@ class UserStore {
                 } else if (body.hasOwnProperty('companyName')) {
                     this.isStudent = false;
                     Object.assign(this.companyUser, body);
+                    this.userJobs = this.jobStore.jobs.filter(job =>this.companyUser.jobs.includes(job.id));
                 }
             }}))
             .finally(action(() => {
@@ -48,6 +51,9 @@ class UserStore {
                 }
             }))
             .finally(action(() => {
+                if (!this.isStudent){
+                    this.userJobs = this.jobStore.jobs.filter(job =>this.companyUser.jobs.includes(job.id));
+                }
                 this.updatingUser = false;
             }))
     }
@@ -130,6 +136,7 @@ decorate(UserStore, {
     updatingUser: observable,
     isStudent: observable,
     authStore: observable,
+    userJobs: observable,
     logout: action,
     forgetUser: action,
     updateUser: action,

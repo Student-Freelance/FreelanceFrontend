@@ -1,8 +1,13 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import {useStores} from "../../../../index";
+import {withRouter, useHistory} from "react-router-dom";
+import {observer} from "mobx-react";
 
 function EmployerJobs(props) {
     const jobs = props.jobs;
+    const {userStore, jobStore} = useStores();
+    const history = useHistory();
 
     return (
         <Card>
@@ -11,9 +16,9 @@ function EmployerJobs(props) {
                 <Card.Text>This company currently has no available jobs.</Card.Text>
                 :
                 <ul className="list-group list-group-flush">
-                    {jobs.map(job =>
+                    {jobStore.jobs.filter(job =>jobs.includes(job.id)).map(job =>
                         <li className="list-group-item" key={job.id}
-                            onClick={() => console.log(`User pressed on ${job.title}`)}>
+                            onClick={()=> { history.push(`/job/${job.id}`)}}>
                             {job.title}
                         </li>
                     )}
@@ -24,4 +29,4 @@ function EmployerJobs(props) {
 }
 
 
-export default EmployerJobs
+export default withRouter(observer(EmployerJobs))

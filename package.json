@@ -10,6 +10,7 @@
     "jwt-decode": "latest",
     "mobx": "^5.14.2",
     "mobx-react": "^6.1.4",
+    "mobx-utils": "^5.5.2",
     "moment": "^2.24.0",
     "popper.js": "^1.15.0",
     "prop-types": "^15.5.7",

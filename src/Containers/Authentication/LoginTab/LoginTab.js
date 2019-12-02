@@ -12,7 +12,7 @@ const LoginTab = (props) => {
     const ClientID = "908937238247-c2fr5ag4d8vi7tcd5m8cssa0pffaiccp.apps.googleusercontent.com";
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const {userStore} = useStores();
+    const {userStore, jobStore} = useStores();
 
     const responseGoogle = (response) => {
         userStore.googlelogin({access_token: response.Zi.id_token}).then((result) => {
@@ -25,7 +25,6 @@ const LoginTab = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         userStore.login(userName, password).then((result) => {
-            console.log(result);
             if (result) {
                 props.history.push("/")
             }

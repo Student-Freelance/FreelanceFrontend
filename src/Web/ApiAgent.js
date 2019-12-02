@@ -90,7 +90,9 @@ const JobActions = {
     fetchAll: () =>
         requests.get('Jobs'),
     fetchOne: async (id) =>
-        requests.get(`Jobs/${id}`)
+        requests.get(`Jobs/${id}`),
+    deleteOne: (id) =>
+        requests.del(`Jobs/${id}`)
 };
 
 

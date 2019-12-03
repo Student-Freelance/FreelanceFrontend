@@ -1,20 +1,22 @@
 import React, {useState} from "react";
 import './EmployerSignupTab.css';
-import {Button, Col} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import {observer} from "mobx-react";
 import {useStores} from "../../../../index";
 import {withRouter} from "react-router-dom";
 import * as Yup from "yup";
-import {Field, Form, Formik} from "formik";
+import {Form, Formik} from "formik";
+import FormInput from "../FormInput";
 
 const SignupSchema = Yup.object().shape({
     email: Yup.string()
         .email('Invalid email')
         .required('Required'),
     password: Yup.string()
-        .matches(
-            "^(?=.*[A-Za-z])(?=.*d)[A-Za-zd@$!%*#?&]{8,}$",
+        .matches(new RegExp(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$"
+            ),
             "Must Contain 8 Characters, One Uppercase, One Lowercase, One numnber"
         )
         .required('Required'),
@@ -22,7 +24,6 @@ const SignupSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), null], "Must match password")
         .required('Required'),
     vat: Yup.string()
-    // .test('len', 'Must have a length of 8', val => val.length === 8)
         .required('Required'),
     userName: Yup.string()
         .required('Required'),
@@ -32,27 +33,14 @@ const SignupSchema = Yup.object().shape({
 
 const EmployerSignupTab = (props) => {
     const {userStore} = useStores();
-    const [form, setState] = useState({
-        email: "",
-        userName: "",
-        password: "",
-        confirmPassword: "",
-        companyName: "",
-        vat: ""
-    });
-    // const handleChange = event => {
-    //     setState({
-    //         ...form,
-    //         [event.target.name]: event.target.value
-    //     });
-    // };
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-    //     userStore.registerCompany({...form}).finally(() => {
-    //         userStore.loadingUser = false;
-    //         props.history.push("/")
-    //     })
-    // };
+
+    const handleSubmit = e => {
+        userStore.registerCompany({...e}).finally(() => {
+            userStore.loadingUser = false;
+            props.history.push("/")
+        })
+    };
+
     return (
         <div>
             <Container className="LoginForm">
@@ -66,42 +54,58 @@ const EmployerSignupTab = (props) => {
                         vat: ""
                     }}
                     validationSchema={SignupSchema}
-                    onSubmit={values => console.log(values)}
-                >
-                    {({values, errors, touched, handleChange, handleBlur}) => (
+                    onSubmit={handleSubmit}>
+                    {({values, errors, touched, handleChange, isValid}) => (
                         <Form>
-                            <label htmlFor="companyName">Company name: </label>
-                            <Field name="companyName"
-                                   onBlur={handleBlur}
-                                   onChange={handleChange}
-                                   className={touched.companyName && errors.companyName ? (
-                                       <div>{errors.companyName}</div>) : null}/>
-                            <Field name="email"
-                                   onBlur={handleBlur}
-                                   onChange={handleChange}
-                                   className={touched.email && errors.email ? (<div>{errors.email}</div>) : null}/>
-                            <Field name="vat"
-                                   onBlur={handleBlur}
-                                   onChange={handleChange}
-                                   className={touched.vat && errors.vat ? (<div>{errors.vat}</div>) : null}/>
-                            <Field name="username"
-                                   onBlur={handleBlur}
-                                   onChange={handleChange}
-                                   className={touched.username && errors.username ? (<div>{errors.username}</div>) : null}/>
-                            <Field name="password"
-                                   onBlur={handleBlur}
-                                   onChange={handleChange}
-                                   className={touched.password && errors.password ? (<div>{errors.password}</div>) : null}/>
-                            <Field name="confirmPassword"
-                                   onBlur={handleBlur}
-                                   onChange={handleChange}
-                                   className={touched.confirmPassword && errors.confirmPassword ? (<div>{errors.confirmPassword}</div>) : null}/>
-                            <button type="submit">submit</button>
-                            {/*<Button*/}
-                            {/*    onClick={(e) => handleSubmit(e)}*/}
-                            {/*    variant="primary" type="submit" size="lg" block>*/}
-                            {/*    Sign up*/}
-                            {/*</Button>*/}
+                            <FormInput
+                                name="companyName"
+                                value={values.companyName}
+                                errors={errors.companyName}
+                                type="text"
+                                text="Company name"
+                                changeHandler={handleChange}
+                                touched={touched.companyName}/>
+                            <FormInput
+                                name="email"
+                                type="email"
+                                value={values.email}
+                                errors={errors.email}
+                                text="Email"
+                                changeHandler={handleChange}
+                                touched={touched.email}/>
+                            <FormInput
+                                name="vat"
+                                type="number"
+                                value={values.vat}
+                                errors={errors.vat}
+                                text="CVR/VAT"
+                                changeHandler={handleChange}
+                                touched={touched.vat}/>
+                            <FormInput
+                                type="text"
+                                name="userName"
+                                value={values.userName}
+                                errors={errors.userName}
+                                text="Username"
+                                changeHandler={handleChange}
+                                touched={touched.userName}/>
+                            <FormInput
+                                type="password"
+                                name="password"
+                                value={values.password}
+                                errors={errors.password}
+                                text="Password"
+                                changeHandler={handleChange}
+                                touched={touched.password}/>
+                            <FormInput
+                                type="password"
+                                name="confirmPassword"
+                                value={values.confirmPassword}
+                                errors={errors.confirmPassword}
+                                text="Confirm password"
+                                changeHandler={handleChange}
+                                touched={touched.confirmPassword}/>
+                            <Button variant="primary" type="submit" size="lg" block disabled={!isValid}>Sign up</Button>
                         </Form>
                     )}
                 </Formik>

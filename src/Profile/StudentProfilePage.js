@@ -16,7 +16,6 @@ import ArrayComponent from "../Components/ArrayComponent";
 const StudentProfilePage = () => {
 
     const {userStore} = useStores();
-    const [skill, setSkill] = useState("");
     const [edit, setEdit] = useState({
         editMode: false,
         btnText: "Edit"
@@ -47,22 +46,23 @@ const StudentProfilePage = () => {
             <div>
                 <Container>
                     <Row>
-                        <Col><h3>Profile</h3>
-
-                            <div className="input-group"><input
-                                type="text" value={userStore.studentUser.username}
-                                name="username" onChange={handleChange}
-                                disabled={!edit.editMode}
-                                className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
-                            />
-                                <input
+                        <Col><h3><input
+                            type="text" value={userStore.studentUser.username}
+                            name="username" onChange={handleChange}
+                            placeholder="Username"
+                            disabled={!edit.editMode}
+                            className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                        /></h3>
+                                <br/>
+                                <label>Semester</label>
+                                    <input
                                     type="number" maxLength='2' value={userStore.studentUser.semester}
                                     name="semester" onChange={handleChange}
+                                    placeholder={edit.editMode?"semester":""}
                                     disabled={!edit.editMode}
-                                    className={'text-right ' + (!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                    className={'text-left ' + (!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                 />
-                                <div className="input-group-append form-control-plaintext">Semester</div>
-                            </div>
+
                         </Col>
                         <Col> </Col>
                     </Row>
@@ -93,22 +93,23 @@ const StudentProfilePage = () => {
                                                 <input
                                                     type="email" value={userStore.studentUser.email} id="email"
                                                     name="email" onChange={handleChange}
+                                                    placeholder={edit.editMode?"Enter Email":""}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
                                                 <input
                                                     type="url"
-                                                    value={userStore.studentUser.website}
+                                                    value={(userStore.studentUser.website)?userStore.studentUser.website:""}
                                                     name="website" onChange={handleChange}
-                                                    placeholder="Website"
+                                                    placeholder={edit.editMode?"Enter Website":""}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
                                                 <input
                                                     type="number" maxLength='8'
-                                                    value={userStore.studentUser.phoneNumber}
+                                                    value={(userStore.studentUser.phoneNumber)?(userStore.studentUser.phoneNumber):""}
                                                     name="phoneNumber" onChange={handleChange}
-                                                    placeholder="Phonenumber"
+                                                    placeholder={edit.editMode?"Enter Phonenumber":""}
                                                     disabled={!edit.editMode}
                                                     className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                 />
@@ -123,6 +124,7 @@ const StudentProfilePage = () => {
                                                         <input
                                                             type="text" value={userStore.studentUser.firstname}
                                                             name="firstname" onChange={handleChange}
+                                                            placeholder={edit.editMode?"Enter Firstname":""}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                         />
@@ -130,6 +132,7 @@ const StudentProfilePage = () => {
                                                             type="text" value={userStore.studentUser.lastname}
                                                             name="lastname" onChange={handleChange}
                                                             disabled={!edit.editMode}
+                                                            placeholder={edit.editMode?"Enter Lastname":""}
                                                             className={"input-group-append " + (!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                         />
                                                     </div>
@@ -143,14 +146,14 @@ const StudentProfilePage = () => {
                                                             type="text"
                                                             value={userStore.studentUser.locationModel.street}
                                                             name="street"
-                                                            placeholder="Street"
+                                                            placeholder={edit.editMode?"Enter Street":""}
                                                             onChange={handleLocationChange}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                         />
                                                         <input
                                                             type="text"
-                                                            placeholder="Streetnumber"
+                                                            placeholder={edit.editMode?"Enter street number":""}
                                                             value={userStore.studentUser.locationModel.number}
                                                             name="number" onChange={handleLocationChange}
                                                             disabled={!edit.editMode}
@@ -161,14 +164,14 @@ const StudentProfilePage = () => {
                                                         <input
                                                             type="number" value={userStore.studentUser.locationModel.zip}
                                                             name="zip" onChange={handleLocationChange}
-                                                            placeholder="Zip"
+                                                            placeholder={edit.editMode?"Enter Zip Code":""}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                         />
                                                         <input
                                                             type="text" value={userStore.studentUser.locationModel.city}
                                                             name="city"
-                                                            placeholder="City"
+                                                            placeholder={edit.editMode?"Enter city name":""}
                                                             onChange={handleLocationChange}
                                                             disabled={!edit.editMode}
                                                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
@@ -230,6 +233,9 @@ const StudentProfilePage = () => {
                                     variant="primary" type="submit" size="lg" block>
                                     {edit.btnText}
                                 </Button>
+                                {edit.editMode?<Button variant= "outline-danger" size="lg"
+                                                       onClick={() => setEdit({ editMode: false, btnText: "Edit"})}
+                                                       block>Cancel</Button>:null}
                             </Col>
                         </InputGroup>
                     </Row>

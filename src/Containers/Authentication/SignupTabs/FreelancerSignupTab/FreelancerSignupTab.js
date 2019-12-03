@@ -1,6 +1,6 @@
 import React from "react";
 import './FreelancerSignupTab.css';
-import {Button, Col, Form} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import Container from "react-bootstrap/Container";
 import {observer} from "mobx-react";
 import {withRouter} from "react-router-dom";
@@ -44,16 +44,16 @@ const FreelancerSignupTab = (props) => {
         <div>
             <Container className="LoginForm">
                 <Formik
-                initialValues={{
-                    firstName: "",
-                    lastName: "",
-                    userName: "",
-                    email: "",
-                    password: "",
-                    confirmPassword: ""
-                }}
-                validationSchema={StudentSignupSchema}
-                onSubmit={handleSubmit}>
+                    initialValues={{
+                        firstName: "",
+                        lastName: "",
+                        userName: "",
+                        email: "",
+                        password: "",
+                        confirmPassword: ""
+                    }}
+                    validationSchema={StudentSignupSchema}
+                    onSubmit={handleSubmit}>
                     {({values, errors, touched, handleChange, isValid}) => (
                         <Form>
                             <FormInput
@@ -104,7 +104,8 @@ const FreelancerSignupTab = (props) => {
                                 text="Confirm password"
                                 changeHandler={handleChange}
                                 touched={touched.confirmPassword}/>
-                            <Button variant="primary" onClick={() => handleSubmit(values)} size="lg" block disabled={!isValid}>Sign up</Button>
+                            <Button variant="primary" onClick={() => handleSubmit(values)} size="lg" block
+                                    disabled={!isValid}>Sign up</Button>
                         </Form>
                     )}
                 </Formik>

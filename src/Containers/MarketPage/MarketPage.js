@@ -44,6 +44,7 @@ const MarketPage = () => {
         const filter = search.search;
         console.log(filter);
         let jobs = ([...toJS(jobStore.jobs)]);
+        // eslint-disable-next-line array-callback-return
         let filtered = jobs.filter(job => {
                 if (!(job.title == null)) {
                     return job.description.includes(filter);
@@ -54,18 +55,18 @@ const MarketPage = () => {
         jobStore.filteredJobs = filtered;
     }
 
-    function onSearchChange(event){
+    function onSearchChange(event) {
         setSearchState({search: event.target.value})
     }
 
     return (
         <Container fluid>
-            {jobStore.isLoading ?  <div className='sweet-loading, LoaderMargins'
-            >
-                <ClipLoader
-                    size={150} // or 150px
-                    color={'#123abc'}
-                /> </div> :
+            {jobStore.isLoading ? <div className='sweet-loading, LoaderMargins'
+                >
+                    <ClipLoader
+                        size={150} // or 150px
+                        color={'#123abc'}
+                    /></div> :
                 <Row sm={12} md={12} xl={12}>
                     <Col xl={2} className="d-none d-lg-block">
                         <h1 className="d-flex justify-content-left">Labels</h1>
@@ -95,7 +96,9 @@ const MarketPage = () => {
                                 </InputGroup>
                             </Col>
                         </Row>
-                        <Row>{!userStore.isStudent? <Button onClick={() => history.push(`/create/${userStore.companyUser.companyName}`)}>Create job</Button>:''}</Row>
+                        <Row>{!userStore.isStudent ?
+                            <Button onClick={() => history.push(`/create/${userStore.companyUser.companyName}`)}>Create
+                                job</Button> : ''}</Row>
                         <Row>
                             {(jobStore.filteredJobs.map(job => {
                                     const {id, title, description, location, createdOn, companyName} = job;

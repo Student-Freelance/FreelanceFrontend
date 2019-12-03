@@ -8,7 +8,6 @@ import {useStores} from "../index";
 import {ClipLoader} from "react-spinners";
 import Button from "react-bootstrap/Button";
 import {set} from "mobx";
-import ArrayComponent from "../Components/ArrayComponent";
 import JobObjectComponent from "../Components/JobObjectComponent";
 
 
@@ -185,7 +184,6 @@ const CompanyProfilePage = () => {
                                 </Card>
                                 <br/>
                                 <Card body>
-                                    <hr/>
                                     <JobObjectComponent
                                         description="Jobs"
                                         storelink={userStore.userJobs}
@@ -193,11 +191,15 @@ const CompanyProfilePage = () => {
                                         editMode={edit.editMode}
                                     />
                                 </Card>
+                                <br/>
                                 <Button
                                     onClick={(event) => handleSubmit(event)}
                                     variant="primary" type="submit" size="lg" block>
                                     {edit.btnText}
                                 </Button>
+                                {edit.editMode ? <Button variant="outline-danger" size="lg"
+                                                         onClick={() => setEdit({editMode: false, btnText: "Edit"})}
+                                                         block>Cancel</Button> : null}
                             </Col>
                         </InputGroup>
                     </Row>

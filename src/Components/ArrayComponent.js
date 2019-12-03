@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import {observer} from "mobx-react";
 import {useStores} from "../index";
+import {ListGroup, ListGroupItem} from "react-bootstrap";
 
 
 const ArrayComponent = (props) => {
@@ -16,10 +16,10 @@ const ArrayComponent = (props) => {
     return (
         <Container className='text-center'>
             <label className='col-form-label-sm'>{props.description}</label>
-            {
+            <ListGroup> {
                 props.storelink.map((value, key) => {
                     return (
-                        <Card key={key} body>
+                        <ListGroupItem key={key}>
                             <div className="input-group">
                                 <input
                                     type="text" value={props.storelink[key]}
@@ -27,48 +27,48 @@ const ArrayComponent = (props) => {
                                     disabled={!props.editMode}
                                     className={(!props.editMode ? 'form-control-plaintext text-center' : 'form-control')}
                                 />
-                                {props.editMode?
-                                <div className="input-group-append">
-                                    <button className="btn btn-danger"
-                                            type="button"
-                                            onClick={() => {
-                                                props.storelink.remove(value)
-                                                userStore.updateUser({...userStore.studentUser})
-                                            }}
-                                    >Delete
-                                    </button>
-                                </div>: ''}
+                                {props.editMode ?
+                                    <div className="input-group-append">
+                                        <button className="btn btn-danger"
+                                                type="button"
+                                                onClick={() => {
+                                                    props.storelink.remove(value);
+                                                    userStore.updateUser({...userStore.studentUser})
+                                                }}
+                                        >Delete
+                                        </button>
+                                    </div> : ''}
                             </div>
-                        </Card>
+                        </ListGroupItem>
 
                     )
                 })
-            }
+            }  </ListGroup>
             <br/>
-            {props.editMode?
-            < div
-                className="input-group mb-3">
-                < input
-                    type="text"
-                    className="form-control"
-                    placeholder="Type here"
-                    value={input}
-                    onChange={event => {
-                        setInput(event.target.value)
-                    }
-                    }
-                />
-                <div className="input-group-append">
-                    <button className= "btn btn-success"
-                            type="submit"
-                            onClick={() => {
-                                props.storelink.push(input);
-                                userStore.updateUser({...userStore.studentUser})
-                            }}
-                    >Add new
-                    </button>
-                </div>
-            </div>: ''
+            {props.editMode ?
+                <div
+                    className="input-group mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Type here"
+                        value={input}
+                        onChange={event => {
+                            setInput(event.target.value)
+                        }
+                        }
+                    />
+                    <div className="input-group-append">
+                        <button className="btn btn-success"
+                                type="submit"
+                                onClick={() => {
+                                    props.storelink.push(input);
+                                    userStore.updateUser({...userStore.studentUser})
+                                }}
+                        >Add new
+                        </button>
+                    </div>
+                </div> : ''
             }
         </Container>
     );

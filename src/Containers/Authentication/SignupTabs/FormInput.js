@@ -12,6 +12,7 @@ const FormInput = (props) => {
                 name={name}
                 onChange={changeHandler}
                 value={value}
+                touched={touched}
                 isInvalid={!!errors}/>
             <div style={{color: "red"}}>{errors}</div>
         </FormGroup>

@@ -1,10 +1,9 @@
-import React, {useState} from "react";
-import Card from "react-bootstrap/Card";
+import React from "react";
 import Container from "react-bootstrap/Container";
 import {observer} from "mobx-react";
 import {useStores} from "../index";
-import {withRouter, useHistory} from "react-router-dom";
-import {FormText} from "react-bootstrap";
+import {useHistory, withRouter} from "react-router-dom";
+import {FormText, ListGroup, ListGroupItem} from "react-bootstrap";
 
 
 const JobObjectComponent = (props) => {
@@ -15,17 +14,19 @@ const JobObjectComponent = (props) => {
     return (
         <Container className='text-center'>
             <label className='col-form-label-sm'>{props.description}</label>
-            {
+            <ListGroup> {
                 props.storelink.map((value, key) => {
                     return (
-                        <Card key={key} body>
+                        <ListGroupItem style={{cursor: 'pointer'}} key={key} body>
                             <div className="input-group">
                                 <FormText
-                                    onClick={()=> { history.push(`/job/${value.id}`)}}
+                                    onClick={() => {
+                                        history.push(`/job/${value.id}`)
+                                    }}
                                     type="text"
                                     className={'form-control-plaintext text-center'}
                                 >{value.title} - Click for details</FormText>
-                                {props.editMode?
+                                {props.editMode ?
                                     <div className="input-group-append">
                                         <button className="btn btn-danger"
                                                 type="button"
@@ -36,24 +37,25 @@ const JobObjectComponent = (props) => {
                                                 }}
                                         >Delete
                                         </button>
-                                    </div>: ''}
+                                    </div> : ''}
                             </div>
-                        </Card>
+                        </ListGroupItem>
                     )
                 })
-            }
+            }      </ListGroup>
             <br/>
-            {props.editMode?
-                    <div>
-                        <button className= "btn btn-success"
-                                type="submit"
-                                onClick={() => {
-                                    history.push(`/create/${userStore.companyUser.companyName}`)
-                                }}
-                        >Add new
-                        </button>
-                    </div>
-                     : ''
+            {props.editMode ?
+                <div>
+                    <button className="btn btn-success"
+                            type="submit"
+                            onClick={() => {
+                                history.push(`/create/${userStore.companyUser.companyName}`)
+                            }}
+                    >Add new
+                    </button>
+                </div>
+
+                : ''
             }
         </Container>
     );

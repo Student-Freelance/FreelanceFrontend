@@ -17,6 +17,7 @@ const DetailedJobPage = () => {
     mapJob();
 
     function mapJob() {
+        // eslint-disable-next-line array-callback-return
         jobStore.jobs.map(jobIterator => {
             if (jobIterator.id === String(handle)) {
                 job = toJS(jobIterator);
@@ -75,5 +76,5 @@ const DetailedJobPage = () => {
             }
         </div>
     )
-}
+};
 export default observer(DetailedJobPage);

@@ -42,16 +42,15 @@ const MarketPage = () => {
 
     function searchJob() {
         const filter = search.search;
-        console.log(filter);
         let jobs = ([...toJS(jobStore.jobs)]);
         // eslint-disable-next-line array-callback-return
         let filtered = jobs.filter(job => {
                 if (!(job.title == null)) {
-                    return job.description.includes(filter);
+                    return (job.title.includes(filter) || job.description.includes(filter) || job.companyName.includes(filter)
+                        || job.tags.includes(filter));
                 }
             }
         );
-        console.log(jobStore.filteredJobs);
         jobStore.filteredJobs = filtered;
     }
 
@@ -91,6 +90,7 @@ const MarketPage = () => {
                                         placeholder="Search job titles"/>
                                     <InputGroup.Append>
                                         <Button variant="outline-primary"
+                                                type="submit"
                                                 onClick={searchJob}>Search</Button>
                                     </InputGroup.Append>
                                 </InputGroup>

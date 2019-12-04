@@ -19,9 +19,9 @@ const LandingPage = () => {
         <div>
             <Container>
                 <Row>
-                    <Col sm={12} lg={5}>
+                    <Col sm={12} lg={9}>
                         <div className="Headline">
-                            <h1>Find nemt freelance jobs for studerende</h1>
+                            <h1>An easy way for students to find freelance work!</h1>
                         </div>
                     </Col>
                 </Row>
@@ -30,7 +30,7 @@ const LandingPage = () => {
                         <div className="searchBar">
                             <InputGroup className="mb-5">
                                 <FormControl
-                                    placeholder="Job title eller søge ord"
+                                    placeholder="Search jobs"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                 />

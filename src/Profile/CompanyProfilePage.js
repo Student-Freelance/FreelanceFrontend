@@ -68,7 +68,7 @@ const CompanyProfilePage = () => {
                                         <br/>
                                         <Col xl={7} sm={7} md={7} xs={7}>
                                             <div className="form-group">
-                                                <label className="control-label-sm">Email</label>
+                                                <label className="control-label-sm"><b>Email:</b></label>
                                                 <input
                                                     type="email" value={userStore.companyUser.email} id="email"
                                                     name="email" onChange={handleInputChange}
@@ -77,7 +77,7 @@ const CompanyProfilePage = () => {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-form-label-sm"> Mobile Number</label>
+                                                <label className="col-form-label-sm"> <b>Mobile Number:</b></label>
                                                 <input
                                                     type="number" maxLength={8} value={userStore.companyUser.phoneNumber}
                                                     name="phoneNumber" onChange={handleInputChange}
@@ -91,7 +91,7 @@ const CompanyProfilePage = () => {
                                             <Row>
                                                 <Col>
                                                     <div className="form-group">
-                                                        <label className='col-form-label-sm'>Name</label>
+                                                        <label className='col-form-label-sm'><b>Name:</b></label>
                                                         <input
                                                             type="text" value={userStore.companyUser.companyName}
                                                             name="companyName" onChange={handleInputChange}
@@ -109,7 +109,7 @@ const CompanyProfilePage = () => {
                                     <Row sm={12} md={12} xl={12}>
                                         <Col xl={7}>
                                             <div className="form-group">
-                                                <label className='col-form-label-sm'>Vat:</label>
+                                                <label className='col-form-label-sm'><b>Vat:</b></label>
                                                 <input
                                                     type="number" maxLength={6} value={userStore.companyUser.vat}
                                                     name="vat" onChange={handleInputChange}
@@ -118,7 +118,7 @@ const CompanyProfilePage = () => {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label className='col-form-label-sm'>Website:</label>
+                                                <label className='col-form-label-sm'><b>Website:</b></label>
                                                 <input
                                                     type="text" value={userStore.companyUser.website}
                                                     name="webSite" onChange={handleInputChange}
@@ -127,7 +127,7 @@ const CompanyProfilePage = () => {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-form-label-sm">Address:</label>
+                                                <label className="col-form-label-sm"><b>Address:</b></label>
                                                 <input
                                                     type="text"
                                                     value={userStore.companyUser.locationModel.street}

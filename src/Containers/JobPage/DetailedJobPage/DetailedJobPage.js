@@ -51,6 +51,8 @@ const DetailedJobPage = () => {
                                             <Card.Text>
                                                 <small className="text-muted">Created {new Date().getDate() -  new Date(job.createdOn).getDate()} days ago</small>
                                             </Card.Text>
+                                            <hr/>
+                                            <Card.Subtitle>Contact: <a href={`mailto:notimplemented@info.dk`}>Email</a></Card.Subtitle>
                                         </Card.Body>
                                     </Card>
                                 </Col>

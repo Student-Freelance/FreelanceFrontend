@@ -53,10 +53,10 @@ class EmployerPage extends Component {
                                 src={this.state.employer.logo || 'https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg'}
                                 alt="logo"/>
                             <Card.Body>
-                                {this.state.editMode ?
-                                    <EmployerToChange employer={this.state.employer}/> :
-                                    <EmployerToView employer={this.state.employer}/>}
+                                    <EmployerToView employer={this.state.employer}/>
                                 <EmployerJobs jobs={this.state.employer.jobs}/>
+                                <hr/>
+                                <Card.Subtitle>Contact: <a href={`mailto:${this.state.employer.email}`}>Email</a></Card.Subtitle>
                             </Card.Body>
                         </Card>
                         : <EmployerError companyName={this.props.match.params.handle}/>}

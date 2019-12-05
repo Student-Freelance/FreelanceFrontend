@@ -18,6 +18,7 @@ function EmployerJobs(props) {
                 <ul className="list-group list-group-flush">
                     {jobStore.jobs.filter(job => jobs.includes(job.id)).map(job =>
                         <li className="list-group-item" key={job.id}
+                            style={{cursor: "pointer"}}
                             onClick={() => {
                                 history.push(`/job/${job.id}`)
                             }}>

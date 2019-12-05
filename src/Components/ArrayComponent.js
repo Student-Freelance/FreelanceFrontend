@@ -15,7 +15,7 @@ const ArrayComponent = (props) => {
 
     return (
         <Container className='text-center'>
-            <label className='col-form-label-sm'>{props.description}</label>
+            <label className='col-form-label-sm'><b>{props.description}:</b></label>
             <ListGroup> {
                 props.storelink.map((value, key) => {
                     return (

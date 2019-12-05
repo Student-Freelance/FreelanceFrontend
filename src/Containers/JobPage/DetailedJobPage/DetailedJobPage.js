@@ -33,7 +33,7 @@ const DetailedJobPage = () => {
                     <Container className="summary-Job-Description">
                             <h2>{job.title}</h2>
                             <div>
-                                {job.tags.map(tag => <JobBadge key={tag} tag={tag}/>)}
+                                {job.tags.slice(0,10).map(tag => <JobBadge key={tag} tag={tag}/>)}
                             </div>
                             <Row>
                                 <Col sm={8}>

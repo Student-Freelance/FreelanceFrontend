@@ -54,7 +54,7 @@ const StudentProfilePage = () => {
                             className={(!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                         /></h3>
                                 <br/>
-                                <label>Semester</label>
+                                <label><b>Semester:</b></label>
                                     <input
                                     type="number" maxLength='2' value={userStore.studentUser.semester}
                                     name="semester" onChange={handleChange}
@@ -71,9 +71,9 @@ const StudentProfilePage = () => {
                             <Col xl={5}>
                                 <Card body>
                                     <Row sm={12} md={12} xl={12}>
-                                        <Col>
+                                        <Col sm={3}>
                                             {edit.editMode ?
-                                                <div><label className="control-label-sm">Enter picture link</label>
+                                                <div><label className="control-label-sm"><b>Enter picture link</b></label>
                                                     <input
                                                         type="url" value={userStore.studentUser.logo}
                                                         name="logo" onChange={handleChange}
@@ -89,7 +89,7 @@ const StudentProfilePage = () => {
                                         <br/>
                                         <Col>
                                             <div className="form-group">
-                                                <label className="control-label-sm">Contact Information</label>
+                                                <label className="control-label-sm"><b>Contact Information:</b></label>
                                                 <input
                                                     type="email" value={userStore.studentUser.email} id="email"
                                                     name="email" onChange={handleChange}
@@ -119,7 +119,7 @@ const StudentProfilePage = () => {
                                         <div className="container">
                                             <Row>
                                                 <Col>
-                                                    <label className='col-form-label-sm'>Name</label>
+                                                    <label className='col-form-label-sm'><b>Name:</b></label>
                                                     <div className="form__group">
                                                         <input
                                                             type="text" value={userStore.studentUser.firstname}
@@ -133,14 +133,14 @@ const StudentProfilePage = () => {
                                                             name="lastname" onChange={handleChange}
                                                             disabled={!edit.editMode}
                                                             placeholder={edit.editMode?"Enter Lastname":""}
-                                                            className={"input-group-append " + (!edit.editMode ? 'form-control-plaintext' : 'form-control')}
+                                                            className={"input-group-prepend " + (!edit.editMode ? 'form-control-plaintext' : 'form-control')}
                                                         />
                                                     </div>
 
                                                 </Col>
                                                 <Col>
                                                     <label
-                                                        className='col-form-label-sm'>Address</label>
+                                                        className='col-form-label-sm'><b>Address:</b></label>
                                                     <div className="form__group">
                                                         <input
                                                             type="text"
@@ -191,7 +191,7 @@ const StudentProfilePage = () => {
                                     </Col>
                                     <Col>
                                         <ArrayComponent storelink={userStore.studentUser.competences}
-                                                        description="Competences:" editMode={edit.editMode}
+                                                        description="Competences" editMode={edit.editMode}
                                                         name="competences"/>
                                     </Col>
                                 </Row>

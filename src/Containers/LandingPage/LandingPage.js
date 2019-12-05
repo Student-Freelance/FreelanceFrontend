@@ -43,7 +43,7 @@ const LandingPage = () => {
                 </Row>
             </Container>
             <div className="image">
-                <Image src={FrontPagePic} fluid/>
+                <Image src={FrontPagePic} fluid style={{minWidth: "100%"}}/>
             </div>
         </div>
     )

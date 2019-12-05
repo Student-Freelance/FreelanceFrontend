@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import EmployerJobs from "./Views/EmployerJobs";
 import Employer from "../Employer";
 import {Card, Container} from "react-bootstrap";
-import EmployerToChange from "./Views/EmployerToChange";
 import EmployerToView from "./Views/EmployerToView";
 import EmployerError from "./Views/EmployerError";
 import {AxiosAgent} from "../../../Web/AxiosAgent";
@@ -46,17 +45,18 @@ class EmployerPage extends Component {
                         color={'#123abc'}
                     />
                 </div> :
-                <Container fluid>
+                <Container fluid className="d-flex justify-content-center">
                     {this.state.isLoaded ?
                         <Card className="col-sm-11 col-xl-6">
                             <Card.Img
                                 src={this.state.employer.logo || 'https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg'}
                                 alt="logo"/>
                             <Card.Body>
-                                    <EmployerToView employer={this.state.employer}/>
+                                <EmployerToView employer={this.state.employer}/>
                                 <EmployerJobs jobs={this.state.employer.jobs}/>
                                 <hr/>
-                                <Card.Subtitle>Contact: <a href={`mailto:${this.state.employer.email}`}>Email</a></Card.Subtitle>
+                                <Card.Subtitle>Contact: <a
+                                    href={`mailto:${this.state.employer.email}`}>Email</a></Card.Subtitle>
                             </Card.Body>
                         </Card>
                         : <EmployerError companyName={this.props.match.params.handle}/>}

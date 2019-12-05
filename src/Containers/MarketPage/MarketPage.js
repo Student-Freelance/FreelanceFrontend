@@ -68,7 +68,7 @@ const MarketPage = () => {
                     /></div> :
                 <Row sm={12} md={12} xl={12}>
                     <Col xl={2} className="d-none d-lg-block">
-                        <h1 className="d-flex justify-content-left">Labels</h1>
+                        <h3 className="d-flex justify-content-left">Labels</h3>
                         <ul className="list-group">
                             {jobStore.tags.slice(0, 10).map(tag =>
                                 (tag[0] === activeTag) ?
@@ -97,8 +97,10 @@ const MarketPage = () => {
                             </Col>
                         </Row>
                         <Row>{!userStore.isStudent ?
-                            <Button onClick={() => history.push(`/create/${userStore.companyUser.companyName}`)}>Create
-                                job</Button> : ''}</Row>
+                            <Button variant="primary" style={{margin: "15px"}} onClick={() => history.push(`/create/${userStore.companyUser.companyName}`)}>
+                                Create job
+                            </Button> : null}
+                        </Row>
                         <Row>
                             {(jobStore.filteredJobs.map(job => {
                                     const {id, title, description, location, createdOn, companyName} = job;

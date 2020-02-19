@@ -4,7 +4,7 @@ import Axios from "axios";
 
 export class AxiosAgent extends Component {
     //url = 'https://localhost:5001/api/';
-    static url = 'https://devops01.eitlab.diplom.dtu.dk/api/';
+    static url = 'https://devops01.eitlab.diplom.dtu.dk/';
 
     static SetConfig(token) {
         if (token != null) {

@@ -4,7 +4,7 @@ import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const superagent = superagentPromise(_superagent, global.Promise);
-const API_ROOT = 'https://devops01.eitlab.diplom.dtu.dk/api/'; //'https://localhost:5001/api/';
+const API_ROOT = 'https://devops01.eitlab.diplom.dtu.dk/'; //'https://localhost:5001/api/';
 
 const handleErrors = (err) => {
     let string= err + '';

@@ -21,7 +21,7 @@ export class AxiosAgent extends Component {
 
     static async GetOne(endpoint, id) {
         return await Axios.get(
-            `${this.url}${endpoint}/${id}`);
+            `${this.url}${endpoint}?${id}`);
     }
 
     static async Post(endpoint, bodyParameter) {

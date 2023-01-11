@@ -7,7 +7,7 @@
     "bootstrap": "^4.3.1",
     "formik": "^2.0.6",
     "jquery": "^3.4.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jwt-decode": "latest",
     "mobx": "^5.14.2",
     "mobx-react": "^6.1.4",
